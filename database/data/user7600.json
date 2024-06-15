@@ -1,0 +1,436 @@
+[
+    {
+        "name": "Tina Wahyufitri, S.Si, M.Si",
+        "bps_id": "340015476",
+        "employee_id": "197609281997122001",
+        "email": "tinaw@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Markus Uda SE",
+        "bps_id": "340013521",
+        "employee_id": "196705221993011001",
+        "email": "markus@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Sari Kristiani A.Md",
+        "bps_id": "340018487",
+        "employee_id": "198209172006042003",
+        "email": "kristi@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Haryo Satriaji SST",
+        "bps_id": "340057946",
+        "employee_id": "199410062017011002",
+        "email": "haryo.satriaji@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Harlina SE, MM",
+        "bps_id": "340013915",
+        "employee_id": "197204161994012001",
+        "email": "harlina@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Eva Resvani S.Psi.",
+        "bps_id": "340055533",
+        "employee_id": "198605272011012019",
+        "email": "reva@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Suherman Bontong S.P.",
+        "bps_id": "340055542",
+        "employee_id": "198806012011011012",
+        "email": "suhermanb@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Harianto",
+        "bps_id": "340053163",
+        "employee_id": "198602042009111001",
+        "email": "harianto@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Reski S.Si.",
+        "bps_id": "340055539",
+        "employee_id": "198807252011012014",
+        "email": "reski@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Deni Widya Ariani SST",
+        "bps_id": "340057945",
+        "employee_id": "199410272017012002",
+        "email": "deni.ariani@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Abd. Syukur SE, MM.",
+        "bps_id": "340014270",
+        "employee_id": "197304031994011001",
+        "email": "syukur@bps.go.id",
+        "type": "Perorangan",
+        "role": "umum"
+    },
+    {
+        "name": "Hamka A.Md.",
+        "bps_id": "340055534",
+        "employee_id": "198206032011011008",
+        "email": "hamka2@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Isba Syukurniaty Bakri A.Md.",
+        "bps_id": "340055537",
+        "employee_id": "198109242011012006",
+        "email": "adhyisba@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Nurwahida SST",
+        "bps_id": "340057533",
+        "employee_id": "199212012016022001",
+        "email": "nurwahida@bps.go.id",
+        "type": "Perorangan",
+        "role": "umum"
+    },
+    {
+        "name": "Fajaruddin Djarir SE",
+        "bps_id": "340018169",
+        "employee_id": "198004012006041004",
+        "email": "djarir@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Muhamad Ferdian Saputra SE, M.Si.",
+        "bps_id": "340051232",
+        "employee_id": "198501222009021006",
+        "email": "ferdian@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Sri Mulyani SST, MM",
+        "bps_id": "340017366",
+        "employee_id": "198207182004122001",
+        "email": "muyani@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Saiyed Andi Bangsawan SE",
+        "bps_id": "340018954",
+        "employee_id": "197610132006041014",
+        "email": "bangsawan@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Aan Setyawan SST,. M.Si.",
+        "bps_id": "340020276",
+        "employee_id": "198502282008011003",
+        "email": "asetya@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Immawan Mujahid Maruddani SST",
+        "bps_id": "340057948",
+        "employee_id": "199410152017011001",
+        "email": "immawan.maruddani@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Ir. Muhammad Nurbakti M.Si",
+        "bps_id": "340014393",
+        "employee_id": "196502141994011001",
+        "email": "nurbakti@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Marsono SST.,M.Si",
+        "bps_id": "340019239",
+        "employee_id": "198205152007011011",
+        "email": "marsono@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Abdul Hafid SST",
+        "bps_id": "340055708",
+        "employee_id": "199002052012111001",
+        "email": "hafid.mhd@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Kartika Usmanti S.ST",
+        "bps_id": "340053341",
+        "employee_id": "198610072009122004",
+        "email": "usmanti@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Saiyed Andi Supardi SP., MM.",
+        "bps_id": "340012740",
+        "employee_id": "196911111991021001",
+        "email": "pardi@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Anindrasari S.P, M.M",
+        "bps_id": "340053879",
+        "employee_id": "198708262010032001",
+        "email": "anindrasari@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Dina Srikandi SST, M.Si.",
+        "bps_id": "340017870",
+        "employee_id": "198401102006022001",
+        "email": "srikandi@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Hapsah S.Si.",
+        "bps_id": "340059327",
+        "employee_id": "199404032019032001",
+        "email": "hapsah@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Sulle",
+        "bps_id": "340019423",
+        "employee_id": "197912252007011001",
+        "email": "sulle_r@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Tyas Jualita Santy SST, M.E.K.K",
+        "bps_id": "340050263",
+        "employee_id": "198605232009022006",
+        "email": "tyasjualita@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Eka Khaerandy Oktafianto SST, M.Si",
+        "bps_id": "340053360",
+        "employee_id": "198610082009121007",
+        "email": "ekakhaerandy@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "M. La'bi S.Si. MM",
+        "bps_id": "340012048",
+        "employee_id": "196512311989011001",
+        "email": "mlabi@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Suwarti SST, M.Stat",
+        "bps_id": "340020268",
+        "employee_id": "198308092008012002",
+        "email": "suwarti@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Mega Kelana Cahya Altoba, SST",
+        "bps_id": "340057951",
+        "employee_id": "199502262017011001",
+        "email": "mega.altoba@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Pertiwi Tanihaha S.ST, MM",
+        "bps_id": "340053241",
+        "employee_id": "198711152009122002",
+        "email": "pertiwi@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Muhammad Said, S.ST",
+        "bps_id": "340015383",
+        "employee_id": "197305161996121001",
+        "email": "msgkuna@bps.go.id ",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Uhat Dies Toga Julius SST",
+        "bps_id": "340053362",
+        "employee_id": "198707272009121003",
+        "email": "uhatdies@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Andra Citta Passadhi Arya SST",
+        "bps_id": "340020267",
+        "employee_id": "198308102008011010",
+        "email": "andra.citta@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Syaifur Rijal Syamsul SST",
+        "bps_id": "340056465",
+        "employee_id": "199008162013111001",
+        "email": "syaifur.rijal@bps.go.id",
+        "type": "Perorangan",
+        "role": "admin"
+    },
+    {
+        "name": "Misnawati Mansur SST, MM",
+        "bps_id": "340054318",
+        "employee_id": "198802122010122003",
+        "email": "misna@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Sri Andriyani Baso A.Md",
+        "bps_id": "340020274",
+        "employee_id": "198707162008012001",
+        "email": "sri.baso@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Budi Setiawan Akkas, SST",
+        "bps_id": "340058179",
+        "employee_id": "199504082018021001",
+        "email": "budi.akkas@bps.go.id",
+        "type": "Perorangan",
+        "role": "user"
+    },
+    {
+        "name": "Ruang Kepala BPS",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Kabag Umum",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Keuangan",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Kepegram",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Sekretaris",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Statistik Produksi",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Nerwilis",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Aula - Studio",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang PST",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang IPDS",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Statistik Distribusi",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Statistik Sosial",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Umum",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    },
+    {
+        "name": "Ruang Frontdesk",
+        "bps_id": null,
+        "employee_id": null,
+        "email": null,
+        "type": "Ruangan"
+    }
+]

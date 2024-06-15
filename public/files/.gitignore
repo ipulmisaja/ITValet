@@ -1,0 +1,6 @@
+livewire-tmp/
+vendor/
+*.png
+*.pdf
+!no_logo.png
+!it_device.png

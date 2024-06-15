@@ -1,0 +1,68 @@
+<svg viewBox="0 0 109.73 112.13" version="1.1" inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns="http://www.w3.org/2000/svg"
+    xmlns:svg="http://www.w3.org/2000/svg">
+    <sodipodi:namedview id="namedview38" pagecolor="#ffffff" bordercolor="#000000" borderopacity="0.25"
+        inkscape:showpageshadow="2" inkscape:pageopacity="0.0" inkscape:pagecheckerboard="0"
+        inkscape:deskcolor="#d1d1d1" showgrid="false" inkscape:zoom="7.3932045" inkscape:cx="35"
+        inkscape:cy="35.998" inkscape:window-width="1920" inkscape:window-height="1009" inkscape:window-x="-8"
+        inkscape:window-y="-8" inkscape:window-maximized="1" inkscape:current-layer="svg36" />
+    <defs id="defs4">
+        <style id="style2">
+            .cls-1 {
+                fill: #ececec;
+            }
+
+            .cls-2 {
+                fill: #fff;
+            }
+
+            .cls-3 {
+                fill: #1e120d;
+            }
+
+            .cls-4 {
+                fill: none;
+                stroke: #1e120d;
+                stroke-miterlimit: 10;
+                stroke-width: 0.99px;
+            }
+
+            .cls-5 {
+                fill: #ffc2b0;
+            }
+        </style>
+    </defs>
+    <g id="Layer_2" data-name="Layer 2">
+        <g id="OBJECTS">
+            <ellipse class="cls-1" cx="54.87" cy="56.06" rx="54.87" ry="56.06" id="ellipse8"
+                style="fill:#b6e0fe;fill-opacity:1" />
+            <path class="cls-2"
+                d="M83.85,62.75c0,2.43-2.95,5.87-6.34,4.88-2.33-.68-5.31-2.45-5.31-4.88s3.4-4.86,5.82-4.86C81.94,57.89,83.85,60.33,83.85,62.75Z"
+                id="path10" />
+            <path class="cls-2"
+                d="M25.88,62.75c0,2.43,2.95,5.87,6.34,4.88,2.33-.68,5.31-2.45,5.31-4.88s-3.4-4.86-5.82-4.86C27.79,57.89,25.88,60.33,25.88,62.75Z"
+                id="path12" />
+            <path class="cls-2"
+                d="M78,56.44c.43,16.94-7.59,33.13-21.52,33.49s-24-14.11-24.42-31.05S41,28.93,54.92,28.58,77.57,39.49,78,56.44Z"
+                id="path14" />
+            <path class="cls-3"
+                d="M79,64.92c.26-.89.64-1.62.8-2.31a1.65,1.65,0,0,0,0-.91,2.86,2.86,0,0,0-.72-.92,1.59,1.59,0,0,1,1.37.49,1.75,1.75,0,0,1,.31,1.56,2.94,2.94,0,0,1-.67,1.26A2.91,2.91,0,0,1,79,64.92Z"
+                id="path16" />
+            <path class="cls-3"
+                d="M31.1,64.92A3,3,0,0,1,30,64.09a2.94,2.94,0,0,1-.67-1.26,1.76,1.76,0,0,1,.32-1.56A1.57,1.57,0,0,1,31,60.78a3.18,3.18,0,0,0-.72.92,1.57,1.57,0,0,0,0,.91C30.46,63.3,30.84,64,31.1,64.92Z"
+                id="path18" />
+            <polyline class="cls-4" points="57.77 54.54 57.77 60.82 55.04 60.82" id="polyline20" />
+            <path class="cls-3" d="M45.9,56.64a1,1,0,1,1-.94-1.2A1.09,1.09,0,0,1,45.9,56.64Z" id="path22" />
+            <path class="cls-3" d="M66.6,56.64a1,1,0,1,1-.94-1.2A1.09,1.09,0,0,1,66.6,56.64Z" id="path24" />
+            <path class="cls-4" d="M52.88,70.88A4.2,4.2,0,0,0,57,74.14a3.77,3.77,0,0,0,4.05-3.26" id="path26" />
+            <path class="cls-5" d="M45.9,65.37a4.55,4.55,0,1,1-4.55-4.55A4.55,4.55,0,0,1,45.9,65.37Z" id="path28"
+                style="fill:#62b0e8;fill-opacity:1" />
+            <path class="cls-5" d="M73.82,65.37a4.55,4.55,0,1,1-4.55-4.55A4.55,4.55,0,0,1,73.82,65.37Z" id="path30"
+                style="fill:#62b0e8;fill-opacity:1" />
+            <path class="cls-3"
+                d="M31.77,57.68s5.58-3,3.08-16.51c0,0,8.51,7.45,21.26,1.43,6.87-3.23,15.7-4.88,18.11-1.91,2.56,3.16,3.52,17.2,3.52,17.2a26.54,26.54,0,0,0,4-14c0-4-.89-16.26-8.91-15.08,0,0,.13-11.19-15.1-9.36C44.47,21.06,31,26.92,28.38,34.08,25.05,43.32,31.77,57.68,31.77,57.68Z"
+                id="path32" />
+        </g>
+    </g>
+</svg>
