@@ -1,5 +1,4 @@
-<button
-    type="submit"
+<button type="submit"
     class="px-3 py-2 rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 ml-auto flex flex-nowrap place-items-center">
     <div wire:loading>
         <svg class="animate-spin -ml-1 mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none"

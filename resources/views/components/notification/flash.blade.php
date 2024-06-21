@@ -1,9 +1,8 @@
-<div class="z-10 pointer-events-none fixed inset-0 flex place-items-end justify-center px-4 py-6 sm:items-start sm:justify-end sm:p-6">
-    <div
-        x-data="{ show: false, message: '' }"
+<div
+    class="z-10 pointer-events-none fixed inset-0 flex place-items-end justify-center px-4 py-6 sm:items-start sm:justify-end sm:p-6">
+    <div x-cloak x-data="{ show: false, message: '' }"
         x-on:notification.window="show = true; message = $event.detail; setTimeout(() => { show = false }, 5000)"
-        x-show="show"
-        x-transition:enter="transform ease-out duration-300 transition"
+        x-show="show" x-transition:enter="transform ease-out duration-300 transition"
         x-transition:enter-start="translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2"
         x-transition:enter-end="translate-y-0 opacity-100 sm:translate-x-0"
         x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"

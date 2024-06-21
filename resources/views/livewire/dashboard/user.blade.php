@@ -1,6 +1,4 @@
 <section class="px-4 pt-8 sm:px-6">
-    <x-notification.flash />
-
     {{-- Title --}}
     <x-pages.page-title title="Dashboard" />
 

@@ -1,7 +1,5 @@
 <div>
     <section class="px-4 py-8 md:px-6 2xl:px-11">
-        <x-notification.flash />
-
         {{-- Section Header --}}
         <div class="flex flex-wrap place-items-center justify-between">
             {{-- Title --}}
