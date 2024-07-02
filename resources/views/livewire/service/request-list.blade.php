@@ -75,17 +75,23 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex place-items-center space-x-3">
+                                            <x-pages.cell-button :route="route('request.room', $request->id)" tooltip="Diskusi"
+                                                color="text-violet-400 hover:text-violet-500" icon="eye" />
+
                                             @if ($request->status === 'menunggu')
                                                 <x-pages.cell-button :route="route('request.edit', $request->id)" tooltip="Update"
-                                                    color="text-primary-500 hover:text-primary-600"
-                                                    icon="pencil-square" />
+                                                    color="text-green-500 hover:text-green-600" icon="pencil-square" />
                                             @endif
 
-                                            <x-pages.cell-button :route="route('request.room', $request->id)" tooltip="Diskusi"
-                                                color="text-yellow-400 hover:text-yellow-500" icon="eye" />
+                                            @if (is_null($request->maintenance_request))
+                                                @canany(['create-device-maintenance', 'update-device-maintenance'])
+                                                    <x-pages.cell-button.maintenance-request label="Pemeliharaan"
+                                                        :id="$request->id" />
+                                                @endcanany
+                                            @endif
 
                                             @if (in_array(!$request->status, ['ditutup', 'spam']))
-                                                <x-pages.delete-cell-button label="Hapus" :id="$request->id" />
+                                                <x-pages.cell-button.delete label="Hapus" :id="$request->id" />
                                             @endif
                                         </div>
                                     </td>
@@ -99,6 +105,9 @@
 
         {{-- Pagination Content --}}
         {{ $requests->links('vendor.livewire.tailwind') }}
+
+        {{-- Maintenance Request --}}
+        <x-forms.modals.maintenance-request />
     </section>
 </div>
 
