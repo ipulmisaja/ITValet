@@ -2,7 +2,12 @@
     "name": "ipulmisaja/itvalet",
     "type": "project",
     "description": "Manajemen Perangkat TI dengan mudah dan cepat.",
-    "keywords": ["laravel", "framework", "livewire", "itvalet"],
+    "keywords": [
+        "laravel",
+        "framework",
+        "livewire",
+        "itvalet"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.1",
@@ -41,7 +46,8 @@
         },
         "files": [
             "app/Helpers/GreetingHelper.php",
-            "app/Helpers/GoogleHelper.php"
+            "app/Helpers/GoogleHelper.php",
+            "app/Helpers/IndonesianDateHelper.php"
         ]
     },
     "autoload-dev": {
@@ -84,7 +90,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "https://github.com/cloudwalkerid/jkd-sso"
+            "url": "https://github.com/cloudwalkerid/jkd-sso"
         }
     ]
 }
