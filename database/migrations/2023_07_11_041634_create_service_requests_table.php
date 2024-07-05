@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('service_requests', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('user_id');
-            $table->enum('request_type', ['troubleshoot', 'maintenance'])->nullable();
-            $table->string('service_type_id')->nullable();
+            $table->string('service_type_id');
+            $table->string('device_id');
             $table->string('summary');
             $table->text('description');
             $table->string('attachment')->nullable();

@@ -9,46 +9,30 @@
                 <form wire:submit="submitData">
                     <div class="flex flex-wrap p-6">
                         {{-- Penjelasan Entri Perangkat TI --}}
-                        <x-forms.attributes.information
-                            title="Permintaan Layanan TI"
-                            description="Isikan informasi layanan TI yang anda ajukan dengan lengkap."
-                        />
+                        <x-forms.attributes.information title="Permintaan Layanan TI"
+                            description="Isikan informasi layanan TI yang anda ajukan dengan lengkap." />
 
                         {{-- Form Entri --}}
                         <div class="w-full lg:w-2/3">
-                            @role('admin')
-                                {{-- Request Type --}}
-                                <x-forms.inputs.select
-                                    model="form.request_type"
-                                    label="Jenis Layanan"
-                                    :optitem="$requestType"
-                                    placeholder="Pilih jenis layanan yang diinginkan"
-                                />
+                            {{-- Jenis Layanan --}}
+                            <x-forms.inputs.select model="form.service_type" label="Jenis Layanan" :optitem="$this->serviceTypes"
+                                placeholder="Jenis Layanan" method="live" />
 
-                                {{-- Jenis Layanan --}}
-                                <x-forms.inputs.select
-                                    model="form.service_type"
-                                    label="Subyek Layanan"
-                                    :optitem="$this->serviceTypes"
-                                    placeholder="Pilih subyek layanan"
-                                />
-                            @endrole
+                            @if ($showDeviceInput)
+                                <x-forms.inputs.select model="form.device" label="Perangkat yang Diajukan Perbaikan"
+                                    :optitem="$this->devices" placeholder="Daftar Perangkat" />
+                            @endif
 
                             {{-- Judul --}}
-                            <x-forms.inputs.text
-                                model="form.summary"
-                                label="Ringkasan Permintaan Layanan"
-                                type="text"
-                            />
+                            <x-forms.inputs.text model="form.summary" label="Ringkasan Permintaan Layanan"
+                                type="text" />
 
                             {{-- Deskripsi --}}
-                            <x-forms.inputs.trix
-                                model="form.description"
-                                label="Deskripsi Permintaan Layanan"
-                            />
+                            <x-forms.inputs.trix model="form.description" label="Deskripsi Permintaan Layanan" />
                         </div>
                     </div>
-                    <div class="flex place-items-center rounded-b-md border-gray-200 bg-gray-200 dark:bg-gray-700 px-6 py-4">
+                    <div
+                        class="flex place-items-center rounded-b-md border-gray-200 bg-gray-200 dark:bg-gray-700 px-6 py-4">
                         <x-forms.attributes.save-button />
                     </div>
                 </form>

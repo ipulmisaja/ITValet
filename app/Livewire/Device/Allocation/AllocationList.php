@@ -1,16 +1,50 @@
 <?php
 
-namespace App\Repositories;
+declare(strict_types=1);
+
+namespace App\Livewire\Device\Allocation;
 
 use App\Models\DeviceState;
-use Exception;
-use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+use Livewire\WithPagination;
 
-class DeviceStateRepository
+class AllocationList extends Component
 {
-    public static function read(?string $keyword, int $numberOfPagination)
+    use WithPagination;
+
+    public int $numberOfPagination = 10;
+    public ?string $searchKeyword  = null;
+    public bool $modal = false;
+
+    public string $id;
+
+    #[Title('Alokasi Perangkat TI')]
+    public function render()
+    {
+        return view("livewire.device.allocation.allocation-list", [
+            'states' => $this->fetchRequest(
+                $this->searchKeyword,
+                $this->numberOfPagination
+            )
+        ]);
+    }
+
+    public function deleteItem(string $id): void
+    {
+        $this->id = $id;
+
+        $this->modal = true;
+    }
+
+    public function confirmDelete(): void
+    {
+        DeviceState::where('id', $this->id)->delete();
+
+        $this->modal = false;
+    }
+
+    private function fetchRequest(?string $keyword, int $pagination)
     {
         return
             DeviceState::search($keyword)
@@ -25,6 +59,7 @@ class DeviceStateRepository
                         'device_states.id',
                         'device_states.user_id',
                         'device_states.device_id as device_state_id',
+                        'device_states.receipt_at',
                         'device_states.bast_no',
                         'device_states.bast_file',
                         'users.name as user',
@@ -37,6 +72,6 @@ class DeviceStateRepository
                     ])
             )
             ->orderBy('receipt_at', 'desc')
-            ->paginate($numberOfPagination);
+            ->paginate($pagination);
     }
 }

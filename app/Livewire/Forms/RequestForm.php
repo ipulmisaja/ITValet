@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms;
 
 use App\Models\ServiceRequest;
@@ -8,23 +10,22 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class RequestForm extends Form
 {
     use SendNotification;
 
-    #[Rule('nullable', onUpdate: false)]
-    public ?string $request_type;
-
-    #[Rule('nullable', onUpdate: false)]
+    #[Validate('required', onUpdate: false)]
     public ?string $service_type;
 
-    #[Rule('required', onUpdate: false)]
+    #[Validate('nullable', onUpdate: false)]
+    public ?string $device;
+
+    #[Validate('required|min:5', onUpdate: false)]
     public ?string $summary;
 
-    #[Rule('required', onUpdate: false)]
     public ?string $description;
 
     public function save(): string
@@ -32,11 +33,12 @@ class RequestForm extends Form
         $this->validate();
 
         try {
-
             DB::beginTransaction();
 
             $request = ServiceRequest::create([
                 'user_id'         => auth()->user()->id,
+                'service_type_id' => $this->service_type,
+                'device_id'       => $this->device ?? null,
                 'summary'         => $this->summary,
                 'description'     => $this->description,
                 'status'          => 'menunggu',
@@ -73,8 +75,8 @@ class RequestForm extends Form
             DB::beginTransaction();
 
             $serviceRequest->update([
-                'request_type'    => $this->request_type ?? null,
-                'service_type_id' => $this->service_type ?? null,
+                'service_type_id' => $this->service_type,
+                'device_id'       => $this->device ?? null,
                 'summary'         => $this->summary,
                 'description'     => $this->description,
                 'status'          => 'menunggu',

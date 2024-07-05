@@ -6,36 +6,36 @@ use App\Models\Device;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class DeviceForm extends Form
 {
-    #[Rule('nullable', onUpdate: false)]
+    #[Validate('nullable', onUpdate: false)]
     public ?int $stock;
 
-    #[Rule('required|min:4', onUpdate: false)]
+    #[Validate('required|min:4', onUpdate: false)]
     public ?string $name;
 
-    #[Rule('nullable|min:3', onUpdate: false)]
+    #[Validate('nullable|min:3', onUpdate: false)]
     public ?string $serial;
 
-    #[Rule('required', onUpdate: false)]
+    #[Validate('required', onUpdate: false)]
     public ?string $brand;
 
-    #[Rule('required', onUpdate: false)]
+    #[Validate('required', onUpdate: false)]
     public $deviceType;
 
-    #[Rule('required_if:deviceType,Laptop|required_if:deviceType,Desktop PC|required_if:deviceType,Server', onUpdate: false)]
+    #[Validate('required_if:deviceType,Laptop|required_if:deviceType,Desktop PC|required_if:deviceType,Server', onUpdate: false)]
     public $os;
 
-    #[Rule('required', onUpdate: false)]
+    #[Validate('required', onUpdate: false)]
     public $procurementDate;
 
-    #[Rule('required', onUpdate: false)]
+    #[Validate('required', onUpdate: false)]
     public $procurementType;
 
-    #[Rule('nullable|min:5', onUpdate: false)]
+    #[Validate('nullable|min:5', onUpdate: false)]
     public $bmn_number;
 
     public $image;

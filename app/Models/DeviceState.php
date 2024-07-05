@@ -1,15 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Models\Traits\DeviceStateRelationship;
+use App\Models\Traits\ModelUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 
 class DeviceState extends Model
 {
-    use Searchable, SoftDeletes;
+    use ModelUuid, DeviceStateRelationship, Searchable, SoftDeletes;
 
     protected $table = "device_states";
 
@@ -20,30 +23,9 @@ class DeviceState extends Model
         "bast_no"
     ];
 
-    protected $casts = [
-        'receipt_at' => 'datetime:Y-m-d'
-    ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->{$model->getKeyName()} = (string) Str::uuid();
-        });
-    }
+    protected $casts = ['receipt_at' => 'datetime:Y-m-d'];
 
     public $timestamps = false;
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return "string";
-    }
 
     public function toSearchableArray()
     {
@@ -54,15 +36,5 @@ class DeviceState extends Model
             'devices.serial' => '',
             'devices.bmn_number' => ''
         ];
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id', 'id');
-    }
-
-    public function device()
-    {
-        return $this->belongsTo(Device::class, 'device_id', 'id')->with('maintenance');
     }
 }

@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "barryvdh/laravel-dompdf": "^2.2",
         "cloudwalkerid/jkd-sso": "dev-master",
         "guzzlehttp/guzzle": "^7.2",
         "irazasyed/telegram-bot-sdk": "^3.13",
@@ -16,6 +17,7 @@
         "livewire/livewire": "^3.0",
         "mbarlow/megaphone": "^2.0",
         "opcodesio/log-viewer": "^3.1",
+        "simplesoftwareio/simple-qrcode": "*",
         "spatie/laravel-csp": "^2.8",
         "spatie/laravel-permission": "^5.10"
     },

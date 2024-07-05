@@ -1,23 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Models\Traits\DeviceMaintenanceRelationship;
+use App\Models\Traits\ModelUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
 class DeviceMaintenance extends Model
 {
-    use Searchable, SoftDeletes;
+    use DeviceMaintenanceRelationship, ModelUuid, Searchable, SoftDeletes;
 
     protected $table = "device_maintenances";
 
     protected $fillable = [
         "device_id",
-        "ticket",
+        "request_id",
         "condition",
         "maintenance",
         "description",
+        "repair_request",
+        "memo_id",
         "created_at",
         "maintenance_at",
         "completed_at"
@@ -31,22 +37,13 @@ class DeviceMaintenance extends Model
 
     public $timestamps = false;
 
-    public function getRouteKeyName()
-    {
-        return 'ticket';
-    }
-
     public function toSearchableArray(): array
     {
         return [
-            'ticket'      => $this->ticket,
+            'id'          => $this->id,
+            // TODO: Tambahkan pencarian device
             'condition'   => $this->condition,
             'maintenance' => $this->maintenance
         ];
-    }
-
-    public function device()
-    {
-        return $this->belongsTo(Device::class, 'device_id', 'id')->with('state.user');
     }
 }

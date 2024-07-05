@@ -1,19 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Models\Traits\ModelUuid;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 use MBarlow\Megaphone\HasMegaphone;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, HasRoles, Notifiable, Searchable, SoftDeletes, HasMegaphone;
+    use HasFactory, HasRoles, ModelUuid, Notifiable, Searchable, SoftDeletes, HasMegaphone;
 
     protected $table = "users";
 
@@ -34,25 +36,6 @@ class User extends Authenticatable
 
     protected $hidden = ["password", "remember_token"];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->{$model->getKeyName()} = (string) Str::uuid();
-        });
-    }
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return "string";
-    }
-
     public function toSearchableArray()
     {
         return [
@@ -61,7 +44,6 @@ class User extends Authenticatable
             'employee_id' => $this->employee_id,
             'email'       => $this->email,
             'type'        => $this->type
-
         ];
     }
 }

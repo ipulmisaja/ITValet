@@ -4,13 +4,14 @@ use App\Http\Controllers\SSOController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Device\CreateEditDevice;
-use App\Livewire\Device\CreateEditDeviceMaintenance;
-use App\Livewire\Device\CreateEditDeviceState;
-use App\Livewire\Device\CreateEditDeviceSupply;
 use App\Livewire\Device\DeviceList;
-use App\Livewire\Device\DeviceMaintenance;
-use App\Livewire\Device\DeviceState;
-use App\Livewire\Device\DeviceSupply;
+use App\Livewire\Device\Allocation\AllocationList;
+use App\Livewire\Device\Allocation\AllocationBuilder;
+use App\Livewire\Device\Maintenance\MaintenanceList;
+use App\Livewire\Device\Maintenance\MaintenanceCreate;
+use App\Livewire\Device\Maintenance\MaintenanceEdit;
+use App\Livewire\Device\Maintenance\MaintenanceMemoList;
+use App\Livewire\Device\Maintenance\MaintenanceMemoBuilder;
 use App\Livewire\ItValet\Settings\Webhook\CreateEditWebhook;
 use App\Livewire\ItValet\Settings\Webhook\WebhookList;
 use App\Livewire\Service\CreateEditRequest;
@@ -22,8 +23,6 @@ use App\Livewire\Settings\CreateEditUser;
 use App\Livewire\Settings\RolePermission;
 use App\Livewire\Settings\ServiceList;
 use App\Livewire\Settings\UserList;
-use App\Livewire\Software\CreateEditSoftware;
-use App\Livewire\Software\SoftwareList;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'dashboard');
@@ -38,32 +37,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('/perangkat-ti/')->group(function () {
         Route::group(['middleware' => ['permission:read-device|read-device-state|read-device-maintenance']], function() {
             Route::get('daftar-perangkat', DeviceList::class)->name('device');
-            Route::get('alokasi-perangkat', DeviceState::class)->name('device-state');
-            Route::get('pemeliharaan/{device?}', DeviceMaintenance::class)->name('device-maintenance');
+            Route::get('alokasi-perangkat', AllocationList::class)->name('allocation.list');
+            Route::get('pemeliharaan/{device?}', MaintenanceList::class)->name('maintenance.list');
+            Route::get('pemeliharaan/memo/list', MaintenanceMemoList::class)->name('maintenance.memo');
         });
 
         Route::group(['middleware' => ['permission:create-device|create-device-state|create-device-maintenance']], function() {
             Route::get('daftar-perangkat/tambah', CreateEditDevice::class)->name('device.create');
-            Route::get('alokasi-perangkat/tambah/{id}', CreateEditDeviceState::class)->name('device-state.create');
-            Route::get('pemeliharaan/tambah/{device}', CreateEditDeviceMaintenance::class)->name('device-maintenance.create');
+            Route::get('alokasi-perangkat/tambah/{id}', AllocationBuilder::class)->name('allocation.create');
+            Route::get('pemeliharaan/baru/{device}', MaintenanceCreate::class)->name('maintenance.create');
+            Route::get('pemeliharaan/memo/tambah', MaintenanceMemoBuilder::class)->name('maintenance.create-memo');
         });
 
         Route::group(['middleware' => ['permission:update-device|update-device-state|update-device-maintenance']], function() {
             Route::get('daftar-perangkat/edit/{device}', CreateEditDevice::class)->name('device.edit');
-            Route::get('alokasi-perangkat/edit/{id}', CreateEditDeviceState::class)->name('device-state.edit');
-            Route::get('pemeliharaan/edit/{ticket}', CreateEditDeviceMaintenance::class)->name('device-maintenance.edit');
-        });
-
-        // Route::get('persediaan/daftar', DeviceSupply::class)->name('device-supply');
-        // Route::get('persediaan/tambah', CreateEditDeviceSupply::class)->name('create-device-supply');
-        // Route::get('persediaan/edit/', CreateEditDeviceSupply::class)->name('edit-device-supply');
-    });
-
-    Route::prefix('/software/')->group(function () {
-        Route::get('daftar', SoftwareList::class)->name('software');
-        Route::group(['middleware' => ['permission:create-software|update-software']], function() {
-            Route::get('tambah', CreateEditSoftware::class)->name('software.create');
-            Route::get('edit/{software}', CreateEditSoftware::class)->name('software.edit');
+            Route::get('alokasi-perangkat/edit/{id}', AllocationBuilder::class)->name('allocation.edit');
+            Route::get('pemeliharaan/edit/{maintenanceId}', MaintenanceEdit::class)->name('maintenance.edit');
+            Route::get('pemeliharaan/memo/edit/{maintenanceMemo}', MaintenanceMemoBuilder::class)->name('maintenance.edit-memo');
         });
     });
 

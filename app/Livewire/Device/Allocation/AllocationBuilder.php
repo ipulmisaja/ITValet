@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Device;
+namespace App\Livewire\Device\Allocation;
 
 use App\Livewire\Forms\StateForm;
 use App\Models\Device;
@@ -16,7 +16,7 @@ use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-class CreateEditDeviceState extends Component
+class AllocationBuilder extends Component
 {
     use HasRenderOption, WithFileUploads;
 
@@ -65,7 +65,7 @@ class CreateEditDeviceState extends Component
 
     public function render(): View
     {
-        return view("livewire.device.create-edit-device-state")->title($this->pageTitle);
+        return view("livewire.device.allocation.allocation-builder")->title($this->pageTitle);
     }
 
     public function submitData()

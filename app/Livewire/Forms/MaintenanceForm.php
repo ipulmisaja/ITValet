@@ -1,28 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms;
 
+use App\Livewire\Traits\HasTransaction;
 use App\Models\Device;
-use App\Models\User;
 use App\Models\DeviceMaintenance;
-use App\Traits\SendNotification;
 use Carbon\Carbon;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
-use Livewire\Attributes\Rule;
 use Livewire\Form;
 
 class MaintenanceForm extends Form
 {
-    use SendNotification;
+    use HasTransaction;
 
     public ?string $device_name;
     public ?string $device_id;
     public ?string $condition;
     public ?string $maintenance;
     public ?string $description;
+    public ?int $repair;
     public ?string $maintenance_at;
     public ?string $completed_at;
 
@@ -30,35 +27,19 @@ class MaintenanceForm extends Form
     {
         // $this->validate();
 
-        try {
-            DB::beginTransaction();
-
-            $device = DeviceMaintenance::create([
+        $result = $this->modelTransaction(
+            DeviceMaintenance::create([
                 'device_id'   => $device->id,
-                'ticket'      => substr(Str::uuid(), 0, 8),
+                'request_id'  => null,
                 'condition'   => $this->condition,
-                'maintenance' => 'belum perbaikan',
                 'description' => $this->description ?? null,
                 'created_at'  => Carbon::now(),
-            ]);
+            ])
+        );
 
-            DB::commit();
-
-            $message = "Informasi pemeliharaan perangkat telah disimpan.";
-
-            // FIXME: Sementara dinonaktifkan karena bug connection refuse pada production
-            // $this->sendToUser(
-            //     User::where('username', 'suhermanb')->pluck('telegram_id')[0],
-            //     "Pemeliharaan perangkat dengan no. tiket " . $device->ticket . " telah diajukan IPDS."
-            // );
-
-        } catch (Exception $error) {
-            DB::rollBack();
-
-            Log::error($error->getMessage());
-
-            $message = "Informasi pemeliharaan perangkt gagal disimpan.";
-        }
+        $message = $result === 'Success'
+                 ? 'Permohonan pemeliharaan telah ditambahkan.'
+                 : 'Permohonan pemeliharaan gagal ditambahkan.';
 
         return $message;
     }
@@ -67,26 +48,19 @@ class MaintenanceForm extends Form
     {
         // $this->validate();
 
-        try {
-            DB::beginTransaction();
-
+        $result = $this->modelTransaction(
             $deviceMaintenance->update([
                 'condition'      => $this->maintenance === 'selesai perbaikan' ? 'baik' : ($this->maintenance === 'batal perbaikan' ? 'rusak berat' : $this->condition),
                 'maintenance'    => $this->maintenance,
                 'description'    => $this->description ?? null,
+                'repair_request' => $this->repair,
                 'completed_at'   => $this->maintenance === 'selesai perbaikan' ? Carbon::now() : ($this->maintenance === 'batal perbaikan' ? Carbon::now() : null)
-            ]);
+            ])
+        );
 
-            DB::commit();
-
-            $message = "Informasi pemeliharaan perangkat telah disimpan.";
-        } catch (Exception $error) {
-            DB::rollBack();
-
-            Log::error($error->getMessage());
-
-            $message = "Informasi pemeliharaan perangkt gagal disimpan.";
-        }
+        $message = $result === 'Success'
+                 ? 'Info pemeliharaan telah diupdate.'
+                 : 'Info pemeliharaan gagal diupdate';
 
         return $message;
     }

@@ -24,11 +24,6 @@
                             : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="ticket"
                             page="Request" title="Layanan" />
 
-                        {{-- Perangkat Lunak --}}
-                        <x-pages.navigation.menu :route="route('software')" :path="request()->routeIs('software') || request()->routeIs('software.*')
-                            ? 'font-extrabold text-gray-900 dark:text-white'
-                            : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
-                            icon="code-bracket-square" page="Software" title="Perangkat Lunak" />
 
                         @role('admin|umum')
                             {{-- Perangkat --}}
@@ -38,7 +33,7 @@
                                 page="Hardware" title="Perangkat Keras" />
 
                             {{-- Alokasi --}}
-                            <x-pages.navigation.menu :route="route('device-state')" :path="request()->routeIs('device-state') || request()->routeIs('device-state.*')
+                            <x-pages.navigation.menu :route="route('allocation.list')" :path="request()->routeIs('allocation.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="swatch"
                                 page="State" title="Alokasi" />
@@ -46,16 +41,12 @@
 
                         @canany(['read-device-maintenance', 'create-device-maintenance', 'update-device-maintenance'])
                             {{-- Pemeliharaan --}}
-                            <x-pages.navigation.menu :route="route('device-maintenance')" :path="request()->routeIs('device-maintenance') ||
-                            request()->routeIs('device-maintenance.*')
+                            <x-pages.navigation.menu :route="route('maintenance.list')" :path="request()->routeIs('maintenance.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
                                 icon="wrench-screwdriver" page="Maintenance" title="Pemeliharaan" />
                         @endcanany
 
-                        {{-- Jaringan --}}
-
-                        {{-- Knowledge Managemen --}}
 
                         {{-- Perangkat TI --}}
                         {{-- <x-pages.navigation.collapse-menu page="Device" icon="server-stack" label="Perangkat Keras"
@@ -64,8 +55,8 @@
                             <x-pages.navigation.submenu :route="route('device')" title="Daftar"
                                 :path="request()->routeIs('device') || request()->routeIs('device.*') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'" />
 
-                            <x-pages.navigation.submenu :route="route('device-state')" title="Status Perangkat"
-                                :path="request()->routeIs('device-state') || request()->routeIs('device-state.*') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'" />
+                            <x-pages.navigation.submenu :route="route('allocation.list')" title="Status Perangkat"
+                                :path="request()->routeIs('allocation.list') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'" />
 
                             <x-pages.navigation.submenu :route="route('device-maintenance')" title="Pemeliharaan"
                                 :path="request()->routeIs('device-maintenance') || request()->routeIs('device-maintenance.*') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'" />

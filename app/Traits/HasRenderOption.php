@@ -21,11 +21,12 @@ trait HasRenderOption
 
     public function getOptionForRender($model, array $column): array
     {
-        return
-            $model::get($column)
+        $data = $model::get($column)
                 ->map(function ($item) {
                     return array_values($item->toArray());
                 })
                 ->toArray();
+
+        return $data;
     }
 }

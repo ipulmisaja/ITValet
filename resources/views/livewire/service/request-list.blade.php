@@ -6,10 +6,10 @@
             <x-pages.page-title title="Daftar Permintaan Layanan TI" />
 
             {{-- Permintaan Layanan --}}
-            <x-pages.page-button :route="route('request.create')" title="Permintaan" />
+            <x-pages.page-button :route="route('request.create')" icon="plus-circle" title="Permintaan" />
         </div>
 
-        <div class="mt-14 mb-7">
+        <div class="mb-6 mt-10">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 @if ($requests->isEmpty())
                     <x-images.not-found />

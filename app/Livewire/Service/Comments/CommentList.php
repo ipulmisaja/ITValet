@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Service\Comments;
 
 use App\Models\ServiceComment;

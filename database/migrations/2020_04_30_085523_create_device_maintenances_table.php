@@ -14,12 +14,13 @@ class CreateDeviceMaintenancesTable extends Migration
     public function up()
     {
         Schema::create('device_maintenances', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->uuid('device_id');
-            $table->string('ticket');
+            $table->string('request_id');
             $table->enum('condition', ['rusak berat', 'rusak ringan', 'baik']);
             $table->enum('maintenance', ['belum perbaikan', 'sedang perbaikan', 'selesai perbaikan', 'batal perbaikan']);
             $table->text('description')->nullable();
+            $table->boolean('repair_request')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('maintenance_at')->nullable();
             $table->timestamp('completed_at')->nullable();

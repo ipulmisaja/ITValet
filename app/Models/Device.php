@@ -1,15 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use App\Models\Traits\DeviceRelationship;
+use App\Models\Traits\ModelUuid;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 
 class Device extends Model
 {
-    use Searchable, SoftDeletes;
+    use Searchable, SoftDeletes, ModelUuid, DeviceRelationship;
 
     protected $table = "devices";
 
@@ -29,25 +32,6 @@ class Device extends Model
         'procurement_period' => 'datetime:Y-m-d',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->{$model->getKeyName()} = (string) Str::uuid();
-        });
-    }
-
-    public function getIncrementing()
-    {
-        return false;
-    }
-
-    public function getKeyType()
-    {
-        return "string";
-    }
-
     public function toSearchableArray(): array
     {
         return [
@@ -59,20 +43,5 @@ class Device extends Model
             // 'operating_system' => $this->operating_system,
             // 'procurement_type' => $this->procurement_type
         ];
-    }
-
-    public function maintenance()
-    {
-        return $this->hasMany(DeviceMaintenance::class, 'device_id', 'id');
-    }
-
-    public function state()
-    {
-        return $this->hasOne(DeviceState::class);
-    }
-
-    public function image()
-    {
-        return $this->belongsTo(DeviceImage::class, 'image_id', 'id');
     }
 }

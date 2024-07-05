@@ -15,10 +15,11 @@ use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class RequestList extends Component
 {
-    use HasComment, HasMaintenance;
+    use HasComment, HasMaintenance, WithPagination;
 
     public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;

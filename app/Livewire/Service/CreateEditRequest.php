@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Service;
 
 use App\Livewire\Forms\RequestForm;
 use App\Models\ServiceRequest;
+use App\Models\Device;
 use App\Models\ServiceType;
 use App\Traits\HasRenderOption;
-use Illuminate\Contracts\View\View;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -16,35 +19,36 @@ class CreateEditRequest extends Component
 {
     use HasRenderOption;
 
+    const PERANGKAT_KERAS = "038d0ee1-a909-4e20-88bf-be9ae75121af";
+
     #[Locked]
-    public $pageTitle;
+    public string $pageTitle;
 
-    public RequestForm $form;
-
-    public ServiceRequest $serviceRequest;
-
+    #[Locked]
     public string $routeName;
 
-    #[Locked]
-    public string $requestType =
-        "<option value='troubleshoot'>Penanganan Masalah</option>
-        <option value='maintenance'>Pemeliharaan</option>";
+    public bool $showDeviceInput = false;
+
+    public string $devices;
+
+    public RequestForm $form;
+    public ServiceRequest $serviceRequest;
 
     #[Computed]
-    public function serviceTypes()
+    public function serviceTypes(): string
     {
         return $this->renderOption($this->getOptionForRender(app(ServiceType::class), ['id', 'type']));
     }
 
-    public function mount(ServiceRequest $serviceRequest)
+    public function mount(ServiceRequest $serviceRequest): void
     {
         $this->routeName = Route::currentRouteName();
 
         if ($this->routeName === 'request.edit') {
             $this->pageTitle          = "Edit Permintaan";
             $this->serviceRequest     = $serviceRequest;
-            $this->form->request_type = $serviceRequest->request_type;
             $this->form->service_type = $serviceRequest->service_type_id;
+            $this->form->device       = $serviceRequest->device_id;
             $this->form->summary      = $serviceRequest->summary;
             $this->form->description  = $serviceRequest->description;
         } else {
@@ -57,7 +61,7 @@ class CreateEditRequest extends Component
         return view('livewire.service.create-edit-request')->title($this->pageTitle);
     }
 
-    public function submitData()
+    public function submitData(): void
     {
         $this->dispatch('validate');
 
@@ -67,6 +71,36 @@ class CreateEditRequest extends Component
 
         session()->flash('messages', $result);
 
-        $this->redirect(auth()->user()->hasRole('admin') ? route('request') : route('dashboard'));
+        auth()->user()->hasRole('admin')
+            ? $this->redirectRoute('request', navigate: true)
+            : $this->redirectRoute('dashboard', navigate: true);
+    }
+
+    public function updatedFormServiceType($value): void
+    {
+        if ($value === self::PERANGKAT_KERAS) {
+            $this->showDeviceInput = true;
+
+            $userId = auth()->user()->id;
+
+            // Retrieve Device Lists by User
+            $arrData = Device::withWhereHas('state', function($query) use ($userId) {
+                            $query->where('user_id', $userId);
+                       })->get(['id', 'name'])->map(function($item) {
+                            return array_values($item->toArray());
+                       })->toArray();
+
+            // Delete Unneed Array Key
+            array_walk($arrData, function(&$a, $k) { unset($a[2]); });
+
+            // Add Other Choice
+            array_push($arrData, [0 => '00000000', 1 => 'Lainnya']);
+
+            $this->devices = $this->renderOption($arrData);
+        } else {
+            $this->showDeviceInput = false;
+
+            $this->reset('devices');
+        }
     }
 }

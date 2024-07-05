@@ -23,7 +23,7 @@ class Login extends Component
     {
         $this->dispatch('validate');
 
-        if (Auth::attempt($this->form->validate())) $this->redirect(route('dashboard'));
+        if (Auth::attempt($this->form->validate())) $this->redirectIntended('dashboard');
 
         throw ValidationException::withMessages([
             'form.username' => 'Username tidak sesuai database kami.',
