@@ -147,7 +147,9 @@
                                         <div
                                             class="mb-2 text-xs text-gray-500 dark:text-gray-400 flex flex-nowrap place-items-center space-x-2">
                                             <x-icons.herosolid name="document-magnify" class="h-4 w-4" />
-                                            <button wire:click="generateMemo">No. Memo :
+                                            <button
+                                                wire:click="generateMemo('{{ $maintenance->memo->number ?? null }}')">No.
+                                                Memo :
                                                 {{ $maintenance->memo->number ?? '-' }}</button>
                                         </div>
                                     </td>

@@ -22,7 +22,7 @@
                 <tr>
                     <td>BADAN PUSAT STATISTIK<br>PROVINSI SULAWESI BARAT</td>
                     <td>
-                        <div class="is-pulled-right">Invoice ID: #21343</div>
+                        <div class="is-pulled-right">Invoice ID: #{{ $data['invoice'] }}</div>
                     </td>
                 </tr>
             </table>
@@ -30,7 +30,7 @@
             <!-- Judul Memo -->
             <div class="has-text-centered mb-6">
                 <h3 style="font-weight: bolder;">Memorandum</h3>
-                <h6 style="font-size: small;">No. 12345</h6>
+                <h6 style="font-size: small;">NOMOR: {{ $data['number'] }}</h6>
             </div>
 
             <!-- Tujuan Memo -->
@@ -60,12 +60,14 @@
                     <th>Deskripsi</th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1.</td>
-                        <td>Dell Optiplex 3010 DT</td>
-                        <td>083245</td>
-                        <td>Listrik tidak masuk</td>
-                    </tr>
+                    @foreach ($data['devices'] as $index => $device)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $device->device->name }}</td>
+                            <td>{{ $device->device->serial }}</td>
+                            <td>{!! $device->description !!}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
 
@@ -75,7 +77,7 @@
             <!-- TTD -->
             <div class="is-pulled-right mt-6">
                 <div class="has-text-centered">
-                    <div>Mamuju, 4 Juli 2024</div>
+                    <div>Mamuju, {{ inadate($data['date']) }}</div>
                     <div>Pranata Komputer Ahli Muda</div>
                     {{-- <img src="data:image/png;base64,{{ $qrcode }}"> --}}
                     <div class="mt-4 mb-4">ttd.</div>
