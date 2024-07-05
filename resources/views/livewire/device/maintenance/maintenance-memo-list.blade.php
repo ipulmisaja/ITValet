@@ -91,8 +91,12 @@
                                     </td> --}}
                                     <td class="px-6 py-4">
                                         <div class="flex place-items-center space-x-3">
-                                            <x-pages.cell-button.navigate :route="route('maintenance.edit-memo', $memo->id)" tooltip="Update"
-                                                color="text-green-500 hover:text-green-600" icon="pencil-square" />
+                                            @role('admin')
+                                                <x-pages.cell-button.navigate :route="route('maintenance.edit-memo', $memo->id)" tooltip="Update"
+                                                    color="text-green-500 hover:text-green-600" icon="pencil-square" />
+                                            @endrole
+
+                                            <x-pages.cell-button.generate-memo :id="$memo->id" />
                                         </div>
                                     </td>
                                 </tr>
