@@ -111,7 +111,7 @@
                                                 {{-- Alokasi Perangkat --}}
                                                 @canany(['create-device-state', 'update-device-state'])
                                                     <x-pages.cell-button.navigate
-                                                        route="{{ !is_null($state->id) ? route('device.allocation.edit', $state->id) : route('allocation.create', $state->device->id) }}"
+                                                        route="{{ !is_null($state->id) ? route('device.allocation.edit', $state->id) : route('device.allocation.create', $state->device->id) }}"
                                                         tooltip="Alokasi" color="text-green-500 hover:text-green-600"
                                                         icon="pencil-square" />
                                                 @endcanany

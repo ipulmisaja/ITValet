@@ -78,6 +78,6 @@ class AllocationBuilder extends Component
 
         session()->flash('messages', $result);
 
-        $this->redirectRoute('allocation.list', navigate: true);
+        $this->redirectRoute('device.allocation.list', navigate: true);
     }
 }

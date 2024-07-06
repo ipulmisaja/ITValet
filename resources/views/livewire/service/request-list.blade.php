@@ -76,12 +76,13 @@
                                             {{ is_null($request->completed_at) ? '-' : $request->completed_at->format('d M Y') }}
                                         </span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <p class="text-gray-800 dark:text-white">
+                                    <td class="px-6 py-4 flex items-center space-x-1">
+                                        <span class="text-gray-800 dark:text-white">
                                             {{ $request->summary }}
-                                        </p>
-                                        <span class="text-sm text-gray-500 dark:text-gray-400 whitespace-normal">
-                                            {!! $request->description !!}
+                                        </span>
+                                        <span x-data x-tooltip="{allowHTML: true}"
+                                            x-tooltip.raw="{{ $request->description }}">
+                                            <x-icons.herosolid name="document-magnify" class="w-5 h-5" />
                                         </span>
                                     </td>
                                     <td class="px-6 py-4">
