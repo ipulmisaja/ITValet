@@ -53,6 +53,9 @@
 
     @livewireScriptConfig
 
+    <script src="{{ secure_asset('vendor/trix/trix.min.js') }}" data-navigate-once></script>
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js" data-navigate-once></script>
+
     @stack('scripts')
 </body>
 
