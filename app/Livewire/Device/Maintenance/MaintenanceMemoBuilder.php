@@ -48,7 +48,7 @@ class MaintenanceMemoBuilder extends Component
             return 'empty';
     }
 
-    public function mount(MaintenanceMemo $maintenanceMemo)
+    public function mount(MaintenanceMemo $maintenanceMemo): void
     {
         $this->routeName = Route::currentRouteName();
 

@@ -1,26 +1,25 @@
 <div>
     <section class="px-4 pt-8 sm:px-6">
-        {{-- Section Title --}}
-        <div class="flex flex-row flex-wrap place-items-center justify-between">
-            {{-- Title --}}
-            <x-pages.page-title title="Daftar Perangkat TI"/>
-
-            @can('create-device')
-                {{-- Add New Device --}}
-                <x-pages.page-button :route="route('device.create')" title="Perangkat TI" />
-            @endcan
-        </div>
+        <x-pages.page-title title="Daftar Perangkat TI" />
 
         {{-- Content --}}
-        <div class="my-8">
-            <x-forms.inputs.search />
+        <div class="mb-6 mt-10">
+            <div
+                class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700 mb-4">
+                <div class="flex items-center mb-4 sm:mb-0">
+                    <x-forms.inputs.search placeholder="Cari informasi perangkat..." />
+                </div>
+                @can('create-device')
+                    <x-pages.page-button :route="route('device.create')" icon="plus-circle" title="Perangkat" />
+                @endcan
+            </div>
 
             @if ($devices->isEmpty())
                 <x-images.not-found />
             @else
                 <div class="flex flex-col gap-4 lg:grid lg:grid-cols-5">
                     @foreach ($devices as $index => $device)
-                    <div>
+                        <div>
                             <div
                                 class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                 <a href="#">

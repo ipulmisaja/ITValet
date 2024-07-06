@@ -4,20 +4,27 @@ declare(strict_types=1);
 
 namespace App\Livewire\Device\Maintenance;
 
+use App\Livewire\Traits\HasTransaction;
+use App\Models\DeviceMaintenance;
 use App\Models\MaintenanceMemo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class MaintenanceMemoList extends Component
 {
-    use WithPagination;
+    use HasTransaction, WithPagination;
 
     public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;
+    public bool $modal = false;
+
+    #[Locked]
+    public string $memoId;
 
     #[Title('Memo Pemeliharaan')]
     public function render(): View
@@ -47,6 +54,22 @@ class MaintenanceMemoList extends Component
             return response()->streamDownload(function () use ($pdf) {
                 echo $pdf->stream();
             }, 'Memo.pdf');
+    }
+
+    public function deleteItem(string $memoId): void
+    {
+        $this->memoId = $memoId;
+
+        $this->modal = true;
+    }
+
+    public function confirmDelete(): void
+    {
+        DeviceMaintenance::where('memo_id', $this->memoId)->update(['memo_id' => null]);
+
+        MaintenanceMemo::where('id', $this->memoId)->delete();
+
+        $this->modal = false;
     }
 
     private function fetchRequest(?string $keyword, int $pagination): Paginator

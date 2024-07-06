@@ -26,6 +26,7 @@ class RequestForm extends Form
     #[Validate('required|min:5', onUpdate: false)]
     public ?string $summary;
 
+    #[Validate('required|min:5', onUpdate: false)]
     public ?string $description;
 
     public function save(): string

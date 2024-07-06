@@ -52,10 +52,21 @@
                                         <span
                                             class="text-xs text-primary-600 dark:text-gray-400">{{ $request->user->email }}</span>
                                     </td>
-                                    <td class="px-6 py-4">
-                                        <p class="text-gray-800 dark:text-white">
+                                    <td class="px-6 py-4 space-y-1">
+                                        <div class="text-gray-800 dark:text-white text-md">
                                             {{ $request->serviceType->type }}
-                                        </p>
+                                        </div>
+                                        <div
+                                            class="text-gray-500 dark:text-gray-400 text-xs flex flex-nowrap items-center space-x-2">
+                                            <x-icons.herosolid name="computer-desktop" class="h-4 w-4" />
+                                            <span>
+                                                @if ($request->device)
+                                                    {{ $request->device->name . ' (SN. ' . $request->device->serial . ')' }}
+                                                @else
+                                                    -
+                                                @endif
+                                            </span>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <p class="text-gray-800 dark:text-white">{{ ucfirst($request->status) }}</p>
@@ -75,11 +86,11 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex place-items-center space-x-3">
-                                            <x-pages.cell-button :route="route('request.room', $request->id)" tooltip="Diskusi"
+                                            <x-pages.cell-button.navigate :route="route('request.room', $request->id)" tooltip="Diskusi"
                                                 color="text-violet-400 hover:text-violet-500" icon="eye" />
 
                                             @if ($request->status === 'menunggu')
-                                                <x-pages.cell-button :route="route('request.edit', $request->id)" tooltip="Update"
+                                                <x-pages.cell-button.navigate :route="route('request.edit', $request->id)" tooltip="Update"
                                                     color="text-green-500 hover:text-green-600" icon="pencil-square" />
                                             @endif
 
@@ -90,8 +101,8 @@
                                                 @endcanany
                                             @endif
 
-                                            @if (in_array(!$request->status, ['ditutup', 'spam']))
-                                                <x-pages.cell-button.delete label="Hapus" :id="$request->id" />
+                                            @if ($request->status === 'spam')
+                                                <x-pages.cell-button.delete-item :id="$request->id" />
                                             @endif
                                         </div>
                                     </td>
@@ -108,6 +119,9 @@
 
         {{-- Maintenance Request --}}
         <x-forms.modals.maintenance-request />
+
+        {{-- Delete Modal --}}
+        <x-forms.modals.delete-confirmation />
     </section>
 </div>
 

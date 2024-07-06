@@ -8,9 +8,9 @@
             <div
                 class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700 mb-4">
                 <div class="flex items-center mb-4 sm:mb-0">
-                    <x-forms.inputs.search placeholder="Cari Informasi Memorandum" />
+                    <x-forms.inputs.search placeholder="Cari informasi memorandum..." />
                 </div>
-                <x-pages.page-button :route="route('maintenance.create-memo')" icon="plus-circle" title="Memo Baru" />
+                <x-pages.page-button :route="route('device.maintenance.create-memo')" icon="plus-circle" title="Memo Baru" />
             </div>
 
             <div class="relative overflow-x-auto shadow rounded-lg">
@@ -91,12 +91,14 @@
                                     </td> --}}
                                     <td class="px-6 py-4">
                                         <div class="flex place-items-center space-x-3">
-                                            @role('admin')
-                                                <x-pages.cell-button.navigate :route="route('maintenance.edit-memo', $memo->id)" tooltip="Update"
-                                                    color="text-green-500 hover:text-green-600" icon="pencil-square" />
-                                            @endrole
-
                                             <x-pages.cell-button.generate-memo :id="$memo->id" />
+
+                                            @role('admin')
+                                                <x-pages.cell-button.navigate :route="route('device.maintenance.edit-memo', $memo->id)" tooltip="Update"
+                                                    color="text-green-500 hover:text-green-600" icon="pencil-square" />
+
+                                                <x-pages.cell-button.delete-item :id="$memo->id" />
+                                            @endrole
                                         </div>
                                     </td>
                                 </tr>
@@ -109,5 +111,8 @@
 
         {{-- Pagination Content --}}
         {{ $memos->links('vendor.livewire.tailwind') }}
+
+        {{-- Delete Modal --}}
+        <x-forms.modals.delete-confirmation />
     </section>
 </div>

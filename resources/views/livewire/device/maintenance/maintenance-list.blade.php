@@ -11,7 +11,7 @@
 
             {{-- Add Maintenance --}}
             @if (!is_null($device->id))
-                <x-pages.page-button :route="route('maintenance.create', $device->id)" title="Pemeliharaan" />
+                <x-pages.page-button :route="route('device.maintenance.create', $device->id)" icon="plus-circle" title="Pemeliharaan" />
             @endif
         </div>
 
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <x-pages.page-button :route="route('maintenance.memo')" icon="document-magnify" title="Memo" />
+                <x-pages.page-button :route="route('device.maintenance.memo')" icon="document-magnify" title="Memo" />
             </div>
 
             <div class="relative overflow-x-auto shadow rounded-lg">
@@ -121,11 +121,11 @@
                                         </p>
                                     </td>
                                     <td class="px-6 py-4 space-y-2">
-                                        <div class="text-md">
+                                        <div class="text-gray-800 dark:text-white text-md">
                                             <x-pages.label-color.device-condition :condition="$maintenance->condition" />
                                         </div>
                                         <div
-                                            class="text-xs text-gray-500 dark:text-gray-400 flex flex-nowrap place-items-center space-x-2">
+                                            class="text-xs text-gray-500 dark:text-gray-400 flex flex-nowrap items-center space-x-2">
                                             <x-icons.herosolid name="calendar-days" class="h-4 w-4" />
                                             <span>{{ $maintenance->created_at->format('d M Y') }}</span>
                                         </div>
@@ -156,7 +156,7 @@
                                     <td class="px-6 py-4">
                                         <div class="flex place-items-center space-x-3">
                                             @role('admin')
-                                                <x-pages.cell-button.navigate :route="route('maintenance.edit', $maintenance->id)" tooltip="Update"
+                                                <x-pages.cell-button.navigate :route="route('device.maintenance.edit', $maintenance->id)" tooltip="Update"
                                                     color="text-primary-400 hover:text-primary-500"
                                                     icon="pencil-square" />
                                             @endrole

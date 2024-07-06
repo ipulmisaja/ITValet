@@ -7,6 +7,7 @@ namespace App\Livewire\Device\Maintenance;
 use App\Livewire\Forms\MaintenanceForm;
 use App\Models\DeviceMaintenance;
 use App\Models\Device;
+use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -29,20 +30,20 @@ class MaintenanceCreate extends Component
         <option value='selesai perbaikan'>Selesai</option>
         <option value='batal perbaikan'>Batal</option>";
 
-    public function mount(Device $device)
+    public function mount(Device $deviceId): void
     {
-        $this->device            = $device;
-        $this->form->device_id   = $device->id;
-        $this->form->device_name = $device->name . ' (' . $device->serial . ')';
+        $this->device            = $deviceId;
+        $this->form->device_id   = $deviceId->id;
+        $this->form->device_name = $deviceId->name . ' (' . $device->serial . ')';
     }
 
     #[Title('Pemeliharaan Baru')]
-    public function render()
+    public function render(): View
     {
         return view('livewire.device.maintenance.maintenance-create');
     }
 
-    public function submitData()
+    public function submitData(): void
     {
         $this->dispatch('validate');
 
@@ -50,6 +51,6 @@ class MaintenanceCreate extends Component
 
         session()->flash('messages', $result);
 
-        $this->redirect(route('maintenance.list'), navigate: true);
+        $this->redirectRoute('maintenance.list', navigate: true);
     }
 }

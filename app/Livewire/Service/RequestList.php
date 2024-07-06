@@ -7,9 +7,10 @@ namespace App\Livewire\Service;
 use App\Models\ServiceRequest;
 use App\Livewire\Traits\HasComment;
 use App\Livewire\Traits\HasMaintenance;
+use App\Livewire\Traits\HasTransaction;
 use Exception;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Contracts\View\View;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Locked;
@@ -19,14 +20,18 @@ use Livewire\WithPagination;
 
 class RequestList extends Component
 {
-    use HasComment, HasMaintenance, WithPagination;
+    use HasComment, HasMaintenance, HasTransaction, WithPagination;
 
     public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;
-    public bool $modal = false;
+    public bool $maintenanceReqModal = false;
+    public bool $deleteModal = false;
 
     #[Locked]
     public string $requestId;
+
+    #[Locked]
+    public string $deleteRequestId;
 
     #[Title('Daftar Layanan TI')]
     public function render(): View
@@ -43,7 +48,7 @@ class RequestList extends Component
     {
         $this->requestId = $requestId;
 
-        $this->modal = true;
+        $this->maintenanceReqModal = true;
     }
 
     public function confirmMaintenance(bool $state): void
@@ -65,13 +70,27 @@ class RequestList extends Component
                 );
 
             DB::commit();
-        } catch(Exception $error) {
+        } catch(Exception $exception) {
             DB::rollBack();
 
-            Log::error($error->getMessage());
+            Log::error($exception->getMessage());
         }
 
-        $this->modal = false;
+        $this->maintenanceReqModal = false;
+    }
+
+    public function deleteItem(string $deleteRequestId): void
+    {
+        $this->deleteRequestId = $deleteRequestId;
+
+        $this->deleteModal = true;
+    }
+
+    public function confirmDelete(): void
+    {
+        ServiceRequest::where('id', $this->deleteRequestId)->delete();
+
+        $this->deleteModal = false;
     }
 
     private function fetchRequests(?string $keyword, int $pagination): Paginator
@@ -80,7 +99,7 @@ class RequestList extends Component
 
         return
             ServiceRequest::search($keyword)
-                ->query(fn ($query) => $query->with(['user', 'serviceType']))
+                ->query(fn ($query) => $query->with(['user', 'serviceType', 'device']))
                 ->when(!$admin, function ($query) {
                     $query->where('user_id', auth()->user()->id);
                 })

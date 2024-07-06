@@ -4,8 +4,10 @@
         <x-pages.page-title title="Alokasi Perangkat TI" />
 
         {{-- Content --}}
-        <div class="mt-14 mb-7">
-            <x-forms.inputs.search />
+        <div class="mb-6 mt-10">
+            <div class="mb-4">
+                <x-forms.inputs.search placeholder="Cari Informasi Alokasi ..." />
+            </div>
 
             @if ($states->isEmpty())
                 <x-images.not-found />
@@ -109,20 +111,20 @@
                                                 {{-- Alokasi Perangkat --}}
                                                 @canany(['create-device-state', 'update-device-state'])
                                                     <x-pages.cell-button.navigate
-                                                        route="{{ !is_null($state->id) ? route('allocation.edit', $state->id) : route('allocation.create', $state->device->id) }}"
+                                                        route="{{ !is_null($state->id) ? route('device.allocation.edit', $state->id) : route('allocation.create', $state->device->id) }}"
                                                         tooltip="Alokasi" color="text-green-500 hover:text-green-600"
                                                         icon="pencil-square" />
                                                 @endcanany
 
                                                 {{-- Pemeliharaan --}}
                                                 @canany(['create-device-maintenance', 'update-device-maintenance'])
-                                                    <x-pages.cell-button.navigate :route="route('maintenance.list', $state->device_id)" tooltip="Pemeliharaan"
+                                                    <x-pages.cell-button.navigate :route="route('device.maintenance.list', $state->device_id)" tooltip="Pemeliharaan"
                                                         color="text-yellow-400 hover:text-yellow-500"
                                                         icon="shield-exclamation" />
                                                 @endcanany
 
                                                 @can('delete-device-state')
-                                                    <x-pages.cell-button.delete label="Hapus" :id="$state->id" />
+                                                    <x-pages.cell-button.delete-item :id="$state->id" />
                                                 @endcan
                                             </div>
                                         </td>
@@ -138,7 +140,7 @@
         {{-- Pagination Content --}}
         {{ $states->links('vendor.livewire.tailwind') }}
 
-        {{-- Delete Model --}}
+        {{-- Delete Modal --}}
         <x-forms.modals.delete-confirmation />
     </section>
 </div>

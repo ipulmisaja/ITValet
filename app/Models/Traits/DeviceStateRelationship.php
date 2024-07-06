@@ -16,6 +16,6 @@ trait DeviceStateRelationship
 
     public function device()
     {
-        return $this->belongsTo(Device::class, 'device_id', 'id')->with('maintenance');
+        return $this->belongsTo(Device::class, 'device_id', 'id')->with('maintenances');
     }
 }

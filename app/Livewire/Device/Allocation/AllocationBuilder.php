@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Device\Allocation;
 
 use App\Livewire\Forms\StateForm;
 use App\Models\Device;
 use App\Models\DeviceState;
 use App\Models\User;
-use App\Repositories\DeviceStateRepository;
 use App\Traits\HasRenderOption;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Contracts\View\View;
+use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
@@ -24,11 +25,8 @@ class AllocationBuilder extends Component
     public $pageTitle;
 
     public StateForm $form;
-
     public DeviceState $deviceState;
-
     public string $routeName;
-
     public array $savedevices = [];
 
     #[Computed]
@@ -43,22 +41,24 @@ class AllocationBuilder extends Component
         return $this->renderOption($this->getOptionForRender(app(Device::class), ['id', 'name', 'serial']));
     }
 
-    public function mount($id)
+    public function mount(string $id): void
     {
         $this->routeName = Route::currentRouteName();
 
-        if ($this->routeName === 'device-state.edit') {
+        if ($this->routeName === 'allocation.edit') {
             $this->pageTitle = "Edit Alokasi Perangkat";
 
             $deviceState = DeviceState::where('id', $id)->first();
-            $this->deviceState = $deviceState;
-            $this->form->user  = $deviceState->user_id;
-            $this->form->device = $deviceState->device_id;
+
+            $this->deviceState     = $deviceState;
+            $this->form->user      = $deviceState->user_id;
+            $this->form->device    = $deviceState->device_id;
             $this->form->bast_date = Carbon::parse($deviceState->receipt_at);
         } else {
             $this->pageTitle = "Alokasi Baru";
 
             $device = Device::where('id', $id)->first();
+
             $this->form->device = $device->id;
         }
     }
@@ -68,16 +68,16 @@ class AllocationBuilder extends Component
         return view("livewire.device.allocation.allocation-builder")->title($this->pageTitle);
     }
 
-    public function submitData()
+    public function submitData(): void
     {
         $this->dispatch('validate');
 
-        $result = $this->routeName === 'device-state.edit'
+        $result = $this->routeName === 'allocation.edit'
             ? $this->form->update($this->deviceState)
             : $this->form->save();
 
         session()->flash('messages', $result);
 
-        $this->redirect(route('device-state'));
+        $this->redirectRoute('allocation.list', navigate: true);
     }
 }

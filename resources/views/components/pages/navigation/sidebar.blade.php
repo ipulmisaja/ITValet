@@ -25,77 +25,82 @@
                             page="Request" title="Layanan" />
 
 
-                        @role('admin|umum')
-                            {{-- Perangkat --}}
-                            <x-pages.navigation.menu :route="route('device')" :path="request()->routeIs('device') || request()->routeIs('device.*')
+                        {{-- @role('admin|umum') --}}
+                        {{-- Perangkat --}}
+                        {{-- <x-pages.navigation.menu :route="route('device')" :path="request()->routeIs('device') || request()->routeIs('device.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="server-stack"
-                                page="Hardware" title="Perangkat Keras" />
+                                page="Hardware" title="Perangkat TI" /> --}}
 
-                            {{-- Alokasi --}}
-                            <x-pages.navigation.menu :route="route('allocation.list')" :path="request()->routeIs('allocation.*')
+                        {{-- Alokasi --}}
+                        {{-- <x-pages.navigation.menu :route="route('allocation.list')" :path="request()->routeIs('allocation.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="swatch"
                                 page="State" title="Alokasi" />
-                        @endrole
+                        @endrole --}}
 
-                        @canany(['read-device-maintenance', 'create-device-maintenance', 'update-device-maintenance'])
-                            {{-- Pemeliharaan --}}
-                            <x-pages.navigation.menu :route="route('maintenance.list')" :path="request()->routeIs('maintenance.*')
+                        {{-- @canany(['read-device-maintenance', 'create-device-maintenance', 'update-device-maintenance']) --}}
+                        {{-- Pemeliharaan --}}
+                        {{-- <x-pages.navigation.menu :route="route('maintenance.list')" :path="request()->routeIs('maintenance.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
-                                icon="wrench-screwdriver" page="Maintenance" title="Pemeliharaan" />
-                        @endcanany
+                                icon="wrench-screwdriver" page="Maintenance" title="Pemeliharaan" /> --}}
+                        {{-- @endcanany --}}
 
 
                         {{-- Perangkat TI --}}
-                        {{-- <x-pages.navigation.collapse-menu page="Device" icon="server-stack" label="Perangkat Keras"
-                            :class="request()->is('perangkat-ti/*') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'"
-                            :verticalborder="request()->is('perangkat-ti/*') ? '' : 'opacity-50'">
-                            <x-pages.navigation.submenu :route="route('device')" title="Daftar"
-                                :path="request()->routeIs('device') || request()->routeIs('device.*') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'" />
+                        <x-pages.navigation.collapse-menu page="Device" icon="server-stack" label="Perangkat"
+                            :class="request()->routeIs('device.*')
+                                ? 'font-extrabold text-gray-900 dark:text-white'
+                                : 'font-normal text-gray-500 dark:text-gray-400'" :verticalborder="request()->routeIs('device.*') ? '' : 'opacity-50'">
+                            <x-pages.navigation.submenu :route="route('device.list')" title="Daftar" :path="request()->routeIs('device.list') ||
+                            request()->routeIs('device.create') ||
+                            request()->routeIs('device.edit')
+                                ? 'text-gray-900 dark:text-white'
+                                : 'text-gray-500 dark:text-gray-400'" />
 
-                            <x-pages.navigation.submenu :route="route('allocation.list')" title="Status Perangkat"
-                                :path="request()->routeIs('allocation.list') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'" />
+                            <x-pages.navigation.submenu :route="route('device.allocation.list')" title="Alokasi" :path="request()->routeIs('device.allocation.*')
+                                ? 'text-gray-900 dark:text-white'
+                                : 'text-gray-500 dark:text-gray-400'" />
 
-                            <x-pages.navigation.submenu :route="route('device-maintenance')" title="Pemeliharaan"
-                                :path="request()->routeIs('device-maintenance') || request()->routeIs('device-maintenance.*') ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-400'" />
+                            <x-pages.navigation.submenu :route="route('device.maintenance.list')" title="Pemeliharaan" :path="request()->routeIs('device.maintenance.*')
+                                ? 'text-gray-900 dark:text-white'
+                                : 'text-gray-500 dark:text-gray-400'" />
                         </x-pages.navigation.collapse-menu>
-                    </div> --}}
-
-                        @role('admin')
-                            {{-- Pengaturan --}}
-                            <div class="mt-10">
-                                <h3 class="mb-4 font-medium text-base text-gray-900 dark:text-white">PENGATURAN</h3>
-
-                                {{-- User --}}
-                                <x-pages.navigation.menu :route="route('user')" :path="request()->routeIs('user') || request()->routeIs('user.*')
-                                    ? 'font-extrabold text-gray-900 dark:text-white'
-                                    : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
-                                    icon="user-circle" page="User" title="Pengguna" />
-
-                                {{-- Role --}}
-                                <x-pages.navigation.menu :route="route('role-permission')" :path="request()->routeIs('role-permission') ||
-                                request()->routeIs('role-permission.*')
-                                    ? 'font-extrabold text-gray-900 dark:text-white'
-                                    : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="key"
-                                    page="rolepermission" title="Hak Akses" />
-
-                                <x-pages.navigation.menu :route="route('webhook')" :path="request()->routeIs('webhook') || request()->routeIs('webhook.*')
-                                    ? 'font-extrabold text-gray-900 dark:text-white'
-                                    : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
-                                    icon="rocket-launch" page="webhook" title="Webhook" />
-
-                                <x-pages.navigation.menu :route="env('APP_URL') . '/log-viewer'" :path="request()->is('log-viewer')
-                                    ? 'font-extrabold text-gray-900 dark:text-white'
-                                    : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
-                                    icon="document-magnifying-glass" page="log" title="Log" />
-                            </div>
-                        @endrole
                     </div>
+
+                    @role('admin')
+                        {{-- Pengaturan --}}
+                        <div class="mt-10">
+                            <h3 class="mb-4 font-medium text-base text-gray-900 dark:text-white">PENGATURAN</h3>
+
+                            {{-- User --}}
+                            <x-pages.navigation.menu :route="route('user')" :path="request()->routeIs('user') || request()->routeIs('user.*')
+                                ? 'font-extrabold text-gray-900 dark:text-white'
+                                : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="user-circle"
+                                page="User" title="Pengguna" />
+
+                            {{-- Role --}}
+                            <x-pages.navigation.menu :route="route('role-permission')" :path="request()->routeIs('role-permission') || request()->routeIs('role-permission.*')
+                                ? 'font-extrabold text-gray-900 dark:text-white'
+                                : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="key"
+                                page="rolepermission" title="Hak Akses" />
+
+                            <x-pages.navigation.menu :route="route('webhook')" :path="request()->routeIs('webhook') || request()->routeIs('webhook.*')
+                                ? 'font-extrabold text-gray-900 dark:text-white'
+                                : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
+                                icon="rocket-launch" page="webhook" title="Webhook" />
+
+                            <x-pages.navigation.menu :route="env('APP_URL') . '/log-viewer'" :path="request()->is('log-viewer')
+                                ? 'font-extrabold text-gray-900 dark:text-white'
+                                : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
+                                icon="document-magnifying-glass" page="log" title="Log" />
+                        </div>
+                    @endrole
                 </div>
             </div>
         </div>
+    </div>
 </aside>
 
 <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>

@@ -4,23 +4,28 @@ declare(strict_types=1);
 
 namespace App\Livewire\Device\Allocation;
 
+use App\Livewire\Traits\HasTransaction;
 use App\Models\DeviceState;
+use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\View\View;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class AllocationList extends Component
 {
-    use WithPagination;
+    use HasTransaction, WithPagination;
 
     public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;
-    public bool $modal = false;
+    public bool $deleteModal = false;
 
-    public string $id;
+    #[Locked]
+    public string $allocationId;
 
     #[Title('Alokasi Perangkat TI')]
-    public function render()
+    public function render(): View
     {
         return view("livewire.device.allocation.allocation-list", [
             'states' => $this->fetchRequest(
@@ -30,29 +35,27 @@ class AllocationList extends Component
         ]);
     }
 
-    public function deleteItem(string $id): void
+    public function deleteItem(string $allocationId): void
     {
-        $this->id = $id;
+        $this->allocationId = $allocationId;
 
-        $this->modal = true;
+        $this->deleteModal = true;
     }
 
     public function confirmDelete(): void
     {
-        DeviceState::where('id', $this->id)->delete();
+        DeviceState::where('id', $this->allocationId)->delete();
 
-        $this->modal = false;
+        $this->deleteModal = false;
     }
 
-    private function fetchRequest(?string $keyword, int $pagination)
+    private function fetchRequest(?string $keyword, int $pagination): Paginator
     {
         return
             DeviceState::search($keyword)
             ->query(
                 fn ($query) => $query
-                    ->with(['user', 'device' => function ($query) {
-                        $query->with('maintenance');
-                    }])
+                    ->with(['user', 'device'])
                     ->join('users', 'device_states.user_id', 'users.id')
                     ->rightJoin('devices', 'device_states.device_id', 'devices.id')
                     ->select([

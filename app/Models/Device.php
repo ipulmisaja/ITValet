@@ -12,7 +12,7 @@ use Laravel\Scout\Searchable;
 
 class Device extends Model
 {
-    use Searchable, SoftDeletes, ModelUuid, DeviceRelationship;
+    use DeviceRelationship, ModelUuid, Searchable, SoftDeletes;
 
     protected $table = "devices";
 

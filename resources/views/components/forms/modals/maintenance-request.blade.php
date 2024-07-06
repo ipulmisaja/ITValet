@@ -1,4 +1,4 @@
-<div x-data="{ showModal: @entangle('modal') }" @keydown.window.escape="showModal = false">
+<div x-data="{ showModal: @entangle('maintenanceReqModal') }" @keydown.window.escape="showModal = false">
     {{-- Dark Background --}}
     <div x-cloak x-show="showModal" x-transition.opacity class="fixed inset-0 z-9999 bg-slate-900/75">
     </div>
@@ -12,7 +12,7 @@
                     <div class="font-semibold leading-6 text-xl text-neutral-600">
                         Konfirmasi Pemeliharaan
                     </div>
-                    <button wire:click="$set('modal', false)"
+                    <button wire:click="$set('maintenanceReqModal', false)"
                         class="box-content rounded-none border-none hover:no-underline hover:opacity-75 focus:opacity-100 focus:shadow-none focus:outline-none">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="h-5 w-5">
@@ -53,7 +53,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
