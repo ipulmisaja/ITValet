@@ -85,11 +85,11 @@
 
                                     {{-- Kondisi --}}
                                     <td class="px-6 py-4">
-                                        @isset($state->device->maintenance)
-                                            @if (count($state->device->maintenance) == 0)
+                                        @isset($state->device->maintenances)
+                                            @if (count($state->device->maintenances) == 0)
                                                 <x-pages.label-color.device-condition condition="baik" />
                                             @else
-                                                <x-pages.label-color.device-condition :condition="$state->device->maintenance->sortBy('created_at')->last()
+                                                <x-pages.label-color.device-condition :condition="$state->device->maintenances->sortBy('created_at')->last()
                                                     ->condition" />
                                             @endif
                                         @else

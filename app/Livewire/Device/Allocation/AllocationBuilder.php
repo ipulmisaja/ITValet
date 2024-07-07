@@ -25,7 +25,7 @@ class AllocationBuilder extends Component
     public $pageTitle;
 
     public StateForm $form;
-    public DeviceState $deviceState;
+    public DeviceState $allocation;
     public string $routeName;
     public array $savedevices = [];
 
@@ -45,15 +45,16 @@ class AllocationBuilder extends Component
     {
         $this->routeName = Route::currentRouteName();
 
-        if ($this->routeName === 'allocation.edit') {
+        if ($this->routeName === 'device.allocation.edit') {
             $this->pageTitle = "Edit Alokasi Perangkat";
 
-            $deviceState = DeviceState::where('id', $id)->first();
+            $allocation = DeviceState::where('id', $id)->first();
 
-            $this->deviceState     = $deviceState;
-            $this->form->user      = $deviceState->user_id;
-            $this->form->device    = $deviceState->device_id;
-            $this->form->bast_date = Carbon::parse($deviceState->receipt_at);
+            dump($allocation->receipt_at);
+            $this->allocation      = $allocation;
+            $this->form->user      = $allocation->user_id;
+            $this->form->device    = $allocation->device_id;
+            $this->form->bast_date = Carbon::parse($allocation->receipt_at) ?? null;
         } else {
             $this->pageTitle = "Alokasi Baru";
 
@@ -72,8 +73,8 @@ class AllocationBuilder extends Component
     {
         $this->dispatch('validate');
 
-        $result = $this->routeName === 'allocation.edit'
-            ? $this->form->update($this->deviceState)
+        $result = $this->routeName === 'device.allocation.edit'
+            ? $this->form->update($this->allocation)
             : $this->form->save();
 
         session()->flash('messages', $result);

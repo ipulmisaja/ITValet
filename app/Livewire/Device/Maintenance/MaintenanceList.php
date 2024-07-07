@@ -12,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Attributes\Computed;
+use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -24,7 +25,10 @@ class MaintenanceList extends Component
     public Device $device;
     public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;
-    public bool $modal = false;
+    public bool $deleteModal = false;
+
+    #[Locked]
+    public string $maintenanceId;
 
     #[Computed]
     public function condition(): array
@@ -54,7 +58,7 @@ class MaintenanceList extends Component
     public function generateMemo(?string $number)
     {
         if (!empty($number)) {
-            $result = MaintenanceMemo::with('maintenances.device')->where("number", $number)->get();
+            $result = MaintenanceMemo::with('maintenances.device')->where('number', $number)->get();
 
             $data = [
                 'invoice' => substr($result[0]->id, 0, 8),
@@ -70,6 +74,20 @@ class MaintenanceList extends Component
                 echo $pdf->stream();
             }, 'Memo.pdf');
         }
+    }
+
+    public function deleteItem(string $maintenanceId): void
+    {
+        $this->maintenanceId = $maintenanceId;
+
+        $this->deleteModal = true;
+    }
+
+    public function confirmDelete(): void
+    {
+        DeviceMaintenance::where('id', $this->maintenanceId)->delete();
+
+        $this->deleteModal = false;
     }
 
     private function fetchRequests(?string $device, ?string $keyword, int $pagination): Paginator

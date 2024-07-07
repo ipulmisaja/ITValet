@@ -14,13 +14,11 @@ use App\Livewire\Device\Maintenance\MaintenanceMemoList;
 use App\Livewire\Device\Maintenance\MaintenanceMemoBuilder;
 use App\Livewire\Service\RequestList;
 use App\Livewire\Service\RequestBuilder;
-use App\Livewire\ItValet\Settings\Webhook\CreateEditWebhook;
-use App\Livewire\ItValet\Settings\Webhook\WebhookList;
 use App\Livewire\Service\RequestRoom;
-use App\Livewire\Settings\CreateEditRolePermission;
-use App\Livewire\Settings\CreateEditUser;
-use App\Livewire\Settings\RolePermission;
-use App\Livewire\Settings\UserList;
+use App\Livewire\Settings\Access\RolePermission;
+use App\Livewire\Settings\Access\RolePermissionBuilder;
+use App\Livewire\Settings\User\UserList;
+use App\Livewire\Settings\User\UserBuilder;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'dashboard');
@@ -65,23 +63,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('/pengaturan/')->group(function () {
             Route::get('pengguna', UserList::class)->name('user');
-            Route::get('pengguna/tambah', CreateEditUser::class)->name('user.create');
-            Route::get('pengguna/edit/{user}', CreateEditUser::class)->name('user.edit');
+            Route::get('pengguna/tambah', UserBuilder::class)->name('user.create');
+            Route::get('pengguna/edit/{user}', UserBuilder::class)->name('user.edit');
 
             Route::get('hak-akses', RolePermission::class)->name('role-permission');
-            Route::get('hak-akses/tambah', CreateEditRolePermission::class)->name('role-permission.create');
-            Route::get('hak-akses/edit/{role}', CreateEditRolePermission::class)->name('role-permission.edit');
+            Route::get('hak-akses/tambah', RolePermissionBuilder::class)->name('role-permission.create');
+            Route::get('hak-akses/edit/{role}', RolePermissionBuilder::class)->name('role-permission.edit');
 
-            Route::get('webhook', WebhookList::class)->name('webhook');
-            Route::get('webhook/baru', CreateEditWebhook::class)->name('webhook.create');
-            Route::get('webhook/sunting/{webhook}', CreateEditWebhook::class)->name('webhook.edit');
+            // Route::get('webhook', WebhookList::class)->name('webhook');
+            // Route::get('webhook/baru', CreateEditWebhook::class)->name('webhook.create');
+            // Route::get('webhook/sunting/{webhook}', CreateEditWebhook::class)->name('webhook.edit');
         });
     });
 
-    Route::post('/telegram/webhook', function() {
-        $webhook = \App\Models\Webhook::get(['url', 'token']);
-        dump($webhook);
-        // $response = \Telegram\Bot\Laravel\Facades\Telegram::setWebhook(['url' => 'https://example.com/<token>/webhook']);
+    // Route::post('/telegram/webhook', function() {
+    //     $webhook = \App\Models\Webhook::get(['url', 'token']);
+    //     dump($webhook);
+    //     // $response = \Telegram\Bot\Laravel\Facades\Telegram::setWebhook(['url' => 'https://example.com/<token>/webhook']);
 
-    });
+    // });
 });

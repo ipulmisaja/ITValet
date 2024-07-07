@@ -38,9 +38,9 @@ class ServiceRequest extends Model
     public function toSearchableArray()
     {
         return [
-            'id'           => $this->id,
-            'summary'      => $this->summary,
-            'status'       => $this->status
+            'id'      => $this->id,
+            'summary' => $this->summary,
+            'status'  => $this->status
         ];
     }
 }

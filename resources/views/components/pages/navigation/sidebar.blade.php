@@ -78,7 +78,7 @@
                             <x-pages.navigation.menu :route="route('user')" :path="request()->routeIs('user') || request()->routeIs('user.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="user-circle"
-                                page="User" title="Pengguna" />
+                                page="User" title="User" />
 
                             {{-- Role --}}
                             <x-pages.navigation.menu :route="route('role-permission')" :path="request()->routeIs('role-permission') || request()->routeIs('role-permission.*')
@@ -86,10 +86,10 @@
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="key"
                                 page="rolepermission" title="Hak Akses" />
 
-                            <x-pages.navigation.menu :route="route('webhook')" :path="request()->routeIs('webhook') || request()->routeIs('webhook.*')
+                            {{-- <x-pages.navigation.menu :route="route('webhook')" :path="request()->routeIs('webhook') || request()->routeIs('webhook.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
-                                icon="rocket-launch" page="webhook" title="Webhook" />
+                                icon="rocket-launch" page="webhook" title="Webhook" /> --}}
 
                             <x-pages.navigation.menu :route="env('APP_URL') . '/log-viewer'" :path="request()->is('log-viewer')
                                 ? 'font-extrabold text-gray-900 dark:text-white'

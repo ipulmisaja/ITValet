@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Device;
 
 use App\Livewire\Forms\DeviceForm;
@@ -92,17 +94,17 @@ class DeviceBuilder extends Component
         if ($this->routeName === 'device.edit') {
             $result = $this->form->update($this->device);
 
-            $route = route('device-state');
+            $route = 'device.allocation.list';
         } else {
             $result = $this->form->save();
 
-            $route = route('device');
+            $route = 'device.list';
         }
 
         // Send notification to redirect page.
         session()->flash('messages', $result);
 
-        $this->redirect($route);
+        $this->redirectRoute($route, navigate: true);
     }
 
     public function deleteItem(): void
@@ -123,6 +125,6 @@ class DeviceBuilder extends Component
 
         $this->modal = false;
 
-        return $this->redirect(route('device-state'));
+        return $this->redirectRoute('device.allocation.list', navigate: true);
     }
 }

@@ -25,7 +25,7 @@ class MaintenanceForm extends Form
 
     public function save(Device $device): string
     {
-        // $this->validate();
+        $this->validate();
 
         $result = $this->modelTransaction(
             DeviceMaintenance::create([
@@ -37,7 +37,7 @@ class MaintenanceForm extends Form
             ])
         );
 
-        $message = $result === 'Success'
+        $message = $result !== 'Failed'
                  ? 'Permohonan pemeliharaan telah ditambahkan.'
                  : 'Permohonan pemeliharaan gagal ditambahkan.';
 
@@ -46,7 +46,7 @@ class MaintenanceForm extends Form
 
     public function update(DeviceMaintenance $deviceMaintenance): string
     {
-        // $this->validate();
+        $this->validate();
 
         $result = $this->modelTransaction(
             $deviceMaintenance->update([
@@ -58,7 +58,7 @@ class MaintenanceForm extends Form
             ])
         );
 
-        $message = $result === 'Success'
+        $message = $result !== 'Failed'
                  ? 'Info pemeliharaan telah diupdate.'
                  : 'Info pemeliharaan gagal diupdate';
 

@@ -1,22 +1,36 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms;
 
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class UserForm extends Form
 {
-    public $name;
-    public $role;
-    public $email;
+    #[Validate('required|min:5', onUpdate: false)]
+    public ?string $name;
+
+    #[Validate('required', onUpdate: false)]
+    public ?string $role;
+
+    #[Validate('required|email:rfc', onUpdate: false)]
+    public ?string $email;
+
+    #[Validate('required|numeric:min:9', onUpdate: false)]
     public $bps_id;
+
+    #[Validate('required|numeric|min:18', onUpdate: false)]
     public $employee_id;
+
+    #[Validate('required', onUpdate: false)]
     public $type;
+
     public $image;
 
     public function save(): string

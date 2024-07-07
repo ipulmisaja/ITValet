@@ -1,4 +1,5 @@
-<nav class="sticky top-0 z-50 w-full bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow duration-100 ease-linear">
+<nav
+    class="sticky top-0 z-50 w-full bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow duration-100 ease-linear">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
         <div class="flex place-items-center justify-between">
             {{-- Left Side --}}
@@ -66,10 +67,10 @@
                 </div>
 
                 {{-- Notification --}}
-                <livewire:megaphone />
+                {{-- <livewire:megaphone /> --}}
 
                 {{-- Apps --}}
-                <x-pages.navigation.apps />
+                {{-- <x-pages.navigation.apps /> --}}
 
                 {{-- Color Switcher --}}
                 <x-pages.color-switcher />

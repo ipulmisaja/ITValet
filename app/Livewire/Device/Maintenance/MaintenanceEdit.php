@@ -58,6 +58,6 @@ class MaintenanceEdit extends Component
 
         session()->flash('messages', $result);
 
-        $this->redirect(route('maintenance.list'), navigate: true);
+        $this->redirectRoute('device.maintenance.list', navigate: true);
     }
 }

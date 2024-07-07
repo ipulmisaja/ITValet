@@ -1,32 +1,33 @@
 <?php
 
-namespace App\Livewire\Settings;
+declare(strict_types=1);
+
+namespace App\Livewire\Settings\Access;
 
 use App\Models\Role;
-use Livewire\Attributes\Locked;
+use Illuminate\View\View;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 
 class RolePermission extends Component
 {
-    #[Locked]
-    public $pageTitle = "Pengaturan Hak Akses";
-
-    public bool $modal = false;
+    public bool $deleteModal = false;
 
     public string $uuid;
 
-    public function render()
+    #[Title('Hak Akses')]
+    public function render(): View
     {
-        return view('livewire.settings.role-permission', [
+        return view('livewire.settings.access.role-permission', [
             'roles' => Role::with('permissions')->get(),
-        ])->title($this->pageTitle);
+        ]);
     }
 
     public function deleteItem(string $uuid): void
     {
         $this->uuid = $uuid;
 
-        $this->modal = true;
+        $this->deleteModal = true;
     }
 
     public function confirmDelete(): void
@@ -41,6 +42,6 @@ class RolePermission extends Component
 
         Role::where('id', $this->uuid)->delete();
 
-        $this->modal = false;
+        $this->deleteModal = false;
     }
 }

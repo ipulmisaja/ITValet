@@ -1,32 +1,32 @@
 <?php
 
-namespace App\Livewire\Settings;
+declare(strict_types=1);
+
+namespace App\Livewire\Settings\User;
 
 use App\Livewire\Forms\UserForm;
 use App\Models\Role;
 use App\Models\User;
 use App\Traits\HasRenderOption;
-use Illuminate\Contracts\View\View;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
 
-class CreateEditUser extends Component
+class UserBuilder extends Component
 {
     use HasRenderOption, WithFileUploads;
+
+    public UserForm $form;
+    public User $user;
 
     #[Locked]
     public string $pageTitle;
 
-    public ?string $routeName;
-
-    public UserForm $form;
-
-    public User $user;
-
+    #[Locked]
+    public string $routeName;
 
     #[Locked]
     public string $userTypeOpt =
@@ -60,7 +60,7 @@ class CreateEditUser extends Component
 
     public function render(): View
     {
-        return view("livewire.settings.create-edit-user")->title($this->pageTitle);
+        return view("livewire.settings.user.user-builder")->title($this->pageTitle);
     }
 
     public function submitData()
@@ -73,6 +73,6 @@ class CreateEditUser extends Component
 
         session()->flash('messages', $result);
 
-        $this->redirect(route('user'));
+        $this->redirectRoute('user', navigate: true);
     }
 }

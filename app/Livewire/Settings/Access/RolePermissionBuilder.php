@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Settings;
+namespace App\Livewire\Settings\Access;
 
 use App\Models\Permission;
 use App\Models\Role;
@@ -10,7 +10,7 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
-class CreateEditRolePermission extends Component
+class RolePermissionBuilder extends Component
 {
     use HasRenderOption;
 
@@ -50,7 +50,7 @@ class CreateEditRolePermission extends Component
 
     public function render()
     {
-        return view('livewire.settings.create-edit-role-permission')->title($this->pageTitle);
+        return view('livewire.settings.access.role-permission-builder')->title($this->pageTitle);
     }
 
     public function submitData()

@@ -1,26 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Forms;
 
 use App\Models\DeviceState;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Livewire\Attributes\Rule;
+use Livewire\Attributes\Validate;
 use Livewire\Form;
 
 class StateForm extends Form
 {
-    #[Rule('required', onUpdate: false)]
-    public string $device;
+    #[Validate('required', onUpdate: false)]
+    public ?string $device;
 
-    #[Rule('required', onUpdate: false)]
-    public string $user;
-    public string $bmn;
+    #[Validate('required', onUpdate: false)]
+    public ?string $user;
 
-    public string $bast_date;
+    public ?string $bmn;
 
-    #[Rule('nullable|min:3', onUpdate: false)]
+    public $bast_date;
+
+    #[Validate('nullable|min:3', onUpdate: false)]
     public string $bast_number;
 
     public function save(): string

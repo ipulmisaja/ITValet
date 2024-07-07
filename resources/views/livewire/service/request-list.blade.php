@@ -1,16 +1,17 @@
 <div>
     <section class="px-4 pt-8 sm:px-6">
-        {{-- Section Title --}}
-        <div class="flex flex-wrap place-items-center justify-between">
-            {{-- Title --}}
-            <x-pages.page-title title="Daftar Permintaan Layanan TI" />
-
-            {{-- Permintaan Layanan --}}
-            <x-pages.page-button :route="route('request.create')" icon="plus-circle" title="Permintaan" />
-        </div>
+        {{-- Page Title --}}
+        <x-pages.page-title title="Daftar Permintaan Layanan TI" />
 
         <div class="mb-6 mt-10">
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <div
+                    class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700 mb-4">
+                    <div class="flex items-center mb-4 sm:mb-0">
+                        <x-forms.inputs.search placeholder="Cari Informasi Layanan ..." />
+                    </div>
+                    <x-pages.page-button :route="route('request.create')" icon="plus-circle" title="Permintaan" />
+                </div>
                 @if ($requests->isEmpty())
                     <x-images.not-found />
                 @else
@@ -90,7 +91,7 @@
                                             <x-pages.cell-button.navigate :route="route('request.room', $request->id)" tooltip="Diskusi"
                                                 color="text-violet-400 hover:text-violet-500" icon="eye" />
 
-                                            @if ($request->status === 'menunggu')
+                                            @if ($request->user_id === auth()->user()->id && $request->status === 'menunggu')
                                                 <x-pages.cell-button.navigate :route="route('request.edit', $request->id)" tooltip="Update"
                                                     color="text-green-500 hover:text-green-600" icon="pencil-square" />
                                             @endif

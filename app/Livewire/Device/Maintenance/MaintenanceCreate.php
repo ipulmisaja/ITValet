@@ -34,7 +34,7 @@ class MaintenanceCreate extends Component
     {
         $this->device            = $deviceId;
         $this->form->device_id   = $deviceId->id;
-        $this->form->device_name = $deviceId->name . ' (' . $device->serial . ')';
+        $this->form->device_name = $deviceId->name . ' (' . $deviceId->serial . ')';
     }
 
     #[Title('Pemeliharaan Baru')]
@@ -51,6 +51,6 @@ class MaintenanceCreate extends Component
 
         session()->flash('messages', $result);
 
-        $this->redirectRoute('maintenance.list', navigate: true);
+        $this->redirectRoute('device.maintenance.list', navigate: true);
     }
 }
