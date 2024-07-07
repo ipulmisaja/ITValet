@@ -3,15 +3,17 @@
         {{-- @include('components.notification.flash') --}}
 
         {{-- Page Title --}}
-        <x-pages.page-title :title="$serviceRequest->summary"/>
+        <x-pages.page-title :title="$serviceRequest->summary" />
 
         {{-- Content --}}
         <div class="mb-6 mt-10">
             <div class="flex flex-col-reverse lg:flex-row gap-4 lg:gap-6">
                 {{-- Komentar --}}
-                <div class="flex flex-col col-span-2 lg:basis-2/3 overflow-x-auto rounded-md bg-white dark:bg-gray-800 shadow">
+                <div
+                    class="flex flex-col col-span-2 lg:basis-2/3 overflow-x-auto rounded-md bg-white dark:bg-gray-800 shadow">
                     <div class="w-auto">
-                        <div class="flex place-items-center justify-start space-x-3 bg-gray-300 dark:bg-gray-700 px-6 py-6 font-bold">
+                        <div
+                            class="flex place-items-center justify-start space-x-3 bg-gray-300 dark:bg-gray-700 px-6 py-6 font-bold">
                             <span class="h-8 w-8 rounded-full shadow">
                                 <x-images.avatar />
                             </span>
@@ -48,7 +50,8 @@
                 {{-- Informasi --}}
                 <div class="lg:basis-1/3 overflow-x-auto rounded-md bg-white dark:bg-gray-800 shadow">
                     <div class="w-full">
-                        <div class="flex place-items-center justify-between bg-gray-300 dark:bg-gray-700 px-6 py-6 text-sm font-bold">
+                        <div
+                            class="flex place-items-center justify-between bg-gray-300 dark:bg-gray-700 px-6 py-6 text-sm font-bold">
                             {{-- Ticket Title --}}
                             <span class="mr-4 max-w-sm text-gray-900 dark:text-white leading-4">
                                 Tiket : #{{ substr($serviceRequest->id, 0, 8) }}
@@ -56,7 +59,9 @@
 
                             {{-- Ticket Status Select --}}
                             @role('admin')
-                                <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" wire:model.live="status">
+                                <select
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    wire:model.live="status">
                                     <option hidden selected>Status Tiket</option>
                                     <option value="menunggu">Menunggu</option>
                                     <option value="dijawab">Dijawab</option>
@@ -69,7 +74,8 @@
                         <div class="px-6 pb-4 pt-6">
                             <div class="mb-5 space-y-3">
                                 <span class="text-gray-900 dark:text-white font-bold">Pemilik Tiket</span>
-                                <p class="text-sm text-gray-700 dark:text-gray-300">{{ $serviceRequest->user->name }}</p>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">{{ $serviceRequest->user->name }}
+                                </p>
                             </div>
 
                             <x-pages.divider />
@@ -83,21 +89,25 @@
 
                             <div class="my-5 space-y-3">
                                 <span class="text-gray-900 dark:text-white font-bold">Subyek Layanan</span>
-                                <p class="text-sm text-gray-700 dark:text-gray-300">{{ $serviceRequest->serviceType->type ?? '-' }}</p>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">
+                                    {{ $serviceRequest->serviceType->type ?? '-' }}</p>
                             </div>
 
                             <x-pages.divider />
 
                             <div class="my-5 space-y-3">
                                 <span class="text-gray-900 dark:text-white font-bold">Tanggal Pengajuan</span>
-                                <p class="text-sm text-gray-700 dark:text-gray-300">{{ $serviceRequest->created_at->format('d M Y') }}</p>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">
+                                    {{ $serviceRequest->created_at->format('d M Y') }}</p>
                             </div>
 
                             <x-pages.divider />
 
                             <div class="my-5 space-y-3">
                                 <span class="text-gray-900 dark:text-white font-bold">Tanggal Selesai</span>
-                                <p class="text-sm text-gray-700 dark:text-gray-300">{{ is_null($serviceRequest->completed_at) ? '-' : $serviceRequest->completed_at->format('d M Y') }}</p>
+                                <p class="text-sm text-gray-700 dark:text-gray-300">
+                                    {{ is_null($serviceRequest->completed_at) ? '-' : $serviceRequest->completed_at->format('d M Y') }}
+                                </p>
                             </div>
 
                             <x-pages.divider />
@@ -113,5 +123,3 @@
         </div>
     </section>
 </div>
-
-<x-pages.notifscript />

@@ -11,9 +11,11 @@ use App\Models\DeviceMaintenance;
 use App\Traits\HasRenderOption;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Contracts\View\View;
+use Illuminate\Routing\Redirector;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector as SupportRedirectsRedirector;
 use Livewire\WithFileUploads;
 
 class DeviceBuilder extends Component
@@ -102,9 +104,9 @@ class DeviceBuilder extends Component
         }
 
         // Send notification to redirect page.
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        $this->redirectRoute($route, navigate: true);
+        return $this->redirectRoute($route, navigate: true);
     }
 
     public function deleteItem(): void

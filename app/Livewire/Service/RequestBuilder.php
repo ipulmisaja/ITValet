@@ -80,7 +80,7 @@ class RequestBuilder extends Component
         return view('livewire.service.request-builder')->title($this->pageTitle);
     }
 
-    public function submitData(): void
+    public function submitData()
     {
         $this->dispatch('validate');
 
@@ -88,9 +88,9 @@ class RequestBuilder extends Component
             ? $this->form->update($this->serviceRequest)
             : $this->form->save();
 
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        auth()->user()->hasRole('admin')
+        return auth()->user()->hasRole('admin')
             ? $this->redirectRoute('request', navigate: true)
             : $this->redirectRoute('dashboard', navigate: true);
     }

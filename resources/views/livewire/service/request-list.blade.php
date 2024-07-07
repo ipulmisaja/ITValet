@@ -126,5 +126,3 @@
         <x-forms.modals.delete-confirmation />
     </section>
 </div>
-
-<x-pages.notifscript />

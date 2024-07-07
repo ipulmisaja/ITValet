@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Service;
 
 use App\Models\ServiceComment;
@@ -51,7 +53,7 @@ class RequestRoom extends Component
             ->where('id', $id)
             ->update(['status' => $value]);
 
-        $this->dispatch('notification', messages: 'Status tiket telah diubah');
+        $this->dispatch('notification', message: 'Status tiket telah diubah');
 
         // FIXME: Sementara dinonaktifkan karena bug connection refuse pada production
         // try {
@@ -129,7 +131,7 @@ class RequestRoom extends Component
 
         $this->reset('comment');
 
-        session()->flash('messages', 'Komentar telah ditambahkan');
+        $this->dispatch('notification', message: 'Komentar telah ditambahkan');
 
         // Send Event to CommentList Component
         $this->dispatch('update-comment-list');

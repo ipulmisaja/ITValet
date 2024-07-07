@@ -43,14 +43,14 @@ class MaintenanceCreate extends Component
         return view('livewire.device.maintenance.maintenance-create');
     }
 
-    public function submitData(): void
+    public function submitData()
     {
         $this->dispatch('validate');
 
         $result = $this->form->save($this->device);
 
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        $this->redirectRoute('device.maintenance.list', navigate: true);
+        return $this->redirectRoute('device.maintenance.list', navigate: true);
     }
 }

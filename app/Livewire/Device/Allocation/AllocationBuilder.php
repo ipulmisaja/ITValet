@@ -69,7 +69,7 @@ class AllocationBuilder extends Component
         return view("livewire.device.allocation.allocation-builder")->title($this->pageTitle);
     }
 
-    public function submitData(): void
+    public function submitData()
     {
         $this->dispatch('validate');
 
@@ -77,8 +77,8 @@ class AllocationBuilder extends Component
             ? $this->form->update($this->allocation)
             : $this->form->save();
 
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        $this->redirectRoute('device.allocation.list', navigate: true);
+        return $this->redirectRoute('device.allocation.list', navigate: true);
     }
 }

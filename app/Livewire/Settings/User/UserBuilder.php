@@ -71,8 +71,8 @@ class UserBuilder extends Component
             ? $this->form->update($this->user)
             : $this->form->save();
 
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        $this->redirectRoute('user', navigate: true);
+        return $this->redirectRoute('user', navigate: true);
     }
 }

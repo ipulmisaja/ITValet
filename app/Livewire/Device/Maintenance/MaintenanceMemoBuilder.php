@@ -66,7 +66,7 @@ class MaintenanceMemoBuilder extends Component
         return view('livewire.device.maintenance.maintenance-memo-builder')->title($this->pageTitle);
     }
 
-    public function submitData(): void
+    public function submitData()
     {
         $this->dispatch('validate');
 
@@ -74,8 +74,8 @@ class MaintenanceMemoBuilder extends Component
                 ? $this->form->update()
                 : $this->form->save();
 
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        $this->redirectRoute('maintenance.memo', navigate: true);
+        return $this->redirectRoute('maintenance.memo', navigate: true);
     }
 }

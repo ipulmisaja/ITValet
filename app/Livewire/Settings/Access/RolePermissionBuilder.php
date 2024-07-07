@@ -62,8 +62,8 @@ class RolePermissionBuilder extends Component
             $role->syncPermissions($this->permissionsCheck);
         }
 
-        session()->flash('messages', 'Sukses');
+        $this->dispatch('notification', message: 'Sukses');
 
-        $this->redirect(route('role-permission'));
+        return $this->redirectRoute('role-permission', navigate: true);
     }
 }

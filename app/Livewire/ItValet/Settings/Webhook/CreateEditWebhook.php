@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\ItValet\Settings\Webhook;
 
 use App\Livewire\Forms\ItValet\Settings\WebhookForm;
 use App\Models\Webhook;
 use App\Traits\HasRenderOption;
-use Illuminate\Contracts\View\View;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Route;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -67,8 +69,8 @@ class CreateEditWebhook extends Component
             ? $this->form->update($this->webhook)
             : $this->form->save();
 
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        $this->redirect(route('webhook'));
+        return $this->redirectRoute('webhook', navigate: true);
     }
 }

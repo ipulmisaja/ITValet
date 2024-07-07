@@ -6,7 +6,7 @@ namespace App\Livewire\Device\Maintenance;
 
 use App\Livewire\Forms\MaintenanceForm;
 use App\Models\DeviceMaintenance;
-use Illuminate\Contracts\View\View;
+use Illuminate\View\View;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 
@@ -56,8 +56,8 @@ class MaintenanceEdit extends Component
 
         $result = $this->form->update($this->maintenanceId);
 
-        session()->flash('messages', $result);
+        $this->dispatch('notification', message: $result);
 
-        $this->redirectRoute('device.maintenance.list', navigate: true);
+        return $this->redirectRoute('device.maintenance.list', navigate: true);
     }
 }

@@ -31,7 +31,7 @@
 <body
     class="bg-gray-100 dark:bg-gray-900 scrollbar scrollbar-w-3 scrollbar-thumb-rounded-[0.25rem] scrollbar-track-slate-200 scrollbar-thumb-gray-400 dark:scrollbar-track-gray-900 dark:scrollbar-thumb-gray-700">
 
-    <x-notification.flash />
+    <x-pages.notification.flash />
 
     @guest
         {{ $slot }}
@@ -53,8 +53,20 @@
 
     @livewireScriptConfig
 
+    {{-- Trix Editor --}}
     <script src="{{ secure_asset('vendor/trix/trix.min.js') }}" data-navigate-once></script>
+
+    {{-- Tom Select JS --}}
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js" data-navigate-once></script>
+
+    {{-- System Notification --}}
+    <script data-navigate-once>
+        window.addEventListener('notification', event => {
+            window.dispatchEvent(new CustomEvent('notify', {
+                detail: event.detail.message
+            }));
+        })
+    </script>
 
     @stack('scripts')
 </body>
