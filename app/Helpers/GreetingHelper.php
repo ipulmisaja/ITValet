@@ -3,9 +3,7 @@
 function greeting()
 {
     /* This sets the $time variable to the current hour in the 24 hour clock format */
-    $time = date("H");
-    /* Set the $timezone variable to become the current timezone */
-    $timezone = date("e");
+    $time = new DateTime("H", new DateTimeZone('Asia/Makassar'));
 
     if ($time < "11") {
         return "Selamat Pagi!";
