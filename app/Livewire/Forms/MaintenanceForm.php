@@ -25,7 +25,7 @@ class MaintenanceForm extends Form
 
     public function save(Device $device): string
     {
-        $this->validate();
+        // $this->validate();
 
         $result = $this->modelTransaction(
             DeviceMaintenance::create([
@@ -46,7 +46,7 @@ class MaintenanceForm extends Form
 
     public function update(DeviceMaintenance $deviceMaintenance): string
     {
-        $this->validate();
+        // $this->validate();
 
         $result = $this->modelTransaction(
             $deviceMaintenance->update([

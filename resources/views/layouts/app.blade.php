@@ -8,7 +8,7 @@
 
     <title>{{ $title ?? 'ITValet' }}</title>
 
-    @vite('resources/js/app.js')
+    @vite('resources/css/app.css')
 
     <link href="https://fonts.cdnfonts.com/css/inter" type="text/css" rel="stylesheet">
 
@@ -50,6 +50,8 @@
             </main>
         </div>
     @endauth
+
+    @vite('resources/js/app.js')
 
     @livewireScriptConfig
 

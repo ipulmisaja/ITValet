@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 trait HasTransaction
 {
-    public function modelTransaction($model): string
+    public function modelTransaction($model)
     {
         try {
             DB::beginTransaction();

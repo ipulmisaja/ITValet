@@ -104,3 +104,63 @@
 </aside>
 
 <div class="fixed inset-0 z-10 hidden bg-gray-900/50 dark:bg-gray-900/90" id="sidebarBackdrop"></div>
+
+@push('scripts')
+    <script data-navigate-once>
+        document.addEventListener("livewire:navigated", () => {
+            const sidebar = document.getElementById("sidebar");
+
+            if (sidebar) {
+                const toggleSidebarMobile = (
+                    sidebar,
+                    sidebarBackdrop,
+                    toggleSidebarMobileHamburger,
+                    toggleSidebarMobileClose
+                ) => {
+                    sidebar.classList.toggle("hidden");
+                    sidebarBackdrop.classList.toggle("hidden");
+                    toggleSidebarMobileHamburger.classList.toggle("hidden");
+                    toggleSidebarMobileClose.classList.toggle("hidden");
+                };
+
+                const toggleSidebarMobileEl = document.getElementById(
+                    "toggleSidebarMobile"
+                );
+                const sidebarBackdrop = document.getElementById("sidebarBackdrop");
+                const toggleSidebarMobileHamburger = document.getElementById(
+                    "toggleSidebarMobileHamburger"
+                );
+                const toggleSidebarMobileClose = document.getElementById(
+                    "toggleSidebarMobileClose"
+                );
+                // const toggleSidebarMobileSearch = document.getElementById('toggleSidebarMobileSearch');
+
+                // toggleSidebarMobileHamburger.addEventListener('click', () => {
+                //     toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
+                // });
+
+                // toggleSidebarMobileSearch.addEventListener('click', () => {
+                //     toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
+                // });
+
+                toggleSidebarMobileEl.addEventListener("click", () => {
+                    toggleSidebarMobile(
+                        sidebar,
+                        sidebarBackdrop,
+                        toggleSidebarMobileHamburger,
+                        toggleSidebarMobileClose
+                    );
+                });
+
+                sidebarBackdrop.addEventListener("click", () => {
+                    toggleSidebarMobile(
+                        sidebar,
+                        sidebarBackdrop,
+                        toggleSidebarMobileHamburger,
+                        toggleSidebarMobileClose
+                    );
+                });
+            }
+        });
+    </script>
+@endpush

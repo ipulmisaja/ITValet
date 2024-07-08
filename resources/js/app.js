@@ -1,4 +1,2 @@
-import "../css/app.css";
-import "../js/scripts/alpine.js";
-import "../js/scripts/sidebar.js";
+import "../js/alpine.js";
 import "flowbite";
