@@ -61,6 +61,14 @@
     {{-- Tom Select JS --}}
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js" data-navigate-once></script>
 
+    {{-- Flatpickr JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr" data-navigate-once></script>
+
+    {{-- SVG JS --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.2.4/svg.min.js"
+        integrity="sha512-ovlWyhrYXr3HEkGJI5YPXIFYIbHEKs2yfemKVVIIQe9U74tXyTuVdzMlvZlw/0X5lnIDRgtVlckrkeuCrDpq4Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" data-navigate-once></script>
+
     {{-- System Notification --}}
     <script data-navigate-once>
         window.addEventListener('notification', event => {

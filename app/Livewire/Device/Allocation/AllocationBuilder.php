@@ -54,7 +54,6 @@ class AllocationBuilder extends Component
             $this->allocation      = $allocation;
             $this->form->user      = $allocation->user_id;
             $this->form->device    = $allocation->device_id;
-            $this->form->bast_date = Carbon::parse($allocation->receipt_at) ?? null;
         } else {
             $this->pageTitle = "Alokasi Baru";
 

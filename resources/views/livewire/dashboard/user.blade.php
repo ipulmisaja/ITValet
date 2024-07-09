@@ -16,5 +16,3 @@
     {{-- Ganti Password --}}
     <x-forms.modals.change-password />
 </section>
-
-<x-pages.notifscript />

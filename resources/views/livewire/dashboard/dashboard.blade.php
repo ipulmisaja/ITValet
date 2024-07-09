@@ -4,7 +4,4 @@
     @else
         @include('livewire.dashboard.user')
     @endrole
-
 </div>
-
-<x-pages.notifscript />

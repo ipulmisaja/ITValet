@@ -12,20 +12,20 @@
         <ul class="border-b dark:border-gray-600 px-6">
             <li>
                 <div class="py-2">
-                    <div class="text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">{{
-                        auth()->user()->name }}</div>
+                    <div class="text-sm font-medium text-gray-900 dark:text-white whitespace-nowrap">
+                        {{ auth()->user()->name }}</div>
                     <small class="text-gray-900 dark:text-white whitespace-nowrap">{{ auth()->user()->email }}</small>
                 </div>
             </li>
         </ul>
         <ul class="border-b dark:border-gray-600 flex flex-col gap-5 px-6 py-2">
             <li>
-                <a href="https://ipulmisaja.notion.site/Pengembangan-ITValet-v2-3c0bb06c2c5b4e94925665cf45da5ffd?pvs=4"
+                <a href="#"
                     class="py-2 flex place-items-center gap-3.5 text-sm text-gray-900 dark:text-white font-medium duration-300 ease-in-out"
                     target="_blank">
                     <x-icons.heroline name="clipboard-document-list" class="h-5 w-5" />
                     {{-- Versi Aplikasi --}}
-                    v3.0
+                    v3.1
                 </a>
             </li>
         </ul>
