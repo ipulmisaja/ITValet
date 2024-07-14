@@ -25,12 +25,12 @@
                     target="_blank">
                     <x-icons.heroline name="clipboard-document-list" class="h-5 w-5" />
                     {{-- Versi Aplikasi --}}
-                    v3.1
+                    v3.3.1
                 </a>
             </li>
         </ul>
 
         {{-- Logout --}}
-        @livewire('auth.logout')
+        <livewire:auth.logout />
     </div>
 </div>

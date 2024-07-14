@@ -20,22 +20,26 @@
     --color-primary: #fff;
     --color-secondary: #d1d5db;
     --color-disabled: #fafafa;
-    --color-border-input: #3F83F8;
+    --color-border-input: #3f83f8;
     --color-hover-font-item: #495c68;
-    --color-font-item: #4B5563;
+    --color-font-item: #4b5563;
     --color-border: rgb(209 213 219 / 1);
+    --color-background-input: rgb(249 250 251 / 0.5);
+    --color-background-input-border: rgb(75 85 99 / 0.2);
 }
 :root.dark {
     --ts-pr-clear-button: 0;
     --ts-pr-caret: 0;
     --ts-pr-min: 0.75rem;
     --color-primary: #374151;
-    --color-secondary: #4B5563;
+    --color-secondary: #4b5563;
     --color-disabled: #495c68;
-    --color-border-input: #3F83F8;
+    --color-border-input: #3f83f8;
     --color-hover-font-item: #374151;
     --color-font-item: #fff;
     --color-border: rgb(75 85 99 / 1);
+    --color-background-input: rgb(75 85 99 / 1);
+    --color-background-input-border: rgb(249 250 251 / 0.2);
 }
 
 .ts-wrapper.single .ts-control,
@@ -44,7 +48,10 @@
 }
 
 .ts-control {
-    padding-right: max(var(--ts-pr-min), var(--ts-pr-clear-button) + var(--ts-pr-caret)) !important;
+    padding-right: max(
+        var(--ts-pr-min),
+        var(--ts-pr-clear-button) + var(--ts-pr-caret)
+    ) !important;
 }
 
 .ts-wrapper.plugin-drag_drop.multi > .ts-control > div.ui-sortable-placeholder {
@@ -152,11 +159,15 @@
     min-width: 4px;
 }
 
-.ts-wrapper.plugin-input_autogrow.has-items.focus .ts-control > input::-ms-input-placeholder {
+.ts-wrapper.plugin-input_autogrow.has-items.focus
+    .ts-control
+    > input::-ms-input-placeholder {
     color: transparent;
 }
 
-.ts-wrapper.plugin-input_autogrow.has-items.focus .ts-control > input::placeholder {
+.ts-wrapper.plugin-input_autogrow.has-items.focus
+    .ts-control
+    > input::placeholder {
     color: transparent;
 }
 
@@ -261,8 +272,8 @@
 }
 
 .ts-control {
-    border: 0.5px solid #d1d5db;
-    border-color: var(--color-border);
+    border: 0.5px solid var(--color-background-input-border);
+    /* border-color: var(--color-border); */
     padding: 0.7rem 1rem;
     width: 100%;
     overflow: hidden;
@@ -273,6 +284,7 @@
     border-radius: 0.375rem;
     display: flex;
     flex-wrap: wrap;
+    background-color: var(--color-background-input);
 }
 
 .ts-wrapper.multi.has-items .ts-control {

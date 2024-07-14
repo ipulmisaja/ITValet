@@ -14,7 +14,7 @@ class DeviceMaintenance extends Model
 {
     use DeviceMaintenanceRelationship, ModelUuid, Searchable, SoftDeletes;
 
-    protected $table = "device_maintenances";
+    protected $table = "device_maintenance";
 
     protected $fillable = [
         "device_id",

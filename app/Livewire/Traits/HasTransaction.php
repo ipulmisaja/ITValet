@@ -10,15 +10,16 @@ use Illuminate\Support\Facades\Log;
 
 trait HasTransaction
 {
-    public function modelTransaction($model)
+    public function modelTransaction($model): string
     {
         try {
             DB::beginTransaction();
 
-            $message = $model;
+            $model;
 
             DB::commit();
 
+            $message = "Success";
         } catch(Exception $exception) {
             DB::rollBack();
 

@@ -39,8 +39,7 @@
 
     @auth
         <x-pages.navigation.sidebar />
-
-        <x-pages.navigation.side-header />
+        <x-pages.navigation.header />
 
         <div class="flex overflow-hidden">
             <main id="main-content" class="w-full h-full overflow-y-auto lg:ml-64 min-h-screen flex flex-col">

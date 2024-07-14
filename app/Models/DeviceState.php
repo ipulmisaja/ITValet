@@ -14,13 +14,10 @@ class DeviceState extends Model
 {
     use ModelUuid, DeviceStateRelationship, Searchable, SoftDeletes;
 
-    protected $table = "device_states";
+    protected $table = "device_state";
 
     protected $fillable = [
-        "user_id",
-        "device_id",
-        "receipt_at",
-        "bast_no"
+        'user_id', 'device_id', 'receipt_at', 'bast_no', 'bast_file'
     ];
 
     protected $casts = ['receipt_at' => 'datetime:Y-m-d'];

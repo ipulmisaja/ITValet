@@ -17,28 +17,22 @@ class Device extends Model
     protected $table = "devices";
 
     protected $fillable = [
-        "name",
-        "serial",
-        "brand",
-        "type",
-        "image_id",
-        "operating_system",
-        "procurement_period",
-        "procurement_type",
-        "bmn_number"
+        'device_id', 'serial', 'bmn_number', 'information'
     ];
 
     protected $casts = [
-        'procurement_period' => 'datetime:Y-m-d',
+        'created_at' => 'datetime:Y-m-d',
+        'updated_at' => 'datetime:Y-m-d',
+        'deleted_at' => 'datetime:Y-m-d'
     ];
 
     public function toSearchableArray(): array
     {
         return [
             'name'   => $this->name,
-            // 'serial' => $this->serial,
-            // 'brand'  => $this->brand,
-            // 'type'   => $this->type,
+            'serial' => $this->serial,
+            'brand'  => $this->brand,
+            'type'   => $this->type,
             // 'bmn_number' => $this->bmn_number,
             // 'operating_system' => $this->operating_system,
             // 'procurement_type' => $this->procurement_type

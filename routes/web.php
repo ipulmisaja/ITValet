@@ -3,7 +3,7 @@
 use App\Http\Controllers\SSOController;
 use App\Livewire\Auth\Login;
 use App\Livewire\Dashboard\Dashboard;
-use App\Livewire\Device\DeviceList;
+use App\Livewire\Device\Master\DeviceList;
 use App\Livewire\Device\DeviceBuilder;
 use App\Livewire\Device\Allocation\AllocationList;
 use App\Livewire\Device\Allocation\AllocationBuilder;
@@ -33,7 +33,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('/perangkat-ti/')->group(function () {
         Route::group(['middleware' => ['permission:read-device|read-device-state|read-device-maintenance']], function() {
             Route::get('daftar-perangkat', DeviceList::class)->name('device.list');
-            Route::get('alokasi-perangkat', AllocationList::class)->name('device.allocation.list');
+            Route::get('alokasi-perangkat/{device}', AllocationList::class)->name('device.allocation.list');
             Route::get('pemeliharaan/{device?}', MaintenanceList::class)->name('device.maintenance.list');
             Route::get('pemeliharaan/memo/list', MaintenanceMemoList::class)->name('device.maintenance.memo');
         });

@@ -1,5 +1,5 @@
 <aside id="sidebar" aria-label="Sidebar"
-    class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hidden w-64 h-full pt-16 font-normal lg:flex duration-100 ease-linear">
+    class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hidden h-full pt-16 font-normal lg:flex duration-100 ease-linear w-64">
     <div
         class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white lg:bg-gray-100 border-r border-gray-200 dark:bg-gray-800 dark:border-gray-700 lg:dark:bg-gray-900">
         <div
@@ -56,10 +56,6 @@
                             <x-pages.navigation.submenu :route="route('device.list')" title="Daftar" :path="request()->routeIs('device.list') ||
                             request()->routeIs('device.create') ||
                             request()->routeIs('device.edit')
-                                ? 'text-gray-900 dark:text-white'
-                                : 'text-gray-500 dark:text-gray-400'" />
-
-                            <x-pages.navigation.submenu :route="route('device.allocation.list')" title="Alokasi" :path="request()->routeIs('device.allocation.*')
                                 ? 'text-gray-900 dark:text-white'
                                 : 'text-gray-500 dark:text-gray-400'" />
 
@@ -133,15 +129,6 @@
                 const toggleSidebarMobileClose = document.getElementById(
                     "toggleSidebarMobileClose"
                 );
-                // const toggleSidebarMobileSearch = document.getElementById('toggleSidebarMobileSearch');
-
-                // toggleSidebarMobileHamburger.addEventListener('click', () => {
-                //     toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
-                // });
-
-                // toggleSidebarMobileSearch.addEventListener('click', () => {
-                //     toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
-                // });
 
                 toggleSidebarMobileEl.addEventListener("click", () => {
                     toggleSidebarMobile(

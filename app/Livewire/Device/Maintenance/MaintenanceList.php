@@ -23,7 +23,7 @@ class MaintenanceList extends Component
     use HasTransaction, WithPagination;
 
     public Device $device;
-    public int $numberOfPagination = 10;
+    public int $numberOfPagination = 20;
     public ?string $searchKeyword  = null;
     public bool $deleteModal = false;
 

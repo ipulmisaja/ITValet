@@ -17,11 +17,11 @@ trait DeviceMasterRelationship
 
     public function states()
     {
-        return $this->hasMany(DeviceState::class, 'device_id', 'id');
+        return $this->hasMany(DeviceState::class, 'device_master_id', 'id');
     }
 
     public function maintenances()
     {
-        return $this->hasMany(DeviceMaintenance::class, 'device_id', 'id')->where('condition', '!=', 'baik');
+        return $this->hasMany(DeviceMaintenance::class, 'device_master_id', 'id')->where('condition', '!=', 'baik');
     }
 }

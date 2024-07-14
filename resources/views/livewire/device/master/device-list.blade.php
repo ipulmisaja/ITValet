@@ -10,7 +10,7 @@
                     <x-forms.inputs.search placeholder="Cari informasi perangkat..." />
                 </div>
                 @can('create-device')
-                    <x-pages.page-button :route="route('device.create')" icon="plus-circle" title="Perangkat" />
+                    <x-buttons.page wire:click.prevent="createDevice" icon="plus-circle" title="Perangkat" />
                 @endcan
             </div>
 
@@ -81,7 +81,43 @@
         {{-- Pagination Content --}}
         {{ $device_masters->links('vendor.livewire.tailwind') }}
 
-        {{-- Delete Modal --}}
-        {{-- <x-forms.modals.delete-confirmation /> --}}
+        {{-- Create Device Modal --}}
+        <x-forms.modals.builder title="Perangkat Baru">
+            <form wire:submit="storeDevice">
+                <div class="px-6 pb-4">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <x-forms.inputs.text model="form.name" label="Nama Perangkat" type="text" />
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <x-forms.inputs.tom-select model="form.brand" label="Merek" :optitem="$this->brands" />
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <x-forms.inputs.tom-select model="form.type" label="Tipe" :optitem="$this->types" />
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <x-forms.inputs.datepicker model="form.procurementDate" label="Tanggal Terima Perangkat" />
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <x-forms.inputs.select model="form.procurementType" label="Satker Pengadaan"
+                                :optitem="$this->procurementOption" />
+                        </div>
+                        <div class="col-span-2">
+                            <x-forms.inputs.text model="form.stock" label="Jumlah Perangkat" type="number" />
+                        </div>
+                    </div>
+                </div>
+                <div class="rounded-b-md bg-gray-200 dark:bg-gray-600 px-6 py-4">
+                    <button type="submit"
+                        class="flex py-2 px-3 text-sm font-medium ml-auto text-center text-white bg-primary-600 rounded-md hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600">
+                        <div wire:loading>
+                            <x-icons.flowbite-solid name="animate-spin" class="w-5 h-5" />
+                        </div>
+                        <span>Simpan Informasi Perangkat</span>
+                    </button>
+                </div>
+            </form>
+        </x-forms.modals.builder>
+
     </section>
 </div>

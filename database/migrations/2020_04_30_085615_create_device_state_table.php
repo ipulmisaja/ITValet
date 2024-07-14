@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDeviceStatesTable extends Migration
+class CreateDeviceStateTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateDeviceStatesTable extends Migration
      */
     public function up()
     {
-        Schema::create('device_states', function (Blueprint $table) {
+        Schema::create('device_state', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid('user_id');
             $table->uuid('device_id')->unique();
@@ -30,6 +30,6 @@ class CreateDeviceStatesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('device_states');
+        Schema::dropIfExists('device_state');
     }
 }

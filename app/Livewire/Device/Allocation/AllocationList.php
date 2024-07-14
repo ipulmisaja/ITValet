@@ -4,27 +4,47 @@ declare(strict_types=1);
 
 namespace App\Livewire\Device\Allocation;
 
-use App\Livewire\Traits\HasTransaction;
-use App\Models\DeviceState;
+use App\Models\Device;
+use App\Models\DeviceMaster;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
 use Livewire\Attributes\Locked;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class AllocationList extends Component
 {
-    use HasTransaction, WithPagination;
+    use WithPagination;
 
+    /** Form Property */
+    public DeviceDetailForm $form;
+
+    /** Page Properties */
     public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;
+
+    /** Modal Property */
     public bool $deleteModal = false;
+
+    #[Locked]
+    public string $pageTitle;
+
+    #[Locked]
+    public string $device;
 
     #[Locked]
     public string $allocationId;
 
-    #[Title('Alokasi Perangkat TI')]
+    #[Locked]
+    public string $deleteId;
+
+    public function mount(string $device): void
+    {
+        $this->device = $device;
+
+        $this->pageTitle = DeviceMaster::where('id', $device)->get('name')[0]->name;
+    }
+
     public function render(): View
     {
         return view("livewire.device.allocation.allocation-list", [
@@ -32,49 +52,57 @@ class AllocationList extends Component
                 $this->searchKeyword,
                 $this->numberOfPagination
             )
-        ]);
+        ])->title($this->pageTitle);
     }
 
-    public function deleteItem(string $allocationId): void
+    public function addStock(): void
+    {
+        $message = $this->form->addStock($this->device);
+
+        $this->dispatch('notification', message: $message);
+    }
+
+    public function addDeviceInformation(string $allocationId): void
     {
         $this->allocationId = $allocationId;
+
+        $property = $this->form->fetchProperty($allocationId);
+
+        $this->form->serial = $property[0]->serial ?? null;
+        $this->form->bmn    = $property[0]->bmn_number ?? null;
+        $this->form->information = $property[0]->information ?? null;
+    }
+
+    public function storeDevice(): void
+    {
+        $this->dispatch('validate');
+
+        $message = $this->form->save($this->allocationId);
+
+        $this->dispatch('notification', message: $message);
+    }
+
+    public function addAllocationInformation(): void
+    {}
+
+    public function deleteDeviceInformation(string $deleteId): void
+    {
+        $this->deleteId = $deleteId;
 
         $this->deleteModal = true;
     }
 
     public function confirmDelete(): void
     {
-        DeviceState::where('id', $this->allocationId)->delete();
+        $message = $this->form->delete($this->deleteId);
+
+        $this->dispatch('notification', message: $message);
 
         $this->deleteModal = false;
     }
 
     private function fetchRequest(?string $keyword, int $pagination): Paginator
     {
-        return
-            DeviceState::search($keyword)
-            ->query(
-                fn ($query) => $query
-                    ->with(['user', 'device'])
-                    ->join('users', 'device_states.user_id', 'users.id')
-                    ->rightJoin('devices', 'device_states.device_id', 'devices.id')
-                    ->select([
-                        'device_states.id',
-                        'device_states.user_id',
-                        'device_states.device_id as device_state_id',
-                        'device_states.receipt_at',
-                        'device_states.bast_no',
-                        'device_states.bast_file',
-                        'users.name as user',
-                        'users.email as email',
-                        'devices.id as device_id',
-                        'devices.name as namedevice',
-                        'devices.serial as serial',
-                        'devices.type as type',
-                        'devices.bmn_number as bmn'
-                    ])
-            )
-            ->orderBy('receipt_at', 'desc')
-            ->paginate($pagination);
+        return $this->form->fetchInformation($this->device, $keyword, $pagination);
     }
 }

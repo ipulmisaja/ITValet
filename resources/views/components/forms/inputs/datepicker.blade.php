@@ -9,7 +9,7 @@
         </div>
         <input x-init="flatpickr('.{{ Str::contains($model, '.') ? Str::replace('.', '-', $model) : $model }}')" x-on:livewire:navigated.window="instance.destroy();"
             wire:model="{{ $model }}" type="text"
-            class="{{ Str::contains($model, '.') ? Str::replace('.', '-', $model) : $model }} w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="{{ Str::contains($model, '.') ? Str::replace('.', '-', $model) : $model }} w-full pt-2.5 pr-2.5 pb-2.5 pl-10 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-primary-600 focus:border-primary-600 block dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
             data-date-format="Y-m-d" placeholder="YYYY-MM-DD">
     </div>
 

@@ -23,7 +23,7 @@ class DeviceBuilder extends Component
     use HasRenderOption, WithFileUploads;
 
     #[Locked]
-    public $pageTitle;
+    public string $pageTitle;
 
     public DeviceForm $form;
 

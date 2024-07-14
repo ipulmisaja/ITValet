@@ -1,12 +1,18 @@
 <div>
     <section class="px-4 pt-8 sm:px-6">
         {{-- Title --}}
-        <x-pages.page-title title="Alokasi Perangkat TI" />
+        <x-pages.page-title title="Alokasi Perangkat {{ $pageTitle }}" />
 
         {{-- Content --}}
         <div class="mb-6 mt-10">
-            <div class="mb-4">
-                <x-forms.inputs.search placeholder="Cari Informasi Alokasi ..." />
+            <div
+                class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700 mb-4">
+                <div class="flex items-center mb-4 sm:mb-0">
+                    <x-forms.inputs.search placeholder="Cari informasi perangkat..." />
+                </div>
+                @can('create-device')
+                    <x-buttons.page wire:click.prevent="addStock" icon="plus-circle" title="Stok" />
+                @endcan
             </div>
 
             @if ($states->isEmpty())
@@ -48,9 +54,11 @@
                                     {{-- Alokasi --}}
                                     <th scope="row"
                                         class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        @if (!is_null($state->user))
-                                            <p class="mb-1 text-gray-900 dark:text-white">{{ $state->user }}</p>
-                                            <span class="text-gray-500 dark:text-gray-400">{{ $state->email }}</span>
+                                        @if ($state->states->count() > 0)
+                                            <p class="mb-1 text-gray-900 dark:text-white">
+                                                {{ $state->states[0]->user->name }}</p>
+                                            <span
+                                                class="text-gray-500 dark:text-gray-400">{{ $state->states[0]->user->email }}</span>
                                         @else
                                             -
                                         @endif
@@ -58,8 +66,8 @@
 
                                     {{-- Perangkat TI --}}
                                     <td class="px-6 py-4">
-                                        <span class="font-normal">{{ $state->type ?? '-' }}</span>
-                                        <p class="my-1 text-gray-900 dark:text-white">{{ $state->namedevice ?? '-' }}
+                                        <span class="font-normal">{{ $state->master->type ?? '-' }}</span>
+                                        <p class="my-1 text-gray-900 dark:text-white">{{ $state->master->name ?? '-' }}
                                         </p>
                                         <span class="font-normal text-primary-600 dark:text-gray-400">
                                             No. Seri : {{ $state->serial ?? '-' }}
@@ -68,33 +76,32 @@
 
                                     {{-- Nomor BMN --}}
                                     <td class="px-6 py-4">
-                                        <span class="text-gray-900 dark:text-white">{{ $state->bmn ?? '-' }}</span>
+                                        <span class="text-gray-900 dark:text-white">
+                                            {{ $state->bmn_number ?? '-' }}
+                                        </span>
                                     </td>
 
                                     {{-- BAST --}}
                                     <td class="px-6 py-4">
-                                        <span class="font-normal">No. {{ $state->bast_no }}</span>
+                                        <span class="font-normal">
+                                            No. {{ $state->states[0]->bast_no ?? '-' }}
+                                        </span>
                                         <div
                                             class="flex flex-nowrap place-items-center my-1 text-gray-500 dark:text-gray-400 space-x-2">
                                             <x-icons.herosolid name="calendar-days" class="h-5 w-5" />
                                             <span>
-                                                {{ is_null($state->receipt_at) ? '-' : $state->receipt_at->format('d M Y') }}
+                                                {{-- {{ is_null($state->states[0]->receipt_at) ? '-' : $state->states[0]->receipt_at->format('d M Y') }} --}}
                                             </span>
                                         </div>
                                     </td>
 
                                     {{-- Kondisi --}}
                                     <td class="px-6 py-4">
-                                        @isset($state->device->maintenances)
-                                            @if (count($state->device->maintenances) == 0)
-                                                <x-pages.label-color.device-condition condition="baik" />
-                                            @else
-                                                <x-pages.label-color.device-condition :condition="$state->device->maintenances->sortBy('created_at')->last()
-                                                    ->condition" />
-                                            @endif
+                                        @if ($state->maintenances->count() > 0)
+                                            <x-pages.label-color.device-condition :condition="$state->maintenances->sortBy('created_at')->last()->condition" />
                                         @else
                                             <x-pages.label-color.device-condition condition="baik" />
-                                        @endisset
+                                        @endif
                                     </td>
 
                                     {{-- Aksi --}}
@@ -103,28 +110,34 @@
                                             <div class="flex place-items-center space-x-3">
                                                 {{-- Edit Perangkat --}}
                                                 @can('update-device')
-                                                    <x-pages.cell-button.navigate :route="route('device.edit', $state->device_id)" tooltip="Perangkat"
-                                                        color="text-primary-500 hover:text-primary-600"
-                                                        icon="computer-desktop" />
+                                                    <x-buttons.table-action data-drawer-target="drawer-edit-device"
+                                                        data-drawer-show="drawer-edit-device" data-drawer-placement="right"
+                                                        aria-controls="drawer-edit-device"
+                                                        wire:click.prevent="addDeviceInformation('{{ $state->id }}')"
+                                                        icon="computer-desktop" tooltip="Perangkat"
+                                                        @class(['text-primary-500 hover:text-primary-600 cursor-pointer']) />
                                                 @endcan
 
                                                 {{-- Alokasi Perangkat --}}
                                                 @canany(['create-device-state', 'update-device-state'])
-                                                    <x-pages.cell-button.navigate
-                                                        route="{{ !is_null($state->id) ? route('device.allocation.edit', $state->id) : route('device.allocation.create', $state->device->id) }}"
-                                                        tooltip="Alokasi" color="text-green-500 hover:text-green-600"
-                                                        icon="pencil-square" />
+                                                    <x-buttons.table-action data-drawer-target="drawer-edit-allocation"
+                                                        data-drawer-show="drawer-edit-allocation" data-drawer-placement="right"
+                                                        aria-controls="drawe-edit-allocation"
+                                                        wire:click.prevent="addAllocationInformation('{{ $state->id }}')"
+                                                        icon="pencil-square" tooltip="Alokasi" @class(['text-green-500 hover:text-green-600 cursor-pointer']) />
                                                 @endcanany
 
                                                 {{-- Pemeliharaan --}}
                                                 @canany(['create-device-maintenance', 'update-device-maintenance'])
-                                                    <x-pages.cell-button.navigate :route="route('device.maintenance.list', $state->device_id)" tooltip="Pemeliharaan"
+                                                    <x-buttons.table-action :route="route('device.maintenance.list', $state->device_id)" tooltip="Pemeliharaan"
                                                         color="text-yellow-400 hover:text-yellow-500"
                                                         icon="shield-exclamation" />
                                                 @endcanany
 
                                                 @can('delete-device-state')
-                                                    <x-pages.cell-button.delete-item :id="$state->id" />
+                                                    <x-buttons.table-action
+                                                        wire:click.prevent="deleteDeviceInformation('{{ $state->id }}')"
+                                                        icon="trash" tooltip="Hapus" @class(['text-red-500 hover:text-red-600']) />
                                                 @endcan
                                             </div>
                                         </td>
@@ -139,6 +152,26 @@
 
         {{-- Pagination Content --}}
         {{ $states->links('vendor.livewire.tailwind') }}
+
+        {{-- Edit Device Drawer --}}
+        <x-forms.modals.drawer method="storeDevice" drawer="drawer-edit-device" title="Edit Informasi Perangkat"
+            icon="computer-desktop">
+            <div class="mb-6">
+                <x-forms.inputs.text model="form.serial" type="text" label="No. Seri" />
+            </div>
+            <div class="mb-6">
+                <x-forms.inputs.text model="form.bmn" type="text" label="No. BMN" />
+            </div>
+            <div class="mb-6">
+                <x-forms.inputs.text-area model="form.information" label="Informasi Tambahan" />
+            </div>
+        </x-forms.modals.drawer>
+
+        {{-- Alokasi Perangkat Drawer --}}
+        <x-forms.modals.drawer method="storeAllocation" drawer="drawer-edit-allocation" title="Edit Alokasi Perangkat"
+            icon="pencil-square">
+            lorem ipsum
+        </x-forms.modals.drawer>
 
         {{-- Delete Modal --}}
         <x-forms.modals.delete-confirmation />

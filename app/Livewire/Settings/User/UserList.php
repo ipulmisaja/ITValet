@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire\Settings\User;
 
 use App\Models\User;
-use App\Repositories\UserRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
@@ -17,8 +16,10 @@ class UserList extends Component
 {
     use WithPagination;
 
+    /** Page Properties */
     public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;
+
     public bool $deleteModal = false;
     public string $userId;
 

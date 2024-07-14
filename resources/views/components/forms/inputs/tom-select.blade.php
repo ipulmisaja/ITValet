@@ -6,9 +6,9 @@
     <div wire:ignore>
         <select id="{{ Str::contains($model, '.') ? Str::replace('.', '-', $model) : $model }}" x-init="new TomSelect('#{{ Str::contains($model, '.') ? Str::replace('.', '-', $model) : $model }}', { create: true })"
             x-on:livewire:navigated.window="instance.destroy();" wire:model="{{ $model }}"
-            placeholder="{{ $placeholder }}" @isset($multiple) multiple @endisset
+            @isset($multiple) multiple @endisset
             @isset($disabled) disabled @endisset autocomplete="off">
-            <option value>{{ $placeholder }}</option>
+            <option value></option>
             {!! $optitem !!}
         </select>
     </div>

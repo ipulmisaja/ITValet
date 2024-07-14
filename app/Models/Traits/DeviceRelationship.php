@@ -6,22 +6,22 @@ namespace App\Models\Traits;
 
 use App\Models\DeviceMaintenance;
 use App\Models\DeviceState;
-use App\Models\DeviceImage;
+use App\Models\DeviceMaster;
 
 trait DeviceRelationship
 {
+    public function master()
+    {
+        return $this->belongsTo(DeviceMaster::class, 'device_id', 'id');
+    }
+
     public function maintenances()
     {
         return $this->hasMany(DeviceMaintenance::class, 'device_id', 'id');
     }
 
-    public function state()
+    public function states()
     {
-        return $this->hasOne(DeviceState::class);
-    }
-
-    public function image()
-    {
-        return $this->belongsTo(DeviceImage::class, 'image_id', 'id');
+        return $this->hasMany(DeviceState::class, 'device_id', 'id');
     }
 }
