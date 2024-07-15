@@ -33,10 +33,10 @@ class DeviceDetailForm extends Form
                 ->paginate($pagination);
     }
 
-    public function fetchProperty(string $allocationId): Collection
+    public function fetchProperty(string $deviceId): Collection
     {
         return
-            Device::where('id', $allocationId)->get(['serial', 'bmn_number', 'information']);
+            Device::where('id', $deviceId)->get(['serial', 'bmn_number', 'information']);
     }
 
     public function addStock(string $deviceId): string

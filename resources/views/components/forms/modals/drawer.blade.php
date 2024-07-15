@@ -14,11 +14,5 @@
     </button>
 
     {{-- Content --}}
-    <form wire:submit="{{ $method }}" class="mb-6">
-        {{ $slot }}
-        <button type="submit" type="button" data-drawer-hide="{{ $drawer }}" aria-controls="{{ $drawer }}"
-            class="text-white justify-center flex items-center bg-primary-700 hover:bg-primary-800 w-full focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
-            Simpan
-        </button>
-    </form>
+    {{ $slot }}
 </div>

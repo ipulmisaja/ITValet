@@ -129,9 +129,9 @@
 
                                                 {{-- Pemeliharaan --}}
                                                 @canany(['create-device-maintenance', 'update-device-maintenance'])
-                                                    <x-buttons.table-action :route="route('device.maintenance.list', $state->device_id)" tooltip="Pemeliharaan"
-                                                        color="text-yellow-400 hover:text-yellow-500"
-                                                        icon="shield-exclamation" />
+                                                    <x-buttons.table-action wire:navigate :href="route('device.maintenance.list', $state->device_id)"
+                                                        tooltip="Pemeliharaan" icon="shield-exclamation"
+                                                        @class(['text-yellow-400 hover:text-yellow-500 cursor-pointer']) />
                                                 @endcanany
 
                                                 @can('delete-device-state')
@@ -154,23 +154,48 @@
         {{ $states->links('vendor.livewire.tailwind') }}
 
         {{-- Edit Device Drawer --}}
-        <x-forms.modals.drawer method="storeDevice" drawer="drawer-edit-device" title="Edit Informasi Perangkat"
-            icon="computer-desktop">
+        <x-forms.modals.drawer drawer="drawer-edit-device" title="Edit Informasi Perangkat" icon="computer-desktop">
             <div class="mb-6">
-                <x-forms.inputs.text model="form.serial" type="text" label="No. Seri" />
+                <x-forms.inputs.text model="deviceDetailForm.serial" type="text" label="No. Seri" />
             </div>
             <div class="mb-6">
-                <x-forms.inputs.text model="form.bmn" type="text" label="No. BMN" />
+                <x-forms.inputs.text model="deviceDetailForm.bmn" type="text" label="No. BMN" />
             </div>
             <div class="mb-6">
-                <x-forms.inputs.text-area model="form.information" label="Informasi Tambahan" />
+                <x-forms.inputs.text-area model="deviceDetailForm.information" label="Informasi Tambahan" />
             </div>
+            <form wire:submit="storeDevice">
+                <button type="submit" data-drawer-hide="drawer-edit-device" aria-controls="drawer-edit-device"
+                    class="text-white justify-center flex items-center bg-primary-700 hover:bg-primary-800 w-full focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    Simpan
+                </button>
+            </form>
         </x-forms.modals.drawer>
 
         {{-- Alokasi Perangkat Drawer --}}
-        <x-forms.modals.drawer method="storeAllocation" drawer="drawer-edit-allocation" title="Edit Alokasi Perangkat"
-            icon="pencil-square">
-            lorem ipsum
+        <x-forms.modals.drawer drawer="drawer-edit-allocation" title="Edit Alokasi Perangkat" icon="pencil-square">
+            <div class="mb-6">
+                <x-forms.inputs.tom-select model="deviceAllocationForm.user" label="Pengguna Perangkat"
+                    :optitem="$this->users" :disabled="auth()->user()->roles->first()->name !== 'admin' ? true : null" />
+            </div>
+            <div class="mb-6">
+                <x-forms.inputs.datepicker model="deviceAllocationForm.bast_date" label="Tanggal" />
+            </div>
+            <div class="mb-6">
+                <x-forms.inputs.text model="deviceAllocationForm.bast_number" label="Nomor BAST" type="text" />
+            </div>
+            <form wire:submit="storeAllocation">
+                <button type="submit" data-drawer-hide="drawer-edit-allocation"
+                    aria-controls="drawer-edit-allocation"
+                    class="text-white justify-center flex items-center bg-primary-700 hover:bg-primary-800 w-full focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                    Simpan
+                </button>
+            </form>
+            <button wire:click="deleteAllocation" type="button" data-drawer-hide="drawer-edit-allocation"
+                aria-controls="drawer-edit-allocation"
+                class="text-white justify-center flex items-center bg-red-700 hover:bg-red-800 w-full focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-red-600 dark:hover:bg-red-700 focus:outline-none dark:focus:ring-red-800">
+                Hapus
+            </button>
         </x-forms.modals.drawer>
 
         {{-- Delete Modal --}}

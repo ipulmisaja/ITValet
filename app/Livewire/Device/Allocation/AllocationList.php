@@ -4,20 +4,23 @@ declare(strict_types=1);
 
 namespace App\Livewire\Device\Allocation;
 
-use App\Models\Device;
 use App\Models\DeviceMaster;
+use App\Models\User;
+use App\Traits\HasRenderOption;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class AllocationList extends Component
 {
-    use WithPagination;
+    use HasRenderOption, WithPagination;
 
     /** Form Property */
-    public DeviceDetailForm $form;
+    public DeviceDetailForm $deviceDetailForm;
+    public DeviceAllocationForm $deviceAllocationForm;
 
     /** Page Properties */
     public int $numberOfPagination = 10;
@@ -30,7 +33,10 @@ class AllocationList extends Component
     public string $pageTitle;
 
     #[Locked]
-    public string $device;
+    public string $master;
+
+    #[Locked]
+    public string $deviceId;
 
     #[Locked]
     public string $allocationId;
@@ -38,11 +44,17 @@ class AllocationList extends Component
     #[Locked]
     public string $deleteId;
 
-    public function mount(string $device): void
+    #[Computed]
+    public function users(): string
     {
-        $this->device = $device;
+        return $this->renderOption($this->getOptionForRender(app(User::class), ['id', 'name']));
+    }
 
-        $this->pageTitle = DeviceMaster::where('id', $device)->get('name')[0]->name;
+    public function mount(string $master): void
+    {
+        $this->master = $master;
+
+        $this->pageTitle = DeviceMaster::where('id', $master)->get('name')[0]->name;
     }
 
     public function render(): View
@@ -57,33 +69,60 @@ class AllocationList extends Component
 
     public function addStock(): void
     {
-        $message = $this->form->addStock($this->device);
+        $message = $this->deviceDetailForm->addStock($this->master);
 
         $this->dispatch('notification', message: $message);
     }
 
-    public function addDeviceInformation(string $allocationId): void
+    public function addDeviceInformation(string $deviceId): void
     {
-        $this->allocationId = $allocationId;
+        $this->deviceId = $deviceId;
 
-        $property = $this->form->fetchProperty($allocationId);
+        $property = $this->deviceDetailForm->fetchProperty($deviceId);
 
-        $this->form->serial = $property[0]->serial ?? null;
-        $this->form->bmn    = $property[0]->bmn_number ?? null;
-        $this->form->information = $property[0]->information ?? null;
+        $this->deviceDetailForm->serial = $property[0]->serial ?? null;
+        $this->deviceDetailForm->bmn = $property[0]->bmn_number ?? null;
+        $this->deviceDetailForm->information = $property[0]->information ?? null;
     }
 
     public function storeDevice(): void
     {
         $this->dispatch('validate');
 
-        $message = $this->form->save($this->allocationId);
+        $message = $this->deviceDetailForm->save($this->deviceId);
 
         $this->dispatch('notification', message: $message);
     }
 
-    public function addAllocationInformation(): void
-    {}
+    public function addAllocationInformation(string $allocationId): void
+    {
+        $this->allocationId = $allocationId;
+
+        $property = $this->deviceAllocationForm->fetchProperty($allocationId);
+
+        $this->deviceAllocationForm->user = $property[0]->user_id ?? null;
+        $this->deviceAllocationForm->bast_date = $property[0]->receipt_at ?? null;
+        $this->deviceAllocationForm->bast_number = $property[0]->bast_no ?? null;
+    }
+
+    public function storeAllocation(): void
+    {
+        $this->dispatch('validate');
+
+        $this->deviceAllocationForm->device = $this->allocationId;
+        $this->deviceAllocationForm->device_master = $this->master;
+
+        $message = $this->deviceAllocationForm->save();
+
+        $this->dispatch('notification', message: $message);
+    }
+
+    public function deleteAllocation(): void
+    {
+        $message = $this->deviceAllocationForm->deleteAllocation($this->allocationId);
+
+        $this->dispatch('notification', message: $message);
+    }
 
     public function deleteDeviceInformation(string $deleteId): void
     {
@@ -94,7 +133,7 @@ class AllocationList extends Component
 
     public function confirmDelete(): void
     {
-        $message = $this->form->delete($this->deleteId);
+        $message = $this->deviceDetailForm->delete($this->deleteId);
 
         $this->dispatch('notification', message: $message);
 
@@ -103,6 +142,6 @@ class AllocationList extends Component
 
     private function fetchRequest(?string $keyword, int $pagination): Paginator
     {
-        return $this->form->fetchInformation($this->device, $keyword, $pagination);
+        return $this->deviceDetailForm->fetchInformation($this->master, $keyword, $pagination);
     }
 }

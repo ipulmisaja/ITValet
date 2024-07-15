@@ -17,7 +17,7 @@ class DeviceState extends Model
     protected $table = "device_state";
 
     protected $fillable = [
-        'user_id', 'device_id', 'receipt_at', 'bast_no', 'bast_file'
+        'user_id', 'device_id', 'device_master_id', 'receipt_at', 'bast_no', 'bast_file'
     ];
 
     protected $casts = ['receipt_at' => 'datetime:Y-m-d'];
