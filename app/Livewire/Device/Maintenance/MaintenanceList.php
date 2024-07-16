@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Livewire\Device\Maintenance;
 
+use App\Livewire\Traits\GenerateMemo;
 use App\Livewire\Traits\HasTransaction;
 use App\Models\Device;
 use App\Models\DeviceMaintenance;
 use App\Models\MaintenanceMemo;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Carbon\Carbon;
 use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -20,15 +20,40 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class MaintenanceList extends Component
 {
-    use HasTransaction, WithPagination;
+    use GenerateMemo, HasTransaction, WithPagination;
+
+    /** Form Property */
+    public MaintenanceForm $maintenanceForm;
 
     public Device $device;
-    public int $numberOfPagination = 20;
+
+    /** Page Properties */
+    public int $numberOfPagination = 10;
     public ?string $searchKeyword  = null;
+
+    /** Modal Properties */
+    public bool $builderModal = false;
     public bool $deleteModal = false;
 
     #[Locked]
     public string $maintenanceId;
+
+    #[Locked]
+    public $conditionOpt =
+        "<option value='rusak berat'>Rusak Berat</option>
+        <option value='rusak ringan'>Rusak Ringan</option>";
+
+    #[Locked]
+    public $actionOpt =
+        "<option value='belum perbaikan'>Belum</option>
+        <option value='sedang perbaikan'>Sedang</option>
+        <option value='selesai perbaikan'>Selesai</option>
+        <option value='batal perbaikan'>Batal</option>";
+
+    #[Locked]
+    public $repairOpt =
+        "<option value='1'>Ya</option>
+        <option value='0'>Tidak</option>";
 
     #[Computed]
     public function condition(): array
@@ -41,6 +66,12 @@ class MaintenanceList extends Component
     public function mount(Device $device)
     {
         $this->device = $device;
+
+        if (request()->is('/perangkat-ti/pemeliharaan/*')) {
+            $this->maintenanceForm->device_master_id = $device->master->id;
+            $this->maintenanceForm->device_id = $device->id;
+            $this->maintenanceForm->state_id = $device->states[0]->id;
+        }
     }
 
     #[Title('Pemeliharaan Perangkat')]
@@ -55,28 +86,54 @@ class MaintenanceList extends Component
         ]);
     }
 
-    public function generateMemo(?string $number)
+    public function addMaintenance()
     {
-        if (!empty($number)) {
-            $result = MaintenanceMemo::with('maintenances.device')->where('number', $number)->get();
+        $this->builderModal = true;
 
-            $data = [
-                'invoice' => substr($result[0]->id, 0, 8),
-                'number'  => $number,
-                'devices' => $result[0]->maintenances,
-                'date'    => date('Y-m-d'),
-                // $qrcode = base64_encode(QrCode::format('png')->size(200)->errorCorrection('H')->generate('string'));
-            ];
-
-            $pdf = Pdf::loadView('memo', ['data' => $data]);
-
-            return response()->streamDownload(function () use ($pdf) {
-                echo $pdf->stream();
-            }, 'Memo.pdf');
-        }
+        $this->maintenanceForm->device_name = $this->device->master->name . ' (' . $this->device->serial . ')';
     }
 
-    public function deleteItem(string $maintenanceId): void
+    public function storeMaintenance()
+    {
+        $this->dispatch('validate');
+
+        $message = $this->maintenanceForm->save();
+
+        $this->dispatch('notification', message: $message);
+
+        $this->builderModal = false;
+    }
+
+    public function editMaintenance(string $maintenanceId)
+    {
+        $this->maintenanceId = $maintenanceId;
+
+        $data = $this->maintenanceForm->fetchEditProperty($maintenanceId);
+
+        $this->maintenanceForm->device_name = $data[0]->device->master->name . ' (' . $data[0]->device->serial . ')';
+        $this->maintenanceForm->condition   = $data[0]->condition;
+        $this->maintenanceForm->description = $data[0]->description;
+        $this->maintenanceForm->status      = $data[0]->maintenance ?? null;
+        $this->maintenanceForm->repair      = $data[0]->repair_request ?? null;
+    }
+
+    public function updateMaintenance()
+    {
+        $this->dispatch('validate');
+
+        $message = $this->maintenanceForm->update($this->maintenanceId);
+
+        $this->dispatch('notification', message: $message);
+
+        $this->reset('maintenanceId');
+    }
+
+    public function generateMemo(?string $number)
+    {
+        return $this->generate($number);
+    }
+
+    public function deleteMaintenance(string $maintenanceId): void
     {
         $this->maintenanceId = $maintenanceId;
 
@@ -85,22 +142,17 @@ class MaintenanceList extends Component
 
     public function confirmDelete(): void
     {
-        DeviceMaintenance::where('id', $this->maintenanceId)->delete();
+        $result = $this->maintenanceForm->delete($this->maintenanceId);
+
+        $this->dispatch('notification', message: $result);
+
+        $this->reset('maintenanceId');
 
         $this->deleteModal = false;
     }
 
     private function fetchRequests(?string $device, ?string $keyword, int $pagination): Paginator
     {
-        $role = auth()->user()->roles[0]->name;
-
-        return
-            DeviceMaintenance::search($keyword)
-                ->query(fn($query) => $query->with(['memo', 'device']))
-                ->when(!is_null($device), function($query) use ($device) {
-                    $query->where('device_id', $device);
-                })
-                ->orderBy('created_at', 'desc')
-                ->paginate($pagination);
+        return $this->maintenanceForm->fetchInformation($device, $keyword, $pagination);
     }
 }

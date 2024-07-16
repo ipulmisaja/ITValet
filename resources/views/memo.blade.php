@@ -63,7 +63,7 @@
                     @foreach ($data['devices'] as $index => $device)
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $device->device->name }}</td>
+                            <td>{{ $device->device->master->name }}</td>
                             <td>{{ $device->device->serial }}</td>
                             <td>{!! $device->description !!}</td>
                         </tr>

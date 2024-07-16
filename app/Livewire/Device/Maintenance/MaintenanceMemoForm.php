@@ -2,14 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Livewire\Forms;
+namespace App\Livewire\Device\Maintenance;
 
 use App\Livewire\Traits\HasTransaction;
 use App\Models\DeviceMaintenance;
 use App\Models\MaintenanceMemo;
-use Exception;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -31,25 +28,21 @@ class MaintenanceMemoForm extends Form
 
     public function save(): string
     {
-        try {
-            DB::beginTransaction();
+        $this->validate();
 
+        $data = function() {
             $memo = MaintenanceMemo::create(['number' => $this->number, 'sign_code' => Str::random(8)]);
 
             for ($i = 0; $i < count($this->maintenances); $i++) {
                 DeviceMaintenance::where('id', $this->maintenances[$i])->update(['memo_id' => $memo->id]);
             }
+        };
 
-            DB::commit();
+        $result = $this->modelTransaction($data());
 
-            $message = "Memo baru telah dibuat.";
-        } catch(Exception $exception) {
-            DB::rollBack();
-
-            Log::error($exception->getMessage());
-
-            $message = "Memo tidak dapat dibuat.";
-        }
+        $message = $result === 'Success'
+                 ? "Memo telah dibuat."
+                 : "Memo gagal dibuat.";
 
         return $message;
     }

@@ -6,10 +6,7 @@ use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Device\Master\DeviceList;
 use App\Livewire\Device\Allocation\AllocationList;
 use App\Livewire\Device\Maintenance\MaintenanceList;
-use App\Livewire\Device\Maintenance\MaintenanceCreate;
-use App\Livewire\Device\Maintenance\MaintenanceEdit;
-use App\Livewire\Device\Maintenance\MaintenanceMemoList;
-use App\Livewire\Device\Maintenance\MaintenanceMemoBuilder;
+use App\Livewire\Device\Maintenance\MaintenanceMemo;
 use App\Livewire\Service\RequestList;
 use App\Livewire\Service\RequestBuilder;
 use App\Livewire\Service\RequestRoom;
@@ -33,17 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('daftar-perangkat', DeviceList::class)->name('device.list');
             Route::get('alokasi-perangkat/{master}', AllocationList::class)->name('device.allocation.list');
             Route::get('pemeliharaan/{device?}', MaintenanceList::class)->name('device.maintenance.list');
-            Route::get('pemeliharaan/memo/list', MaintenanceMemoList::class)->name('device.maintenance.memo');
-        });
-
-        Route::group(['middleware' => ['permission:create-device|create-device-state|create-device-maintenance']], function() {
-            Route::get('pemeliharaan/baru/{deviceId}', MaintenanceCreate::class)->name('device.maintenance.create');
-            Route::get('pemeliharaan/memo/tambah', MaintenanceMemoBuilder::class)->name('device.maintenance.create-memo');
-        });
-
-        Route::group(['middleware' => ['permission:update-device|update-device-state|update-device-maintenance']], function() {
-            Route::get('pemeliharaan/edit/{maintenanceId}', MaintenanceEdit::class)->name('device.maintenance.edit');
-            Route::get('pemeliharaan/memo/edit/{maintenanceMemo}', MaintenanceMemoBuilder::class)->name('device.maintenance.edit-memo');
+            Route::get('pemeliharaan/memo/list', MaintenanceMemo::class)->name('device.maintenance.memo');
         });
     });
 

@@ -11,7 +11,7 @@ trait DeviceMaintenanceRelationship
 {
     public function device()
     {
-        return $this->belongsTo(Device::class, 'device_id', 'id')->with('state.user');
+        return $this->belongsTo(Device::class, 'device_id', 'id')->with(['master', 'states.user']);
     }
 
     public function memo()

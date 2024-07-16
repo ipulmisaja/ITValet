@@ -10,7 +10,9 @@
                 <div class="flex items-center mb-4 sm:mb-0">
                     <x-forms.inputs.search placeholder="Cari informasi memorandum..." />
                 </div>
-                <x-pages.page-button :route="route('device.maintenance.create-memo')" icon="plus-circle" title="Memo Baru" />
+                @if ($this->maintenanceList !== 'empty')
+                    <x-buttons.page wire:click.prevent="createMemo" icon="plus-circle" title="Memo Baru" />
+                @endif
             </div>
 
             <div class="relative overflow-x-auto shadow rounded-lg">
@@ -63,7 +65,7 @@
                                         <p class="text-gray-800 dark:text-white">
                                         <ul style="list-style-type:circle" class="space-y-2">
                                             @foreach ($memo->maintenances as $maintenance)
-                                                <li>{{ $maintenance->device->brand . ' ' . $maintenance->device->name . ' (SN : ' . $maintenance->device->serial . ')' }}
+                                                <li>{{ $maintenance->device->master->brand . ' ' . $maintenance->device->master->name . ' (SN : ' . $maintenance->device->serial . ')' }}
                                                 </li>
                                             @endforeach
                                         </ul>
@@ -91,14 +93,17 @@
                                     </td> --}}
                                     <td class="px-6 py-4">
                                         <div class="flex place-items-center space-x-3">
-                                            <x-pages.cell-button.generate-memo :id="$memo->id" />
+                                            <x-buttons.table-action
+                                                wire:click.prevent="generateMemo('{{ $memo->number }}')"
+                                                tooltip="Generate Memo" icon="document-magnify"
+                                                @class(['text-orange-500 hover:text-orange-600 cursor-pointer']) />
 
-                                            @role('admin')
+                                            {{-- @role('admin')
                                                 <x-pages.cell-button.navigate :route="route('device.maintenance.edit-memo', $memo->id)" tooltip="Update"
                                                     color="text-green-500 hover:text-green-600" icon="pencil-square" />
 
                                                 <x-pages.cell-button.delete-item :id="$memo->id" />
-                                            @endrole
+                                            @endrole --}}
                                         </div>
                                     </td>
                                 </tr>
@@ -111,6 +116,32 @@
 
         {{-- Pagination Content --}}
         {{ $memos->links('vendor.livewire.tailwind') }}
+
+        {{-- Create Memo Modal --}}
+        <x-forms.modals.builder title="Memo Baru">
+            <form wire:submit="storeMemo">
+                <div class="px-6 pb-4">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+                        <div class="col-span-2">
+                            <x-forms.inputs.text model="maintenanceMemoForm.number" label="Nomor Memo" type="text" />
+                        </div>
+                        <div class="col-span-2">
+                            <x-forms.inputs.tom-select model="maintenanceMemoForm.maintenances" label="Daftar Perangkat"
+                                :optitem="$this->maintenanceList" placeholder="Daftar Pemeliharaan Perangkat" :multiple="true" />
+                        </div>
+                    </div>
+                </div>
+                <div class="rounded-b-md bg-gray-200 dark:bg-gray-600 px-6 py-4">
+                    <button type="submit"
+                        class="flex py-2 px-3 text-sm font-medium ml-auto text-center text-white bg-primary-600 rounded-md hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600">
+                        <div wire:loading>
+                            <x-icons.flowbite-solid name="animate-spin" class="w-5 h-5" />
+                        </div>
+                        <span>Buat Memo</span>
+                    </button>
+                </div>
+            </form>
+        </x-forms.modals.builder>
 
         {{-- Delete Modal --}}
         <x-forms.modals.delete-confirmation />

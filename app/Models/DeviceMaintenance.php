@@ -17,16 +17,18 @@ class DeviceMaintenance extends Model
     protected $table = "device_maintenance";
 
     protected $fillable = [
-        "device_id",
-        "request_id",
-        "condition",
-        "maintenance",
-        "description",
-        "repair_request",
-        "memo_id",
-        "created_at",
-        "maintenance_at",
-        "completed_at"
+        'device_master_id',
+        'device_id',
+        'state_id',
+        'request_id',
+        'condition',
+        'maintenance',
+        'description',
+        'repair_request',
+        'memo_id',
+        'created_at',
+        'maintenance_at',
+        'completed_at'
     ];
 
     protected $casts = [
