@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jul 12, 2024 at 08:15 AM
+-- Generation Time: Jul 17, 2024 at 07:33 AM
 -- Server version: 8.0.30
 -- PHP Version: 8.1.10
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `devices` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `device_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `serial` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `serial` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bmn_number` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `information` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -293,16 +293,16 @@ INSERT INTO `devices` (`id`, `device_id`, `serial`, `bmn_number`, `information`,
 --
 
 CREATE TABLE `device_maintenance` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `device_master_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `device_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `state_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `request_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `condition` enum('rusak berat','rusak ringan','baik') COLLATE utf8mb4_unicode_ci NOT NULL,
-  `maintenance` enum('belum perbaikan','sedang perbaikan','selesai perbaikan','batal perbaikan') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'belum perbaikan',
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `request_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `condition` enum('rusak berat','rusak ringan','baik') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `maintenance` enum('belum perbaikan','sedang perbaikan','selesai perbaikan','batal perbaikan') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'belum perbaikan',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `repair_request` tinyint(1) NOT NULL DEFAULT '2',
-  `memo_id` char(36) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `memo_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `maintenance_at` timestamp NULL DEFAULT NULL,
   `completed_at` timestamp NULL DEFAULT NULL,
@@ -452,13 +452,13 @@ INSERT INTO `device_master` (`id`, `name`, `brand`, `type`, `image`, `procuremen
 --
 
 CREATE TABLE `device_state` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `device_master_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `device_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `receipt_at` timestamp NULL DEFAULT NULL,
-  `bast_no` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bast_file` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bast_no` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bast_file` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -643,10 +643,10 @@ INSERT INTO `device_state` (`id`, `device_master_id`, `user_id`, `device_id`, `r
 
 CREATE TABLE `failed_jobs` (
   `id` bigint UNSIGNED NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -673,7 +673,7 @@ CREATE TABLE `maintenance_memos` (
 
 CREATE TABLE `migrations` (
   `id` int UNSIGNED NOT NULL,
-  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -712,9 +712,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 --
 
 CREATE TABLE `model_has_permissions` (
-  `permission_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL
+  `permission_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -724,9 +724,9 @@ CREATE TABLE `model_has_permissions` (
 --
 
 CREATE TABLE `model_has_roles` (
-  `role_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `model_uuid` char(36) COLLATE utf8mb4_unicode_ci NOT NULL
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -796,11 +796,11 @@ INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_uuid`) VALUES
 --
 
 CREATE TABLE `notifications` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `notifiable_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `notifiable_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `data` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `read_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -863,8 +863,8 @@ INSERT INTO `notifications` (`id`, `type`, `notifiable_type`, `notifiable_id`, `
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -875,9 +875,9 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `permissions` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -915,11 +915,11 @@ INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at
 
 CREATE TABLE `personal_access_tokens` (
   `id` bigint UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `tokenable_id` bigint UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `expires_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -933,9 +933,9 @@ CREATE TABLE `personal_access_tokens` (
 --
 
 CREATE TABLE `roles` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `guard_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -958,8 +958,8 @@ INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VAL
 --
 
 CREATE TABLE `role_has_permissions` (
-  `permission_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `role_id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL
+  `permission_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1004,9 +1004,9 @@ INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
 
 CREATE TABLE `service_comments` (
   `id` bigint UNSIGNED NOT NULL,
-  `request_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `request_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1050,14 +1050,14 @@ INSERT INTO `service_comments` (`id`, `request_id`, `user_id`, `comment`, `creat
 --
 
 CREATE TABLE `service_requests` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `service_type_id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `device_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `summary` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `attachment` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('menunggu','dijawab','ditutup','ditunda','spam') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `service_type_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `device_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `summary` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attachment` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` enum('menunggu','dijawab','ditutup','ditunda','spam') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `maintenance_request` tinyint(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `completed_at` timestamp NULL DEFAULT NULL
@@ -1082,8 +1082,8 @@ INSERT INTO `service_requests` (`id`, `user_id`, `service_type_id`, `device_id`,
 --
 
 CREATE TABLE `service_types` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1103,18 +1103,18 @@ INSERT INTO `service_types` (`id`, `type`, `created_at`, `updated_at`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `password` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `change_password` tinyint(1) NOT NULL DEFAULT '0',
-  `remember_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bps_id` varchar(9) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `employee_id` varchar(19) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telegram_id` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `photo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` enum('Perorangan','Ruangan') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bps_id` varchar(9) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `employee_id` varchar(19) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telegram_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `photo` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type` enum('Perorangan','Ruangan') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL
@@ -1177,7 +1177,6 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `change_pass
 ('b32b2f8f-9636-457b-a602-020f1f6570cb', 'Abdul Hafid SST', 'hafid.mhd', 'hafid.mhd@bps.go.id', '$2y$10$PdKmB8CTAU8NAbqTgQP3C.EuMNtXLdn.V1up6ezOg5Am.8v8mIHua', 0, NULL, '340055708', '199002052012111001', NULL, NULL, 'Perorangan', '2023-07-17 02:32:41', '2023-07-17 02:32:41', NULL),
 ('b7885f05-90c0-4d23-8b53-525fa289d44c', 'Tina Wahyufitri, S.Si, M.Si', 'tinaw', 'tinaw@bps.go.id', '$2y$10$RJg/MOZLKuqHD1YQYXaoV.mw7nnsPG/T.dKY/H43Uz9/lHP23NM02', 0, NULL, '340015476', '197609281997122001', NULL, NULL, 'Perorangan', '2023-07-17 02:32:39', '2023-07-17 02:32:39', NULL),
 ('c132686a-e7b7-4029-99a5-13e0987f71d8', 'Ruang Sekretaris', '', NULL, '$2y$10$gVjW1.DxGxbD0uZIlCG2Sez3Km4SBdpd7qclAFPOUMDgwvvtz48W6', 0, NULL, NULL, NULL, NULL, NULL, 'Ruangan', '2023-07-17 02:32:42', '2023-07-17 02:32:42', NULL),
-('c5b9e1da-1cea-4633-9f23-afe1b9b43ee8', 'Pratiwi Bahar', 'pratiwi.bahar', 'pratiwi.bahar@gmail.com', '$2y$10$OQAOP5rEKdGKz70kVcypCuXABnRpPxMslemiSdb2inhY/fPGAxkpq', 0, NULL, '340056466', '199008272024062002', NULL, NULL, 'Perorangan', '2024-07-06 23:50:20', '2024-07-06 23:58:23', '2024-07-06 23:58:23'),
 ('caba2131-9291-4ba3-8842-df8680b07dd5', 'Saiyed Andi Bangsawan SE', 'bangsawan', 'bangsawan@bps.go.id', '$2y$10$Yk5JXdVX8aWfq529kHXsZeMnfmTo/n.wFXngCM8AFQWbd6WKhaDiq', 0, NULL, '340018954', '197610132006041014', NULL, NULL, 'Perorangan', '2023-07-17 02:32:40', '2023-07-17 02:32:40', NULL),
 ('cb9a51d1-5c5f-4403-a473-264fead18228', 'Muhammad Said, S.ST', 'msgkuna', 'msgkuna@bps.go.id ', '$2y$10$N6Es0Y7Fd7/gTwNQSMWA3OzKwRLUDXwTesWlloPGZmKiTZx1tcFlO', 0, NULL, '340015383', '197305161996121001', NULL, NULL, 'Perorangan', '2023-07-17 02:32:42', '2023-07-17 02:32:42', NULL),
 ('d1df9c0f-46a7-420c-b126-ad4f1d7c871e', 'Ruang Nerwilis', '', NULL, '$2y$10$wSksD9dWxaQMlTp3/Pr2FuvKfG53QyV90htq2yEhnejky74OF61K6', 0, NULL, NULL, NULL, NULL, NULL, 'Ruangan', '2023-07-17 02:32:42', '2023-07-17 02:32:42', NULL),
@@ -1205,12 +1204,12 @@ INSERT INTO `users` (`id`, `name`, `username`, `email`, `password`, `change_pass
 --
 
 CREATE TABLE `webhooks` (
-  `id` char(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `provider` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` enum('up','down') COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `provider` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` enum('up','down') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
