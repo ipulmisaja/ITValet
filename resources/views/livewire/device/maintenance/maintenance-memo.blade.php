@@ -98,12 +98,11 @@
                                                 tooltip="Generate Memo" icon="document-magnify"
                                                 @class(['text-orange-500 hover:text-orange-600 cursor-pointer']) />
 
-                                            {{-- @role('admin')
-                                                <x-pages.cell-button.navigate :route="route('device.maintenance.edit-memo', $memo->id)" tooltip="Update"
-                                                    color="text-green-500 hover:text-green-600" icon="pencil-square" />
-
-                                                <x-pages.cell-button.delete-item :id="$memo->id" />
-                                            @endrole --}}
+                                            @role('admin')
+                                                <x-buttons.table-action
+                                                    wire:click.prevent="deleteMemo('{{ $memo->id }}')" tooltip="Update"
+                                                    icon="pencil-square" @class(['text-green-500 hover:text-green-600 cursor-pointer']) />
+                                            @endrole
                                         </div>
                                     </td>
                                 </tr>

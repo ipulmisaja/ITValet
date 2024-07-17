@@ -6,7 +6,6 @@ namespace App\Livewire\Device\Master;
 
 use App\Models\DeviceMaster;
 use App\Traits\HasRenderOption;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -50,19 +49,19 @@ class DeviceList extends Component
     public function render(): View
     {
         return view("livewire.device.master.device-list", [
-            'device_masters' => $this->fetchRequest(
+            'device_masters' => $this->form->fetchInformation(
                 $this->searchKeyword,
                 $this->numberOfPagination
             )
         ]);
     }
 
-    public function createDevice()
+    public function createDevice(): void
     {
         $this->builderModal = true;
     }
 
-    public function storeDevice()
+    public function storeDevice(): void
     {
         $this->dispatch('validate');
 
@@ -71,14 +70,5 @@ class DeviceList extends Component
         $this->dispatch('notification', message: $result);
 
         $this->builderModal = false;
-    }
-
-    private function fetchRequest(?string $keyword, int $pagination): Paginator
-    {
-        return
-            DeviceMaster::search($keyword)
-                ->query(fn ($query) => $query->with(['devices:device_id', 'states:device_master_id', 'maintenances:device_master_id,condition']))
-                ->orderBy('created_at', 'desc')
-                ->paginate($pagination);
     }
 }

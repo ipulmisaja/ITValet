@@ -11,6 +11,7 @@ use App\Models\DeviceMaintenance;
 use App\Models\MaintenanceMemo;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\Title;
@@ -75,10 +76,10 @@ class MaintenanceList extends Component
     }
 
     #[Title('Pemeliharaan Perangkat')]
-    public function render()
+    public function render(): View
     {
         return view('livewire.device.maintenance.maintenance-list', [
-            'maintenances' => $this->fetchRequests(
+            'maintenances' => $this->maintenanceForm->fetchInformation(
                 $this->device->id,
                 $this->searchKeyword,
                 $this->numberOfPagination
@@ -86,14 +87,22 @@ class MaintenanceList extends Component
         ]);
     }
 
-    public function addMaintenance()
+    public function addMaintenance(): void
     {
+        $this->reset([
+            'maintenanceForm.device_name',
+            'maintenanceForm.condition',
+            'maintenanceForm.description',
+            'maintenanceForm.status',
+            'maintenanceForm.repair'
+        ]);
+
         $this->builderModal = true;
 
         $this->maintenanceForm->device_name = $this->device->master->name . ' (' . $this->device->serial . ')';
     }
 
-    public function storeMaintenance()
+    public function storeMaintenance(): void
     {
         $this->dispatch('validate');
 
@@ -108,13 +117,7 @@ class MaintenanceList extends Component
     {
         $this->maintenanceId = $maintenanceId;
 
-        $data = $this->maintenanceForm->fetchEditProperty($maintenanceId);
-
-        $this->maintenanceForm->device_name = $data[0]->device->master->name . ' (' . $data[0]->device->serial . ')';
-        $this->maintenanceForm->condition   = $data[0]->condition;
-        $this->maintenanceForm->description = $data[0]->description;
-        $this->maintenanceForm->status      = $data[0]->maintenance ?? null;
-        $this->maintenanceForm->repair      = $data[0]->repair_request ?? null;
+        $this->maintenanceForm->fetchMaintenance($maintenanceId);
     }
 
     public function updateMaintenance()
@@ -149,10 +152,5 @@ class MaintenanceList extends Component
         $this->reset('maintenanceId');
 
         $this->deleteModal = false;
-    }
-
-    private function fetchRequests(?string $device, ?string $keyword, int $pagination): Paginator
-    {
-        return $this->maintenanceForm->fetchInformation($device, $keyword, $pagination);
     }
 }

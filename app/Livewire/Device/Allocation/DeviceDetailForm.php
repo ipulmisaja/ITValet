@@ -33,15 +33,22 @@ class DeviceDetailForm extends Form
                 ->paginate($pagination);
     }
 
-    public function fetchProperty(string $deviceId): Collection
+    public function fetchDevice(string $deviceId): void
     {
-        return
-            Device::where('id', $deviceId)->get(['serial', 'bmn_number', 'information']);
+        $device = Device::where('id', $deviceId)->get(['serial', 'bmn_number', 'information']);
+
+        $this->serial      = $device[0]->serial ?? null;
+        $this->bmn         = $device[0]->bmn_number ?? null;
+        $this->information = $device[0]->information ?? null;
     }
 
     public function addStock(string $deviceId): string
     {
-        $result = $this->modelTransaction(Device::create(['device_id' => $deviceId]));
+        $query = function() use ($deviceId) {
+            Device::create(['device_id' => $deviceId]);
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === "Success"
                  ? "Stok perangkat telah ditambahkan."
@@ -54,13 +61,15 @@ class DeviceDetailForm extends Form
     {
         $this->validate();
 
-        $result = $this->modelTransaction(
-                Device::where('id', $deviceId)->update([
-                    'serial'      => $this->serial ?? null,
-                    'bmn_number'  => $this->bmn ?? null,
-                    'information' => $this->information ?? null
-                ])
-            );
+        $query = function() use ($deviceId) {
+            Device::where('id', $deviceId)->update([
+                'serial'      => $this->serial ?? null,
+                'bmn_number'  => $this->bmn ?? null,
+                'information' => $this->information ?? null
+            ]);
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === "Success"
                  ? "Informasi perangkat telah disimpan."
@@ -71,7 +80,12 @@ class DeviceDetailForm extends Form
 
     public function delete(string $deleteId): string
     {
-        $result = $this->modelTransaction(Device::where('id', $deleteId)->delete());
+        $query = function() use ($deleteId) {
+            $device = Device::findOrFail($deleteId);
+            $device->delete();
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === "Success"
                  ? "Informasi perangkat telah dihapus."

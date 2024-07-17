@@ -50,17 +50,22 @@ class MaintenanceForm extends Form
                 ->paginate($pagination);
     }
 
-    public function fetchEditProperty(string $maintenanceId): Collection
+    public function fetchMaintenance(string $maintenanceId): void
     {
-        return
-            DeviceMaintenance::with('device')->where('id', $maintenanceId)->get();
+        $maintenance = DeviceMaintenance::with('device')->where('id', $maintenanceId)->get();
+
+        $this->device_name = $maintenance[0]->device->master->name . ' (' . $maintenance[0]->device->serial . ')';
+        $this->condition   = $maintenance[0]->condition;
+        $this->description = $maintenance[0]->description;
+        $this->status      = $maintenance[0]->maintenance ?? null;
+        $this->repair      = $maintenance[0]->repair_request ?? null;
     }
 
     public function save(): string
     {
         // $this->validate();
 
-        $result = $this->modelTransaction(
+        $query = function() {
             DeviceMaintenance::create([
                 'device_master_id' => $this->device_master_id,
                 'device_id'        => $this->device_id,
@@ -69,8 +74,10 @@ class MaintenanceForm extends Form
                 'condition'        => $this->condition,
                 'description'      => $this->description ?? null,
                 'created_at'       => Carbon::now(),
-            ])
-        );
+            ]);
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === 'Success'
                  ? "Permohonan pemeliharaan telah ditambahkan."
@@ -83,15 +90,17 @@ class MaintenanceForm extends Form
     {
         // $this->validate();
 
-        $result = $this->modelTransaction(
+        $query = function() use ($maintenanceId) {
             DeviceMaintenance::where('id', $maintenanceId)->update([
                 'condition'      => $this->status === 'selesai perbaikan' ? 'baik' : ($this->status === 'batal perbaikan' ? 'rusak berat' : $this->condition),
                 'maintenance'    => $this->status,
                 'description'    => $this->description ?? null,
                 'repair_request' => $this->repair,
                 'completed_at'   => $this->status === 'selesai perbaikan' ? Carbon::now() : ($this->status === 'batal perbaikan' ? Carbon::now() : null)
-            ])
-        );
+            ]);
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === 'Success'
                  ? "Info pemeliharaan telah diupdate."
@@ -102,7 +111,12 @@ class MaintenanceForm extends Form
 
     public function delete(string $maintenanceId): string
     {
-        $result = $this->modelTransaction(DeviceMaintenance::where('id', $maintenanceId)->delete());
+        $query = function() use ($maintenanceId) {
+            $maintenance = DeviceMaintenance::findOrFail($maintenanceId);
+            $maintenance->delete();
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === 'Success'
                  ? "Informasi pemeliharaan telah dihapus."

@@ -7,6 +7,7 @@ namespace App\Livewire\Device\Maintenance;
 use App\Livewire\Traits\HasTransaction;
 use App\Models\DeviceMaintenance;
 use App\Models\MaintenanceMemo;
+use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
@@ -26,6 +27,15 @@ class MaintenanceMemoForm extends Form
     #[Validate('nullable', onUpdate: false)]
     public ?string $attachment;
 
+    public function fetchInformation(?string $keyword, int $pagination): Paginator
+    {
+        return
+            MaintenanceMemo::search($keyword)
+                ->query(fn($query) => $query->with('maintenances.device'))
+                ->orderBy('created_at', 'desc')
+                ->paginate($pagination);
+    }
+
     public function save(): string
     {
         $this->validate();
@@ -38,7 +48,7 @@ class MaintenanceMemoForm extends Form
             }
         };
 
-        $result = $this->modelTransaction($data());
+        $result = $this->modelTransaction($data);
 
         $message = $result === 'Success'
                  ? "Memo telah dibuat."
@@ -47,13 +57,34 @@ class MaintenanceMemoForm extends Form
         return $message;
     }
 
-    public function update(MaintenanceMemo $maintenanceMemo): string
+    public function update(string $memoId): string
     {
-        $result = $this->modelTransaction($maintenanceMemo->update(['number' => $this->number]));
+        $query = function() use ($memoId) {
+            MaintenanceMemo::where('id', $memoId)->update(['number' => $this->number]);
+        };
 
-        $message = $result !== 'Failed'
-                 ? "Memo No. " . $maintenanceMemo->number . " telah diperbaharui."
-                 : "Memo No. " . $maintenanceMemo->number . " gagal diperbahaui.";
+        $result = $this->modelTransaction($query);
+
+        $message = $result === 'Success'
+                 ? "Memo telah diperbaharui."
+                 : "Memo gagal diperbaharui.";
+
+        return $message;
+    }
+
+    public function delete(string $memoId): string
+    {
+        $query = function() use ($memoId) {
+            DeviceMaintenance::where('memo_id', $memoId)->update(['memo_id' => null]);
+
+            MaintenanceMemo::where('id', $memoId)->delete();
+        };
+
+        $result = $this->modelTransaction($query);
+
+        $message = $result === 'Success'
+                 ? "Memo telah dihapus."
+                 : "Memo gagal dihapus.";
 
         return $message;
     }

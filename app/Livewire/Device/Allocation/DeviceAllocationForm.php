@@ -29,17 +29,20 @@ class DeviceAllocationForm extends Form
 
     public $bast_file;
 
-    public function fetchProperty(string $allocationId): Collection
+    public function fetchProperty(string $allocationId): void
     {
-        return
-            DeviceState::where('device_id', $allocationId)->get();
+        $state = DeviceState::where('device_id', $allocationId)->get();
+
+        $this->user        = $state[0]->user_id ?? null;
+        $this->bast_date   = $state[0]->receipt_at ?? null;
+        $this->bast_number = $state[0]->bast_no ?? null;
     }
 
     public function save(): string
     {
         $this->validate();
 
-        $result = $this->modelTransaction(
+        $query = function() {
             DeviceState::updateOrCreate([
                 'user_id'          => $this->user,
                 'device_id'        => $this->device,
@@ -47,24 +50,25 @@ class DeviceAllocationForm extends Form
                 'receipt_at'       => $this->bast_date ?? null,
                 'bast_no'          => $this->bast_number ?? null,
                 'bast_file'        => $this->bast_file ?? null
-            ])
-        );
+            ]);
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === "Success"
                  ? "Informasi alokasi perangkat telah disimpan."
                  : "Informasi alokasi perangkat gagal disimpan.";
 
-        return '';
+        return $message;
     }
 
     public function deleteAllocation(string $allocationId): string
     {
-        $result = $this->modelTransaction(
-            DeviceState::query()
-                ->where('device_id', $allocationId)
-                ->where('user_id', $this->user)
-                ->delete()
-        );
+        $query = function() use ($allocationId) {
+            DeviceState::where('device_id', $allocationId)->where('user_id', $this->user)->delete();
+        };
+
+        $result = $this->modelTransaction($query);
 
         $message = $result === "Success"
                  ? "Informasi alokasi telah dihapus."

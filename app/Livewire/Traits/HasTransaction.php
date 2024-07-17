@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Log;
 
 trait HasTransaction
 {
-    public function modelTransaction($model): string
+    public function modelTransaction(callable $callable)
     {
         try {
             DB::beginTransaction();
 
-            $model;
+            $callable();
 
             DB::commit();
 

@@ -5,6 +5,7 @@ namespace App\Livewire\Device\Master;
 use App\Livewire\Traits\HasTransaction;
 use App\Models\Device;
 use App\Models\DeviceMaster;
+use Illuminate\Contracts\Pagination\Paginator;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -41,6 +42,15 @@ class DeviceForm extends Form
 
     public $image;
 
+    public function fetchInformation(?string $keyword, int $pagination): Paginator
+    {
+        return
+            DeviceMaster::search($keyword)
+                ->query(fn ($query) => $query->with(['devices:device_id', 'states:device_master_id', 'maintenances:device_master_id,condition']))
+                ->orderBy('created_at', 'desc')
+                ->paginate($pagination);
+    }
+
     public function save(): string
     {
         $this->validate();
@@ -57,7 +67,7 @@ class DeviceForm extends Form
             for ($i = 0; $i < $this->stock; $i++) Device::create(['device_id' => $device->id]);
         };
 
-        $result = $this->modelTransaction($query());
+        $result = $this->modelTransaction($query);
 
         $message = $result === "Success"
                  ? "Informasi perangkat telah ditambahkan."

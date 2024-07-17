@@ -60,7 +60,8 @@ class AllocationList extends Component
     public function render(): View
     {
         return view("livewire.device.allocation.allocation-list", [
-            'states' => $this->fetchRequest(
+            'states' => $this->deviceDetailForm->fetchInformation(
+                $this->master,
                 $this->searchKeyword,
                 $this->numberOfPagination
             )
@@ -78,11 +79,7 @@ class AllocationList extends Component
     {
         $this->deviceId = $deviceId;
 
-        $property = $this->deviceDetailForm->fetchProperty($deviceId);
-
-        $this->deviceDetailForm->serial = $property[0]->serial ?? null;
-        $this->deviceDetailForm->bmn = $property[0]->bmn_number ?? null;
-        $this->deviceDetailForm->information = $property[0]->information ?? null;
+        $this->deviceDetailForm->fetchDevice($deviceId);
     }
 
     public function storeDevice(): void
@@ -98,11 +95,7 @@ class AllocationList extends Component
     {
         $this->allocationId = $allocationId;
 
-        $property = $this->deviceAllocationForm->fetchProperty($allocationId);
-
-        $this->deviceAllocationForm->user = $property[0]->user_id ?? null;
-        $this->deviceAllocationForm->bast_date = $property[0]->receipt_at ?? null;
-        $this->deviceAllocationForm->bast_number = $property[0]->bast_no ?? null;
+        $this->deviceAllocationForm->fetchProperty($allocationId);
     }
 
     public function storeAllocation(): void
@@ -138,10 +131,5 @@ class AllocationList extends Component
         $this->dispatch('notification', message: $message);
 
         $this->deleteModal = false;
-    }
-
-    private function fetchRequest(?string $keyword, int $pagination): Paginator
-    {
-        return $this->deviceDetailForm->fetchInformation($this->master, $keyword, $pagination);
     }
 }

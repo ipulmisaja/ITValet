@@ -7,9 +7,7 @@ namespace App\Livewire\Device\Maintenance;
 use App\Livewire\Traits\GenerateMemo;
 use App\Livewire\Traits\HasTransaction;
 use App\Models\DeviceMaintenance;
-use App\Models\MaintenanceMemo as Memo;
 use App\Traits\HasRenderOption;
-use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\View\View;
 use Livewire\Attributes\Computed;
 use Livewire\Attributes\Locked;
@@ -30,7 +28,7 @@ class MaintenanceMemo extends Component
 
     /** Modal Properties */
     public bool $builderModal = false;
-    public bool $modal = false;
+    public bool $deleteModal = false;
 
     #[Locked]
     public string $memoId;
@@ -60,7 +58,7 @@ class MaintenanceMemo extends Component
     public function render(): View
     {
         return view('livewire.device.maintenance.maintenance-memo', [
-            'memos' => $this->fetchRequest(
+            'memos' => $this->maintenanceMemoForm->fetchInformation(
                 $this->searchKeyword,
                 $this->numberOfPagination
             )
@@ -86,28 +84,20 @@ class MaintenanceMemo extends Component
         return $this->generate($number);
     }
 
-    public function deleteItem(string $memoId): void
+    public function deleteMemo(string $memoId): void
     {
         $this->memoId = $memoId;
 
-        $this->modal = true;
+        $this->deleteModal = true;
     }
 
     public function confirmDelete(): void
     {
-        DeviceMaintenance::where('memo_id', $this->memoId)->update(['memo_id' => null]);
+        $message = $this->maintenanceMemoForm->delete($this->memoId);
 
-        Memo::where('id', $this->memoId)->delete();
+        $this->dispatch('notification', message: $message);
 
-        $this->modal = false;
+        $this->deleteModal = false;
     }
 
-    private function fetchRequest(?string $keyword, int $pagination): Paginator
-    {
-        return
-            Memo::search($keyword)
-                ->query(fn($query) => $query->with('maintenances.device'))
-                ->orderBy('created_at', 'desc')
-                ->paginate($pagination);
-    }
 }

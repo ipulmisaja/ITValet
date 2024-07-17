@@ -137,7 +137,7 @@
                                                 @can('delete-device-state')
                                                     <x-buttons.table-action
                                                         wire:click.prevent="deleteDeviceInformation('{{ $state->id }}')"
-                                                        icon="trash" tooltip="Hapus" @class(['text-red-500 hover:text-red-600']) />
+                                                        icon="trash" tooltip="Hapus" @class(['text-red-500 hover:text-red-600 cursor-pointer']) />
                                                 @endcan
                                             </div>
                                         </td>
