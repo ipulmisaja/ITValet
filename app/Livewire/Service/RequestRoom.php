@@ -86,14 +86,14 @@ class RequestRoom extends Component
 
             if (auth()->user()->hasRole('admin')) {
                 try {
-                    $notification = new \MBarlow\Megaphone\Types\Important(
-                        'Notifikasi!', // Notification Title
-                        'Admin membalas chat anda pada tiket #' . substr($this->serviceRequest->id, 0, 8) , // Notification Body
-                        route('request.room', $this->serviceRequest)
-                    );
+                    // $notification = new \MBarlow\Megaphone\Types\Important(
+                    //     'Notifikasi!', // Notification Title
+                    //     'Admin membalas chat anda pada tiket #' . substr($this->serviceRequest->id, 0, 8) , // Notification Body
+                    //     route('request.room', $this->serviceRequest)
+                    // );
 
-                    $user = User::find($this->serviceRequest->user_id);
-                    $user->notify($notification);
+                    // $user = User::find($this->serviceRequest->user_id);
+                    // $user->notify($notification);
 
                     // FIXME: Sementara dinonaktifkan karena bug connection refuse pada production
                     // $this->sendToUser(
@@ -105,14 +105,14 @@ class RequestRoom extends Component
                 }
             } else {
                 try {
-                    $notification = new \MBarlow\Megaphone\Types\Important(
-                        'Notifikasi!', // Notification Title
-                        auth()->user()->name . ' membalas chat anda pada tiket #' . substr($this->serviceRequest->id, 0, 8), // Notification Body
-                        route('request.room', $this->serviceRequest)
-                    );
+                    // $notification = new \MBarlow\Megaphone\Types\Important(
+                    //     'Notifikasi!', // Notification Title
+                    //     auth()->user()->name . ' membalas chat anda pada tiket #' . substr($this->serviceRequest->id, 0, 8), // Notification Body
+                    //     route('request.room', $this->serviceRequest)
+                    // );
 
-                    $user = User::find('2e034053-7883-4738-8836-a1dab1e5fa9d');
-                    $user->notify($notification);
+                    // $user = User::find('2e034053-7883-4738-8836-a1dab1e5fa9d');
+                    // $user->notify($notification);
 
                     // FIXME: Sementara dinonaktifkan karena bug connection refuse di production
                     // $this->sendToAdmin(auth()->user()->name . ' membalas chat anda pada tiket #' . substr($this->serviceRequest->id, 0, 8));

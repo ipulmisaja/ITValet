@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models\Traits;
 
 use App\Models\Device;
+use App\Models\DeviceMaster;
 use App\Models\ServiceType;
 use App\Models\User;
 
@@ -22,6 +23,6 @@ trait ServiceRequestRelationship
 
     public function device()
     {
-        return $this->belongsTo(Device::class, 'device_id', 'id');
+        return $this->belongsTo(Device::class, 'device_id', 'id')->with(['master', 'states']);
     }
 }

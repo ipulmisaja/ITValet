@@ -20,6 +20,7 @@ class ServiceRequest extends Model
         'user_id',
         'service_type_id',
         'device_id',
+        'maintenance_request',
         'summary',
         'description',
         'attachment',
