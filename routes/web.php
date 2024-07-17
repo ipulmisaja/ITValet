@@ -13,7 +13,6 @@ use App\Livewire\Service\RequestRoom;
 use App\Livewire\Settings\Access\RolePermission;
 use App\Livewire\Settings\Access\RolePermissionBuilder;
 use App\Livewire\Settings\User\UserList;
-use App\Livewire\Settings\User\UserBuilder;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', 'dashboard');
@@ -44,8 +43,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['role:admin']], function () {
         Route::prefix('/pengaturan/')->group(function () {
             Route::get('pengguna', UserList::class)->name('user');
-            Route::get('pengguna/tambah', UserBuilder::class)->name('user.create');
-            Route::get('pengguna/edit/{user}', UserBuilder::class)->name('user.edit');
 
             Route::get('hak-akses', RolePermission::class)->name('role-permission');
             Route::get('hak-akses/tambah', RolePermissionBuilder::class)->name('role-permission.create');
