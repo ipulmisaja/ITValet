@@ -17,7 +17,7 @@
                 @if (!is_null($device->id))
                     <x-buttons.page wire:click.prevent="addMaintenance" icon="plus-circle" title="Pemeliharaan" />
                 @else
-                    <x-buttons.page wire:navigate :href="route('device.maintenance.memo')" icon="document-magnify" title="Memo" />
+                    <x-buttons.page wire:navigate :href="route('maintenance.memo')" icon="document-magnify" title="Memo" />
                 @endif
             </div>
 

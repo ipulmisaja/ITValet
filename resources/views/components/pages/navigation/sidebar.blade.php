@@ -19,50 +19,24 @@
                             page="Dashboard" title="Dashboard" />
 
                         {{-- Layanan TI --}}
-                        <x-pages.navigation.menu :route="route('request')" :path="request()->routeIs('request') || request()->routeIs('request.*')
+                        <x-pages.navigation.menu :route="route('request.list')" :path="request()->routeIs('request.*')
                             ? 'font-extrabold text-gray-900 dark:text-white'
                             : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="ticket"
                             page="Request" title="Layanan" />
 
+                        {{-- Perangkat TI --}}
+                        <x-pages.navigation.menu :route="route('device.list')" :path="request()->routeIs('device.*')
+                            ? 'font-extrabold text-gray-900 dark:text-white'
+                            : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="server-stack"
+                            page="Device" title="Perangkat TI" />
 
-                        {{-- @role('admin|umum') --}}
-                        {{-- Perangkat --}}
-                        {{-- <x-pages.navigation.menu :route="route('device')" :path="request()->routeIs('device') || request()->routeIs('device.*')
-                                ? 'font-extrabold text-gray-900 dark:text-white'
-                                : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="server-stack"
-                                page="Hardware" title="Perangkat TI" /> --}}
-
-                        {{-- Alokasi --}}
-                        {{-- <x-pages.navigation.menu :route="route('allocation.list')" :path="request()->routeIs('allocation.*')
-                                ? 'font-extrabold text-gray-900 dark:text-white'
-                                : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4" icon="swatch"
-                                page="State" title="Alokasi" />
-                        @endrole --}}
-
-                        {{-- @canany(['read-device-maintenance', 'create-device-maintenance', 'update-device-maintenance']) --}}
                         {{-- Pemeliharaan --}}
-                        {{-- <x-pages.navigation.menu :route="route('maintenance.list')" :path="request()->routeIs('maintenance.*')
+                        @canany(['read-device-maintenance', 'create-device-maintenance', 'update-device-maintenance'])
+                            <x-pages.navigation.menu :route="route('maintenance.list')" :path="request()->routeIs('maintenance.*')
                                 ? 'font-extrabold text-gray-900 dark:text-white'
                                 : 'font-normal text-gray-500 dark:text-gray-400'" class="mb-4"
-                                icon="wrench-screwdriver" page="Maintenance" title="Pemeliharaan" /> --}}
-                        {{-- @endcanany --}}
-
-
-                        {{-- Perangkat TI --}}
-                        <x-pages.navigation.collapse-menu page="Device" icon="server-stack" label="Perangkat"
-                            :class="request()->routeIs('device.*')
-                                ? 'font-extrabold text-gray-900 dark:text-white'
-                                : 'font-normal text-gray-500 dark:text-gray-400'" :verticalborder="request()->routeIs('device.*') ? '' : 'opacity-50'">
-                            <x-pages.navigation.submenu :route="route('device.list')" title="Daftar" :path="request()->routeIs('device.list') ||
-                            request()->routeIs('device.create') ||
-                            request()->routeIs('device.edit')
-                                ? 'text-gray-900 dark:text-white'
-                                : 'text-gray-500 dark:text-gray-400'" />
-
-                            <x-pages.navigation.submenu :route="route('device.maintenance.list')" title="Pemeliharaan" :path="request()->routeIs('device.maintenance.*')
-                                ? 'text-gray-900 dark:text-white'
-                                : 'text-gray-500 dark:text-gray-400'" />
-                        </x-pages.navigation.collapse-menu>
+                                icon="wrench-screwdriver" page="Maintenance" title="Pemeliharaan" />
+                        @endcanany
                     </div>
 
                     @role('admin')

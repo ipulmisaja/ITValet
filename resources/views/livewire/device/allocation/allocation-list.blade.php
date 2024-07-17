@@ -129,7 +129,7 @@
 
                                                 {{-- Pemeliharaan --}}
                                                 @canany(['create-device-maintenance', 'update-device-maintenance'])
-                                                    <x-buttons.table-action wire:navigate :href="route('device.maintenance.list', $state->id)"
+                                                    <x-buttons.table-action wire:navigate :href="route('maintenance.list', $state->id)"
                                                         tooltip="Pemeliharaan" icon="shield-exclamation"
                                                         @class(['text-yellow-400 hover:text-yellow-500 cursor-pointer']) />
                                                 @endcanany

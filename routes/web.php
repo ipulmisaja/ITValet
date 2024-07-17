@@ -27,13 +27,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::group(['middleware' => ['permission:read-device|read-device-state|read-device-maintenance']], function() {
             Route::get('daftar-perangkat', DeviceList::class)->name('device.list');
             Route::get('alokasi-perangkat/{master}', AllocationList::class)->name('device.allocation.list');
-            Route::get('pemeliharaan/{device?}', MaintenanceList::class)->name('device.maintenance.list');
-            Route::get('pemeliharaan/memo/list', MaintenanceMemo::class)->name('device.maintenance.memo');
+            Route::get('pemeliharaan/{device?}', MaintenanceList::class)->name('maintenance.list');
+            Route::get('pemeliharaan/memo/list', MaintenanceMemo::class)->name('maintenance.memo');
         });
     });
 
     Route::prefix('/layanan-ti/')->group(function () {
-        Route::get('permintaan', RequestList::class)->name('request');
+        Route::get('permintaan', RequestList::class)->name('request.list');
         Route::get('permintaan/diskusi/{serviceRequest}', RequestRoom::class)->name('request.room');
     });
 
