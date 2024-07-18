@@ -175,8 +175,8 @@
         {{-- Alokasi Perangkat Drawer --}}
         <x-forms.modals.drawer drawer="drawer-edit-allocation" title="Edit Alokasi Perangkat" icon="pencil-square">
             <div class="mb-6">
-                <x-forms.inputs.tom-select model="deviceAllocationForm.user" label="Pengguna Perangkat"
-                    :optitem="$this->users" :disabled="auth()->user()->roles->first()->name !== 'admin' ? true : null" />
+                <x-forms.inputs.select model="deviceAllocationForm.user" label="Pengguna Perangkat" :optitem="$this->users"
+                    :disabled="auth()->user()->roles->first()->name !== 'admin' ? true : null" />
             </div>
             <div class="mb-6">
                 <x-forms.inputs.datepicker model="deviceAllocationForm.bast_date" label="Tanggal" />

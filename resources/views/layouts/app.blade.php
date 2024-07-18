@@ -60,8 +60,11 @@
     {{-- Tom Select JS --}}
     <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js" data-navigate-once></script>
 
+    {{-- Datepicker --}}
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js" data-navigate-once></script>
+
     {{-- Flatpickr JS --}}
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr" data-navigate-once></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr" data-navigate-once></script> --}}
 
     {{-- SVG JS --}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/svg.js/3.2.4/svg.min.js"
