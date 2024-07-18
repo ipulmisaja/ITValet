@@ -29,13 +29,9 @@ class Device extends Model
     public function toSearchableArray(): array
     {
         return [
-            'name'   => $this->name,
-            'serial' => $this->serial,
-            'brand'  => $this->brand,
-            'type'   => $this->type,
-            // 'bmn_number' => $this->bmn_number,
-            // 'operating_system' => $this->operating_system,
-            // 'procurement_type' => $this->procurement_type
+            'serial'      => $this->serial,
+            'bmn_number'  => $this->bmn_number,
+            'information' => $this->information
         ];
     }
 }

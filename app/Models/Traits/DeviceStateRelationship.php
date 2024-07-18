@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models\Traits;
 
 use App\Models\Device;
-use App\Models\DeviceMaster;
 use App\Models\User;
 
 trait DeviceStateRelationship
@@ -17,14 +16,6 @@ trait DeviceStateRelationship
 
     public function device()
     {
-        return $this->belongsTo(Device::class, 'device_id', 'device_id');
-    }
-
-    public function maintenance()
-    {}
-
-    public function devicemaster()
-    {
-        return $this->belongsTo(DeviceMaster::class, 'device_id', 'id');
+        return $this->belongsTo(Device::class, 'device_id', 'device_id')->with('master');
     }
 }

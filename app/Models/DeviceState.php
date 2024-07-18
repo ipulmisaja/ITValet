@@ -27,11 +27,11 @@ class DeviceState extends Model
     public function toSearchableArray()
     {
         return [
-            'bast_no'        => $this->bast_no,
-            'users.name'     => '',
-            'devices.name'   => '',
-            'devices.serial' => '',
-            'devices.bmn_number' => ''
+            'bast_no'              => $this->bast_no,
+            'users.name'           => '',
+            'device_master.name'   => '',
+            'devices.serial'       => '',
+            'devices.bmn_number'   => ''
         ];
     }
 }

@@ -42,8 +42,6 @@ class DeviceMaintenance extends Model
     public function toSearchableArray(): array
     {
         return [
-            'id'          => $this->id,
-            // TODO: Tambahkan pencarian device
             'condition'   => $this->condition,
             'maintenance' => $this->maintenance
         ];
