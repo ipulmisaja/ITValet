@@ -148,7 +148,8 @@
                                 type="text" />
                         </div>
                         <div class="col-span-2">
-                            <x-forms.inputs.trix model="requestForm.description" label="Deskripsi Permintaan Layanan" />
+                            <x-forms.inputs.text-area model="requestForm.description"
+                                label="Deskripsi Permintaan Layanan" />
                         </div>
                     </div>
                 </div>

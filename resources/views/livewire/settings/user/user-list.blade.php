@@ -143,9 +143,6 @@
         {{-- Edit User Drawer --}}
         <x-forms.modals.drawer drawer="drawer-edit-user" title="Edit User" icon="pencil-square">
             <div class="mb-6">
-                <x-forms.inputs.select model="userForm.type" label="Tipe Pengguna" method="live" :optitem="$userTypeOpt" />
-            </div>
-            <div class="mb-6">
                 <x-forms.inputs.text model="userForm.name" label="Nama Pegawai / Unit / Ruangan" type="text" />
             </div>
             <div class="mb-6">

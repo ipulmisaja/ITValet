@@ -27,12 +27,12 @@
                                 <div id="header">
                                     @if ($master->devices->count() - $master->states->count() == 0)
                                         <span
-                                            class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
+                                            class="bg-blue-100 text-blue-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">
                                             Sudah Teralokasi
                                         </span>
                                     @else
                                         <span
-                                            class="bg-green-100 text-green-800 text-base lg:text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-300 border border-green-300">
+                                            class="bg-green-100 text-green-800 text-sm font-medium me-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-300 border border-green-300">
                                             Belum Teralokasi {{ $master->devices->count() - $master->states->count() }}
                                             Perangkat
                                         </span>
@@ -54,18 +54,18 @@
                                     </div>
                                 </div>
                                 <div id="footer" class="flex items-center justify-between">
-                                    <div class="flex items-center text-xl lg:text-xs font-medium text-primary-400"
+                                    <div class="flex items-center text-sm lg:text-xs font-medium text-primary-400"
                                         x-data x-tooltip.raw="Baik">
                                         <x-icons.flowbite-solid name="shield-check" class="h-6 w-6 mr-2" />
                                         {{ $master->devices->count() - ($master->maintenances->where('condition', 'rusak ringan')->count() + $master->maintenances->where('condition', 'rusak berat')->count()) }}
                                         UNIT
                                     </div>
-                                    <div class="flex items-center text-xl lg:text-xs font-medium text-yellow-400" x-data
+                                    <div class="flex items-center text-sm lg:text-xs font-medium text-yellow-400" x-data
                                         x-tooltip.raw="Rusak Ringan">
                                         <x-icons.flowbite-solid name="exclamation-circle" class="h-6 w-6 mr-2" />
                                         {{ $master->maintenances->where('condition', 'rusak ringan')->count() }} UNIT
                                     </div>
-                                    <div class="flex items-center text-xl lg:text-xs font-medium text-red-400" x-data
+                                    <div class="flex items-center text-sm lg:text-xs font-medium text-red-400" x-data
                                         x-tooltip.raw="Rusak Berat">
                                         <x-icons.flowbite-solid name="fire" class="h-6 w-6 mr-2" />
                                         {{ $master->maintenances->where('condition', 'rusak berat')->count() }} UNIT
