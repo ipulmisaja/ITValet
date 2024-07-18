@@ -32,7 +32,7 @@ class MaintenanceForm extends Form
 
     public ?string $description;
 
-    public ?int $repair;
+    public $repair;
 
     public ?string $maintenance_at;
 
@@ -46,12 +46,14 @@ class MaintenanceForm extends Form
                 ->when(!is_null($device), function($query) use ($device) {
                     $query->where('device_id', $device);
                 })
-                ->orderBy('created_at', 'desc')
+                ->orderBy('condition', 'asc')
                 ->paginate($pagination);
     }
 
     public function fetchMaintenance(string $maintenanceId): void
     {
+        $this->reset(['device_name', 'condition', 'description', 'status', 'repair']);
+
         $maintenance = DeviceMaintenance::with('device')->where('id', $maintenanceId)->get();
 
         $this->device_name = $maintenance[0]->device->master->name . ' (' . $maintenance[0]->device->serial . ')';

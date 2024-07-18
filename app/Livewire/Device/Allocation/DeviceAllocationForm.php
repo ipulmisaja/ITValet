@@ -31,6 +31,8 @@ class DeviceAllocationForm extends Form
 
     public function fetchProperty(string $allocationId): void
     {
+        $this->reset(['user', 'bast_date', 'bast_number']);
+
         $state = DeviceState::where('device_id', $allocationId)->get();
 
         $this->user        = $state[0]->user_id ?? null;

@@ -7,7 +7,6 @@ namespace App\Livewire\Device\Allocation;
 use App\Livewire\Traits\HasTransaction;
 use App\Models\Device;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Support\Collection;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -35,6 +34,8 @@ class DeviceDetailForm extends Form
 
     public function fetchDevice(string $deviceId): void
     {
+        $this->reset(['serial', 'bmn', 'information']);
+
         $device = Device::where('id', $deviceId)->get(['serial', 'bmn_number', 'information']);
 
         $this->serial      = $device[0]->serial ?? null;
