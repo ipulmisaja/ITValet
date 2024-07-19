@@ -95,7 +95,7 @@
                                             @if ($request->user_id === auth()->user()->id && $request->status === 'menunggu')
                                                 <x-buttons.table-action data-drawer-target="drawer-edit-request"
                                                     data-drawer-show="drawer-edit-request" data-drawer-placement="right"
-                                                    aria-controls="drawe-edit-request"
+                                                    aria-controls="drawer-edit-request"
                                                     wire:click.prevent="editRequest('{{ $request->id }}')"
                                                     tooltip="Update" icon="pencil-square"
                                                     @class(['text-green-500 hover:text-green-600 cursor-pointer']) />
@@ -180,7 +180,7 @@
                     type="text" />
             </div>
             <div class="mb-6">
-                <x-forms.inputs.trix model="requestForm.description" label="Deskripsi Permintaan Layanan" />
+                <x-forms.inputs.text-area model="requestForm.description" label="Deskripsi Permintaan Layanan" />
             </div>
             <form wire:submit="updateRequest">
                 <button type="submit" data-drawer-hide="drawer-edit-request" aria-controls="drawer-edit-request"

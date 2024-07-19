@@ -45,14 +45,18 @@ class DeviceAllocationForm extends Form
         $this->validate();
 
         $query = function() {
-            DeviceState::updateOrCreate([
-                'user_id'          => $this->user,
-                'device_id'        => $this->device,
-                'device_master_id' => $this->device_master,
-                'receipt_at'       => $this->bast_date ?? null,
-                'bast_no'          => $this->bast_number ?? null,
-                'bast_file'        => $this->bast_file ?? null
-            ]);
+            DeviceState::updateOrCreate(
+                [
+                    'user_id'          => $this->user,
+                    'device_id'        => $this->device,
+                    'device_master_id' => $this->device_master
+                ],
+                [
+                    'receipt_at'       => $this->bast_date ?? null,
+                    'bast_no'          => $this->bast_number ?? null,
+                    'bast_file'        => $this->bast_file ?? null
+                ]
+            );
         };
 
         $result = $this->modelTransaction($query);

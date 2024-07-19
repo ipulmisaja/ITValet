@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Models\Traits;
 
 use App\Models\Device;
-use App\Models\DeviceMaster;
 use App\Models\ServiceType;
 use App\Models\User;
 
@@ -13,7 +12,7 @@ trait ServiceRequestRelationship
 {
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id', 'id');
+        return $this->belongsTo(User::class, 'user_id', 'id')->withTrashed();
     }
 
     public function serviceType()

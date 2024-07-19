@@ -6,6 +6,8 @@
     --color-border-input: #3f83f8;
     --color-hover-font-item: #495c68;
     --color-font-item: #4b5563;
+    --color-calendar-day: #020101;
+    --color-calendar-weekday: #4b5563;
 }
 
 :root.dark {
@@ -15,6 +17,8 @@
     --color-border-input: #3f83f8;
     --color-hover-font-item: #374151;
     --color-font-item: #fff;
+    --color-calendar-day: #ffffff;
+    --color-calendar-weekday: #94a3b8;
 }
 
 .flatpickr-calendar {
@@ -193,8 +197,8 @@
 
 .flatpickr-months .flatpickr-month {
     background: transparent;
-    color: var(--color-secondary);
-    fill: var(--color-secondary);
+    color: var(--color-calendar-weekday);
+    fill: var(--color-calendar-day);
     height: 34px;
     line-height: 1;
     text-align: center;
@@ -528,7 +532,7 @@ span.flatpickr-weekday {
     cursor: default;
     font-size: 90%;
     background: transparent;
-    color: var(--color-secondary);
+    color: var(--color-calendar-weekday);
     line-height: 1;
     margin: 0;
     text-align: center;
@@ -599,7 +603,7 @@ span.flatpickr-weekday {
     border-radius: 150px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    color: var(--color-secondary);
+    color: var(--color-calendar-day);
     cursor: pointer;
     font-weight: 400;
     width: 14.2857143%;
@@ -711,7 +715,7 @@ span.flatpickr-weekday {
 .flatpickr-day.notAllowed,
 .flatpickr-day.notAllowed.prevMonthDay,
 .flatpickr-day.notAllowed.nextMonthDay {
-    color: var(--color-third);
+    color: var(--color-calendar-weekday);
     background: transparent;
     border-color: transparent;
     cursor: default;

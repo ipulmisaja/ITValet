@@ -68,8 +68,8 @@ class MaintenanceList extends Component
     {
         $this->device = $device;
 
-        if (request()->is('/perangkat-ti/pemeliharaan/*')) {
-            $this->maintenanceForm->device_master_id = $device->master->id;
+        if (request()->is('perangkat-ti/pemeliharaan/*')) {
+            $this->maintenanceForm->device_master_id = $device->device_id;
             $this->maintenanceForm->device_id = $device->id;
             $this->maintenanceForm->state_id = $device->states[0]->id;
         }

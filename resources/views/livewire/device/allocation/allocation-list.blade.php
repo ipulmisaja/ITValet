@@ -90,7 +90,7 @@
                                             class="flex flex-nowrap place-items-center my-1 text-gray-500 dark:text-gray-400 space-x-2">
                                             <x-icons.herosolid name="calendar-days" class="h-5 w-5" />
                                             <span>
-                                                {{-- {{ is_null($state->states[0]->receipt_at) ? '-' : $state->states[0]->receipt_at->format('d M Y') }} --}}
+                                                {{ $state->states[0]->receipt_at ?? '-' }}
                                             </span>
                                         </div>
                                     </td>
@@ -122,7 +122,7 @@
                                                 @canany(['create-device-state', 'update-device-state'])
                                                     <x-buttons.table-action data-drawer-target="drawer-edit-allocation"
                                                         data-drawer-show="drawer-edit-allocation" data-drawer-placement="right"
-                                                        aria-controls="drawe-edit-allocation"
+                                                        aria-controls="drawer-edit-allocation"
                                                         wire:click.prevent="addAllocationInformation('{{ $state->id }}')"
                                                         icon="pencil-square" tooltip="Alokasi" @class(['text-green-500 hover:text-green-600 cursor-pointer']) />
                                                 @endcanany
